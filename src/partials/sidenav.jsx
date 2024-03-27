@@ -22,7 +22,7 @@ function Sidenav() {
           <Link to={`/trending`} className='hover:bg-[#6556cd] px-5 rounded-lg py-3 duration-500 flex items-center gap-2'><AiOutlineFire />Trending</Link>
           <Link to={`/popular`} className='hover:bg-[#6556cd] px-5 rounded-lg py-3 duration-500 flex items-center gap-2'><SiCodemagic className='mt-2'/>popular</Link>          
           <Link to={`/movies`} className='hover:bg-[#6556cd] px-5 rounded-lg py-3 duration-500 flex items-center gap-2'><MdOutlineMovieFilter/>Movies</Link>
-          <Link to={`/ty`} className='hover:bg-[#6556cd] px-5 rounded-lg py-3 duration-500 flex items-center gap-2'><MdTv/> Tv shows</Link>
+          <Link to={`/tv`} className='hover:bg-[#6556cd] px-5 rounded-lg py-3 duration-500 flex items-center gap-2'><MdTv/> Tv shows</Link>
           <Link to={`/people`} className='hover:bg-[#6556cd] px-5  rounded-lg duration-500 flex items-center gap-2 mb-2 py-3'><RiTeamFill className='mt-1'/> people</Link>
         </nav>
         <hr />
