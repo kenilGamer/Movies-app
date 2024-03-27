@@ -60,7 +60,8 @@ const Moviedetails = () => {
             </nav>
 
             {/* Part 2 Poster and details */}
-            <div className="w-full flex items-center">
+            <div className="w-full flex items-center
+            ">
                 <img
                     className="shadow-[8px_17px_38px_2px_rgba(0,0,0,.5)] h-[50vh] object-cover"
                     src={`https://image.tmdb.org/t/p/original/${

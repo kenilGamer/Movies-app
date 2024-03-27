@@ -10,7 +10,7 @@ import People from './components/People'
 import Moviedatails from './partials/moviedatails'
 import Tvdatails from './partials/tvdatails'
 import Parsondatails from './partials/parsondatails'
-
+import LocomotiveScroll from 'locomotive-scroll';
 function App() {
   
   return (
