@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import HorizontalCards from "./Horizontalcrads";
 import Loading from "../components/Loading";
-
+import noimage from "/noimage.jpeg"
 function Tvdatails() {
   document.title = "godcraft | tv Details";
 

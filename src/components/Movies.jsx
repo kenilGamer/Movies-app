@@ -46,8 +46,8 @@ function Movies() {
     }, [category]);
 
     return movie.length > 0 ? (
-        <div className="w-screen h-screen ">
-            <div className=" px-[5%] w-full flex items-center justify-between ">
+        <div className="w-screen h-screen max-md:flex max-md:flex-col ">
+            <div className=" px-[5%] w-full flex items-center justify-between flex-wrap ">
                 <h1 className=" text-2xl font-semibold text-zinc-400">
                     <i
                         onClick={() => navigate(-1)}
@@ -58,7 +58,7 @@ function Movies() {
                         ({category})
                     </small>
                 </h1>
-                <div className="flex items-center w-[80%]">
+                <div className="flex items-center flex-wrap w-[80%]">
                     <Topnev />
                     <Dropdown
                         title="Category"
