@@ -23,7 +23,7 @@ function Topnev({lef}) {
   return (
     <div className='w-full h-[10vh]  relative flex sm:items-center justify-center'>
         {/* <IoCloseSharp className='text-3xl text-zinc-400'/> */}
-       <div className='flex sm:items-center md:min-w-[40%] max-sm:w-[50vw] max-sm:left-3 max-sm:absolute max-md:w-[70vw]'>
+       <div className='flex sm:items-center md:min-w-[40%] max-sm:w-[50vw] max-sm: max-sm:left-3 max-sm:absolute max-md:w-[70vw]'>
        <input onChange={((e)=>setquery(e.target.value))} value={query} className=' max-sm px-5 py-4 md:px-16 mt-5 outline-none text-zinc-200  font2 bg-[#20164d] rounded-full text-xl md:mx-1 flex items-center justify-center shadow-md shadow-[#000033] ' type="search" name="search" placeholder='search anything'/>
         <RiSearchEyeLine className={`text-3xl mt-5 text-zinc-400 -ml-16  `}/>
        </div>
