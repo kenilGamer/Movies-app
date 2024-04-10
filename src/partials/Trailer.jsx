@@ -20,8 +20,9 @@ function Trailer() {
     {ytvideos ? <ReactPlayer
         controls={true}
         url={`https://www.youtube.com/watch?v=${ytvideos.key}`}
-        height={500}
-        width={1100}
+        // height={500}
+        // width={1100}
+        className="w-full"
       />:(
         <NotFound/>
       )}

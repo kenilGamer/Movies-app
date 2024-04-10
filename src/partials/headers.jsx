@@ -18,7 +18,7 @@ function Headers({ data }) {
       }}
       className="w-full h-[85vh] mt-4 flex flex-col justify-end items-start p-[3%]"
     >
-      <div className="w-[50%]">
+      <div className="md:w-[50%]">
         <h1 className="text-5xl font-black ">
           {data.titlel || data.original_name || data.original_title}
         </h1>

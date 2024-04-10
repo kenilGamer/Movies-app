@@ -58,7 +58,7 @@ function Tv() {
                         ({category})
                     </small>
                 </h1>
-                <div className="flex items-center w-[80%]">
+                <div className="flex max-md:flex-col items-center w-[80%]">
                     <Topnev />
                     <Dropdown
                         title="Category"

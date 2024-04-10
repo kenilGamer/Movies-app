@@ -9,8 +9,14 @@ import { RiH1 } from 'react-icons/ri'
 import Horizontalcrads from '../partials/Horizontalcrads'
 import Dropdown from '../partials/Dropdown'
 import Loading from './Loading'
-
 function Home() {
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   const [wallpaper,setwallpaper] = useState(null)
   const [trending, settrending] = useState(null)
   const [category, setcategory] = useState("all")
@@ -41,7 +47,7 @@ function Home() {
     document.title = "Home page for godcraft",
   <>
     <Sidenav/>
-    <div className='w-[80%] h-full overflow-auto overflow-x-hidden'>
+    <div className={`${isMenuOpen ? `w-[100%]` : `md:w-[100%]`} h-full overflow-auto overflow-x-hidden`}>
       <Topnev />
       <Headers data={wallpaper}/>
 

@@ -52,7 +52,7 @@ function Trending() {
 
   return trending.length > 0 ? (
     <div className='w-full min-h-screen  py-3 select-auto '>
-      <div className='w-full flex items-center gap-4 px-[3%]'>
+      <div className='w-full flex max-sm:flex-col sm:items-center gap-4 px-[3%]'>
         <h1 onClick={() => navigate(-1)} className='text-2xl font-semibold hover:text-blue-500 flex items-center text-zinc-400'>
           <FaLongArrowAltLeft className='' /> Trending 
         </h1>

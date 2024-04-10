@@ -60,7 +60,7 @@ const Moviedetails = () => {
             </nav>
 
             {/* Part 2 Poster and details */}
-            <div className="w-full flex items-center
+            <div className="w-full flex max-sm:flex-col px-2 items-center
             ">
                 <img
                     className="shadow-[8px_17px_38px_2px_rgba(0,0,0,.5)] h-[50vh] object-cover"
@@ -70,14 +70,14 @@ const Moviedetails = () => {
                     alt=""
                 />
 
-                <div className="content ml-[5%] text-white">
-                    <h1 className="text-5xl font-black ">
+                <div className="content sm:ml-[5%] px-5 text-white">
+                    <h1 className="sm:text-5xl text-3xl font-black ">
                         {info.detail.name ||
                             info.detail.title ||
                             info.detail.original_name ||
                             info.detail.original_title}
 
-                        <small className="text-2xl font-bold text-zinc-200">
+                        <small className="sm:text-2xl font-bold text-zinc-200">
                             ({info.detail.release_date.split("-")[0]})
                         </small>
                     </h1>
