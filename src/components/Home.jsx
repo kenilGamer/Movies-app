@@ -11,7 +11,7 @@ import Dropdown from '../partials/Dropdown'
 import Loading from './Loading'
 function Home() {
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(true);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
