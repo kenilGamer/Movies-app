@@ -71,7 +71,7 @@ const Moviedetails = () => {
                 />
 
                 <div className="content sm:ml-[5%] px-5 text-white">
-                    <h1 className="sm:text-5xl text-3xl font-black ">
+                    <h1 className="sm:text-5xl text-3xl max-sm:text-center p-3 font-black ">
                         {info.detail.name ||
                             info.detail.title ||
                             info.detail.original_name ||
@@ -82,12 +82,12 @@ const Moviedetails = () => {
                         </small>
                     </h1>
 
-                    <div className="mt-3 mb-5 flex  items-center gap-x-3">
+                    <div className="mt-3 mb-5 flex max-sm:flex-col  items-center gap-x-3">
                         <span className="rounded-full text-xl font-semibold bg-yellow-600 text-white w-[5vh] h-[5vh] flex justify-center items-center">
                             {(info.detail.vote_average * 10).toFixed()}{" "}
                             <sup>%</sup>
                         </span>
-                        <h1 className="w-[60px] font-semibold text-2xl leading-6">
+                        <h1 className="sm:w-[60px] font-semibold text-2xl leading-6">
                             User Score
                         </h1>
                         <h1>{info.detail.release_date}</h1>
