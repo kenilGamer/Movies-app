@@ -21,7 +21,7 @@ function Horizontalcrads({ data, title }) {
               }
               alt=""
             />
-            <h1 className="text-xl text-center mt-3 font-black sm:text-nowrap">
+            <h1 className="text-xl text-center mt-3 font-black w-full sm:text-nowrap">
               {d.titlel || d.original_name || d.original_title}
             </h1>
             <p className="mt-3 ">{d.overview.slice(0, 200)}...</p>
