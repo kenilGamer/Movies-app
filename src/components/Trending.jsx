@@ -4,73 +4,69 @@ import { FaLongArrowAltLeft } from "react-icons/fa";
 import Topnev from '../partials/topnev';
 import Dropdown from '../partials/Dropdown';
 import axios from '../utils/axios';
-import Loading from './Loading';
+import Loading from './Loading'; // Added import statement
 import Card from '../partials/Card';
 import InfiniteScroll from 'react-infinite-scroll-component';
-function Trending() {
+
+const Trending = () => {
   const navigate = useNavigate();
   const [category, setCategory] = useState("all");
   const [duration, setDuration] = useState("day");
   const [trending, setTrending] = useState([]);
-  const [page, setpage] = useState(1)
-  const [hasmore, sethasmore] = useState(true)
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
-  };
-  document.title = "godcraft || Trending " + category
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
-  const handleDurationChange = (event) => {
-    setDuration(event.target.value);
-  };
+  const handleCategoryChange = (event) => setCategory(event.target.value);
+  const handleDurationChange = (event) => setDuration(event.target.value);
 
-  const GetTrending = async () => {
+  const getTrending = async () => {
     try {
       const { data } = await axios.get(`/trending/${category}/${duration}?page=${page}`);
-      // setTrending(data.results);
       if (data.results.length > 0) {
-        setTrending((prevState)=> [...prevState,...data.results])
-        setpage(page + 1)
-      }else{
-        sethasmore(false)
+        setTrending((prevState) => [...prevState, ...data.results]);
+        setPage(page + 1);
+      } else {
+        setHasMore(false);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
-  const refershHandler =  () => {
-    if(trending.length === 0){
-      GetTrending()
-    }else{
-      setpage(1)
-      setTrending([])
-      GetTrending()
+
+  const refreshHandler = () => {
+    if (trending.length === 0) {
+      getTrending();
+    } else {
+      setPage(1);
+      setTrending([]);
+      getTrending();
     }
-  }
+  };
+
   useEffect(() => {
-    refershHandler()
+    refreshHandler();
   }, [category, duration]);
 
-  return trending.length > 0 ? (
-    <div className='w-full min-h-screen  py-3 select-auto '>
+  return (
+    <div className='w-full min-h-screen py-3 select-auto'>
       <div className='w-full flex max-sm:flex-col sm:items-center gap-4 px-[3%]'>
         <h1 onClick={() => navigate(-1)} className='text-2xl font-semibold hover:text-blue-500 flex items-center text-zinc-400'>
-          <FaLongArrowAltLeft className='' /> Trending 
+          <FaLongArrowAltLeft /> Trending 
         </h1>
         <Topnev lef={40} />
         <Dropdown title={`Category`} options={["movie", "tv", "all"]} func={handleCategoryChange} />
         <Dropdown title={`Duration`} options={["week", "day"]} func={handleDurationChange} />
       </div>
       <InfiniteScroll
-      dataLength={trending.length}
-      next={GetTrending}
-      hasMore={hasmore}
-      loader={<h1>loading</h1>}
+        dataLength={trending.length}
+        next={getTrending}
+        hasMore={hasMore}
+        loader={<Loading />} // Changed loader component
       >
-      <Card data={trending} title={`trending`} />
+        <Card data={trending} title={`Trending`} />
       </InfiniteScroll>
-      {/* Render trending content */}
     </div>
-  ) : <Loading />;
-}
+  );
+};
 
 export default Trending;

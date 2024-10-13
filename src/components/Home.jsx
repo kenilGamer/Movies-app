@@ -1,67 +1,64 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidenav from '../partials/sidenav'
 import Topnev from '../partials/topnev'
-import { useState } from 'react'
 import axios from '../utils/axios'
 import Headers from '../partials/headers'
-import { RiH1 } from 'react-icons/ri'
 import Horizontalcrads from '../partials/Horizontalcrads'
 import Dropdown from '../partials/Dropdown'
 import Loading from './Loading'
+import { RiH1 } from 'react-icons/ri'
+
 function Home() {
-
   const [isMenuOpen, setIsMenuOpen] = useState(true);
+  const [wallpaper, setWallpaper] = useState(null);
+  const [trending, setTrending] = useState(null);
+  const [category, setCategory] = useState("all");
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  const toggleMenu = () => setIsMenuOpen(prevState => !prevState);
+
+  const getHeaderWallpaper = async () => {
+    try {
+      const { data } = await axios.get(`/trending/all/day`);
+      const randomIndex = Math.floor(Math.random() * data.results.length);
+      setWallpaper(data.results[randomIndex]);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const [wallpaper,setwallpaper] = useState(null)
-  const [trending, settrending] = useState(null)
-  const [category, setcategory] = useState("all")
-  const GetHeaderWallpaper = async () => {
+  const getTrending = async () => {
     try {
-      const {data} = await axios.get(`/trending/all/day`);
-      let randomdata = data.results[(Math.random() * data.results.length).toFixed()]
-      setwallpaper(randomdata);
+      const { data } = await axios.get(`/trending/${category}/day`);
+      setTrending(data.results);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
-  }
+  };
 
-  const GetTrending = async () => {
-    try {
-      const {data} = await axios.get(`/trending/${category}/day`);
-      settrending(data.results);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  useEffect(() => {
+    if (!wallpaper) getHeaderWallpaper();
+    getTrending();
+  }, [category]);
 
-  useEffect(()=>{
-    !wallpaper && GetHeaderWallpaper()
-    GetTrending()
-  },[category])
-  return wallpaper && trending ? (
-    document.title = "Home page for godcraft",
-  <>
-    <Sidenav/>
-    <div className={`${isMenuOpen ? `w-[100%]` : `md:w-[100%]`} h-full overflow-auto overflow-x-hidden`}>
-      <Topnev />
-      <Headers data={wallpaper}/>
+  if (!wallpaper || !trending) return <Loading />;
 
-      <div className="mt-5 flex justify-between p-3">
-        <h1 className="text-3xl uppercase text-center font-bold ">
-          Trendings
-        </h1>
-        <Dropdown title="filter" options={["tv","movie","all"]} func={(e)=> setcategory(e.target.value)} />
+  return (
+    <>
+      <Sidenav />
+      <div className={`${isMenuOpen ? `w-[100%]` : `md:w-[100%]`} h-full overflow-auto overflow-x-hidden`}>
+        <Topnev />
+        <Headers data={wallpaper} />
+        <div className="mt-5 flex justify-between p-3">
+          <h1 className="text-3xl uppercase text-center font-bold">
+            Trendings
+          </h1>
+          <Dropdown title="filter" options={["tv", "movie", "all"]} func={(e) => setCategory(e.target.value)} />
+        </div>
+        <Horizontalcrads data={trending} />
       </div>
-
-      <Horizontalcrads data={trending} />
-    </div>
-  </>
-  ): <Loading/>
+    </>
+  );
 }
 
 export default Home

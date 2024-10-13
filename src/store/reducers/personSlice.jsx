@@ -8,12 +8,8 @@ export const personSlice = createSlice({
     name: "person",
     initialState,
     reducers: {
-        loadperson: (state, action) => {
-            state.info = action.payload;
-        },
-        removeperson: (state, action) => {
-            state.info = null;
-        },
+        loadperson: (state, action) => state.info = action.payload,
+        removeperson: (state) => state.info = null,
     },
 });
 
