@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import noimage from "/noimage.jpeg";
 
 function Card({ data, title }) {
+  
   return (
     <div className="flex bg-[#0f0b20] w-[100vw] h-full sm:px-[3%] mt-10  justify-between flex-wrap">
       {data.map((c, i) => (
