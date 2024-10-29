@@ -1,7 +1,3 @@
-Here’s a README template you can use for your GitHub repository:
-
----
-
 # Movies App 🎬
 
 A React-based movies app that brings real-time movie data directly to users. This project explores API integration, dynamic UI updates, and aims to provide an engaging and user-friendly movie browsing experience.
@@ -49,5 +45,4 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 ## 📄 License
 This project is licensed under the MIT License.
 
----
 
