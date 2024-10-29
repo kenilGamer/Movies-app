@@ -107,7 +107,8 @@ const Moviedetails = () => {
                     <h1 className="text-2xl mb-3  mt-5">Movie Translated</h1>
                     <p className="mb-10">{info.translations.join(", ")}</p>
 
-                    <Link
+                   <div className="flex max-md:flex-col max-md:items-center gap-5 max-md:justify-center">
+                   <Link
                         className="p-5 bg-[#6556CD] rounded-lg"
                         to={`${pathname}/trailer`}
                     >
@@ -121,6 +122,7 @@ const Moviedetails = () => {
                         <i className="text-xl ri-play-fill mr-3 "></i>
                         Watch Now
                     </Link>
+                   </div>
                 </div>
             </div>
 
