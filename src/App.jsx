@@ -11,12 +11,15 @@ import Tvdatails from './partials/tvdatails'
 import Parsondatails from './partials/parsondatails'
 import Trailer from './partials/Trailer'
 import NotFound from './components/notfound'
+import Sinup from './components/Sinup'
 
 function App() {
 
   return (
     <div className='w-full bg-[#0f0b20] select-none h-screen flex text-white '>
+      
       <Routes>
+        <Route path='/singup' element={<Sinup/>} />
         <Route path="/" element={<Home />} />
         <Route path="/trending" element={<Trending />} />
         <Route path="/popular" element={<Popular />} />

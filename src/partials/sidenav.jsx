@@ -27,7 +27,7 @@ function Sidenav() {
   };
 
   return (
-    <div className='relative '>
+    <div className='relative z-10'>
       <div className="md:hidden flex items-center justify-start ">
        <span>
        <button onClick={toggleMenu} className="text-xl text-white focus:outline-none">
