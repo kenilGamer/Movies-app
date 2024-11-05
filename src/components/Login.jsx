@@ -5,7 +5,7 @@ import Sidenav from "../partials/sidenav";
 import axios2 from "../utils/axios";
 import axios from "axios";
 import Loading from "./Loading";
-function Signup() {
+function Login() {
   const [wallpaper, setWallpaper] = useState(null);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -35,21 +35,23 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/signup',
+      const response = await axios.post('http://localhost:3000/api/login', 
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           },
-          username, email, age, password, avatar
+          username: username || email, password: password
         });
+        console.log(response.data, localStorage.getItem('token'));
       if (!response.data.success) {
-        console.log("Failed to sign up");
+        console.log("Failed to login");
       }
-      console.log(response.data);
-      navigate("/home"); // Redirect to login page after successful signup
+      console.log(response.data.token);
+      localStorage.setItem('token', response.data.token);
+      navigate("/home");
     } catch (error) {
-      console.error('Error signing up:', error);
+      console.error('Error logging in:', error);
     }
   };
   const handleEdit = () => {
@@ -77,29 +79,14 @@ function Signup() {
         className="w-full h-full flex items-center justify-center bg-cover bg-center"
       >
         <div className="w-[25em] h-[35em] bg-[#ffffff68] rounded-xl backdrop-blur-sm bg-opacity-50 box-shadow-md shadow-white flex flex-col items-center justify-center">
-          <h1 className="text-2xl font-bold text-white mb-4">Signup Page</h1>
+          <h1 className="text-2xl font-bold text-white mb-4">Login Page</h1>
           <form
             method="post"
             encType="multipart/form-data"
             onSubmit={handleSubmit}
             className="space-y-4 flex flex-col items-center justify-center relative"
-          >
-            <input
-              defaultValue={avatar}
-              type="file"
-              name="avatar"
-              id="avatar"
-              onChange={(e) => setAvatar(e.target.files[0])}
-              hidden
-            />
-            <div className="w-32 h-32 bg-violet-300 rounded-full">
-              <div className="absolute top-2 left-[60%] avatar cursor-pointer hover:bg-violet-500 rounded-full p-1 bg-violet-500">
-                <MdModeEdit
-                  className="text-white text-2xl cursor-pointer"
-                  onClick={handleEdit}
-                />
-              </div>
-            </div>
+          >   
+         
             <div className="mb-4">
             
               <input
@@ -108,34 +95,8 @@ function Signup() {
                 id="username"
                 className="mt-1 p-2  w-full text-black rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 value={username}
-                placeholder="Username"
+                placeholder="Username or Email"
                 onChange={(e) => setUsername(e.target.value)}
-                required
-              />
-            </div>
-            <div className="mb-4">
-           
-              <input
-                type="email"
-                name="email"
-                id="email"
-                className="mt-1 p-2 w-full text-black   rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                value={email}
-                placeholder="Email"
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="mb-4">
-      
-              <input
-                type="number"
-                name="age"
-                id="age"
-                className="mt-1 p-2 w-full rounded-md text-black border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                value={age}
-                placeholder="Age"
-                onChange={(e) => setAge(e.target.value)}
                 required
               />
             </div>
@@ -160,10 +121,10 @@ function Signup() {
                 type="submit"
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Sign up
+               Login
               </button>
-              <a href="/login" className="mt-4 block">
-                <p className="text-white">Already have an account? Login</p>
+              <a href="/" className="mt-4 block">
+                <p className="text-white">Signup Page</p>
               </a>
             </div>
           </form>
@@ -173,4 +134,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default Login;

@@ -5,14 +5,16 @@ import { SiCodemagic } from "react-icons/si";
 import { MdOutlineMovieFilter } from "react-icons/md";
 import { MdTv } from "react-icons/md";
 import { RiTeamFill } from "react-icons/ri";
-import { HiOutlinePhoneIncoming } from "react-icons/hi";
-import { MdInfoOutline } from "react-icons/md";
 import axios from 'axios';
 import { HiMenu } from "react-icons/hi";
 import { IoMdClose } from "react-icons/io";
+import { IoLogOut } from "react-icons/io5";
+import { CgProfile } from "react-icons/cg";
+import { useNavigate } from 'react-router-dom';
 function Sidenav() {
   const [isMenuOpen, setIsMenuOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const navigate = useNavigate();
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -24,6 +26,10 @@ function Sidenav() {
   }, []);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
   };
 
   return (
@@ -53,9 +59,9 @@ function Sidenav() {
           </nav>
           <hr />
           <nav className='text-md'>
-            <h1 className='text-white font-semibold text-md  md:mt-2 px-5 py-3 text-nowrap'>Website Information</h1>
-            <Link className='hover:bg-[#6556cd] px-5 rounded-lg py-4 duration-500 flex items-center gap-2'><MdInfoOutline/>About</Link>    
-            <Link className='hover:bg-[#5142b1] px-5 rounded-lg py-4 duration-500 flex items-center gap-2'><HiOutlinePhoneIncoming/>Contact</Link>
+            <h1 className='text-white font-semibold text-md  md:mt-2 px-5 py-3 text-nowrap'>Account Information</h1>
+            <Link to={`/profile`} className='hover:bg-[#6556cd] px-5 rounded-lg py-4 duration-500 flex items-center gap-2'><CgProfile/>Profile</Link>     
+            <button onClick={handleLogout} className='hover:bg-[#5142b1] px-5 rounded-lg py-4 duration-500 flex items-center gap-2'><IoLogOut/>Logout</button>
           </nav>
         </div>
       </div>):(
@@ -77,9 +83,9 @@ function Sidenav() {
            </nav>
            <hr />
            <nav className='text-md'>
-             <h1 className='text-white font-semibold text-md  md:mt-2 px-5 py-3 text-nowrap'>Website Information</h1>
-             <Link className='hover:bg-[#6556cd] px-5 rounded-lg py-4 duration-500 flex items-center gap-2'><MdInfoOutline/>About</Link>    
-             <Link className='hover:bg-[#5142b1] px-5 rounded-lg py-4 duration-500 flex items-center gap-2'><HiOutlinePhoneIncoming/>Contact</Link>
+            <h1 className='text-white font-semibold text-md  md:mt-2 px-5 py-3 text-nowrap'>Account Information</h1>
+            <Link to={`/profile`} className='hover:bg-[#6556cd] px-5 rounded-lg py-4 duration-500 flex items-center gap-2'><CgProfile/>Profile</Link>     
+            <button onClick={handleLogout} className='hover:bg-[#5142b1] px-5 rounded-lg py-4 duration-500 flex items-center gap-2'><IoLogOut/>Logout</button>
            </nav>
          </div>
        </div>
