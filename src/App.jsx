@@ -15,7 +15,7 @@ import Sinup from './components/Sinup'
 import AuthenticateToken from './components/AuthenticateToken'
 import Login from './components/Login'
 import Profile from './components/Profile'
-function App() {
+function App() { 
   return (
     <div className='w-full bg-[#0f0b20] select-none h-screen flex text-white '>
       <Routes>

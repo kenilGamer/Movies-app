@@ -1,8 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { children } from 'react';
 
 function AuthenticateToken({ children }) {
+  document.title = "Godcrfts | Home";
+  const [loading, setLoading] = useState(true);
+  const token = localStorage.getItem('token');
+  console.log(token);
   const navigate = useNavigate();
 
   useEffect(() => {

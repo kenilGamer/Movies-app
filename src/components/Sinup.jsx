@@ -35,22 +35,22 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/signup',
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          },
-          username, email, age, password, avatar
-        });
-      if (!response.data.success) {
-        console.log("Failed to sign up");
-      }
-      console.log(response.data);
-      navigate("/home"); // Redirect to login page after successful signup
-    } catch (error) {
-      console.error('Error signing up:', error);
-    }
+          const response = await axios.post('http://localhost:3000/api/signup',
+            {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+              },
+              username, email, age, password, avatar
+            });
+          if (!response.data.success) {
+            console.log("Failed to sign up");
+          }
+          console.log(response.data);
+          navigate("/home"); // Redirect to login page after successful signup
+        } catch (error) {
+          console.error('Error signing up:', error);
+        }
   };
   const handleEdit = () => {
     const fileInput = document.getElementById("avatar");
@@ -61,7 +61,7 @@ function Signup() {
       console.log("File input not found");
     }
   };
-  if (!wallpaper) return <Loading />;
+  if (!wallpaper ) return <Loading />;
 
   return (
     <>
