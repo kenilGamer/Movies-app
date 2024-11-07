@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdModeEdit } from "react-icons/md";
 import Sidenav from "../partials/sidenav";
 import axios2 from "../utils/axios";
@@ -162,9 +162,9 @@ function Signup() {
               >
                 Sign up
               </button>
-              <a href="/login" className="mt-4 block">
+              <Link to="/login" className="mt-4 block">
                 <p className="text-white">Already have an account? Login</p>
-              </a>
+              </Link>
             </div>
           </form>
         </div>
