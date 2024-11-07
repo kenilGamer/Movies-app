@@ -6,7 +6,7 @@ function AuthenticateToken({ children }) {
   document.title = "Godcrfts | Home";
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem('token');
-  console.log(token);
+  // console.log(token);
   const navigate = useNavigate();
 
   useEffect(() => {

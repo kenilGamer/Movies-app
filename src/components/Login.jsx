@@ -32,28 +32,29 @@ function Login() {
   useEffect(() => {
     if (!wallpaper) getHeaderWallpaper();
   }, []);
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:3000/api/login', 
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          },
-          username: username || email, password: password
-        });
-        console.log(response.data, localStorage.getItem('token'));
-      if (!response.data.success) {
-        console.log("Failed to login");
-      }
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await axios.post('http://localhost:3000/api/login', {
+      username: username || email,
+      password: password
+    });
+    console.log(response.data);
+    if (response.data.message !== 'Logged in successfully') {
+      console.log("Failed to login");
+    } else {
       console.log(response.data.token);
       localStorage.setItem('token', response.data.token);
       navigate("/home");
-    } catch (error) {
-      console.error('Error logging in:', error);
     }
-  };
+  } catch (error) {
+    console.error('Error logging in:', error);
+  }
+};
+
+  
   const handleEdit = () => {
     const fileInput = document.getElementById("avatar");
     console.log(fileInput);
