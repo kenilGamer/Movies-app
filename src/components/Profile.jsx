@@ -10,7 +10,7 @@ function Profile() {
       const token = localStorage.getItem('token'); // Or wherever you're storing the token
       if (!token) {
         console.log('No token found. Redirecting to login.');
-        window.location.href = '/login'; // Redirect to login if no token is found
+        navigate("/login"); // Redirect to login if no token is found
         return;
       }
 
@@ -25,8 +25,6 @@ function Profile() {
     } catch (error) {
       console.error('Error fetching profile:', error.response?.data || error.message);
       if (error.response?.status === 401) {
-        // Handle unauthorized (redirect to login or show message)
-         // Redirect to login page
          navigate("/login");
         console.log('User is not authenticated. Redirecting to login.');
       }
