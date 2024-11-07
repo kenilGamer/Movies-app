@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function Profile() {
+  const navigate = useNavigate();
   const [profileData, setProfileData] = useState(null);
 
   const getProfile = async () => {
@@ -25,7 +26,8 @@ function Profile() {
       console.error('Error fetching profile:', error.response?.data || error.message);
       if (error.response?.status === 401) {
         // Handle unauthorized (redirect to login or show message)
-        window.location.href = '/login'; // Redirect to login page
+         // Redirect to login page
+         navigate("/login");
         console.log('User is not authenticated. Redirecting to login.');
       }
     }
