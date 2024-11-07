@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { children } from 'react';
 
 function AuthenticateToken({ children }) {
-  document.title = "Godcrfts | Home";
+  document.title = "Godcrfts | Token";
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem('token');
   // console.log(token);
@@ -12,7 +12,7 @@ function AuthenticateToken({ children }) {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      navigate('/');
+      navigate('/login');
     }
   }, []);
 

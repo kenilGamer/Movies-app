@@ -1,30 +1,33 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdModeEdit } from "react-icons/md";
 import Sidenav from "../partials/sidenav";
 import axios2 from "../utils/axios";
 import axios from "axios";
 import Loading from "./Loading";
+import FlashMessage from "./Flashmessage";
 function Login() {
   const [wallpaper, setWallpaper] = useState(null);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-  const [avatar, setAvatar] = useState(null);
   const [password, setPassword] = useState("");
-  const [age, setAge] = useState("");
-  const [data, setData] = useState(null);
+  const [getError, setError] = useState(null);
+  const [errorKey, setErrorKey] = useState(0);
+
+
   const getHeaderWallpaper = async () => {
     try {
       const { data } = await axios2.get('/trending/all/day');
-      setData(data);
       if (data.results && data.results.length > 0) {
         const randomIndex = Math.floor(Math.random() * data.results.length);
         setWallpaper(`https://image.tmdb.org/t/p/original/${data.results[randomIndex].backdrop_path}`);
       } else {
+        setError("No results found");
         console.error("No results found");
       }
     } catch (error) {
+      setError("Error fetching wallpaper");
       console.error(error);
     }
   };
@@ -35,6 +38,7 @@ function Login() {
 
 
 const handleSubmit = async (e) => {
+  
   e.preventDefault();
   try {
     const response = await axios.post('http://localhost:3000/api/login', {
@@ -43,33 +47,28 @@ const handleSubmit = async (e) => {
     });
     console.log(response.data);
     if (response.data.message !== 'Logged in successfully') {
+      setErrorKey((prevKey) => prevKey + 1);
+      setError("Invalid username or password");
       console.log("Failed to login");
     } else {
       console.log(response.data.token);
       localStorage.setItem('token', response.data.token);
-      navigate("/home");
+      navigate("/");
     }
   } catch (error) {
+    setErrorKey((prevKey) => prevKey + 1);
+    setError(error.response.data);
     console.error('Error logging in:', error);
   }
 };
 
-  
-  const handleEdit = () => {
-    const fileInput = document.getElementById("avatar");
-    console.log(fileInput);
-    if (fileInput) {
-      fileInput.click();
-    } else {
-      console.log("File input not found");
-    }
-  };
   if (!wallpaper) return <Loading />;
 
   return (
     <>
       <Sidenav />
 
+      {getError && <FlashMessage errorKey={errorKey} getError={getError} />}
       <div
         style={{
           background: `linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.7),rgba(0,0,0,0.9)), url(${wallpaper})`,
@@ -78,8 +77,8 @@ const handleSubmit = async (e) => {
           backgroundSize: "cover",
         }}
         className="w-full h-full flex items-center justify-center bg-cover bg-center"
-      >
-        <div className="w-[25em] h-[35em] bg-[#ffffff68] rounded-xl backdrop-blur-sm bg-opacity-50 box-shadow-md shadow-white flex flex-col items-center justify-center">
+        >
+        <div className="w-[20em] h-[30em] bg-[#ffffff68] rounded-xl backdrop-blur-sm bg-opacity-50 box-shadow-md shadow-white flex flex-col items-center justify-center">
           <h1 className="text-2xl font-bold text-white mb-4">Login Page</h1>
           <form
             method="post"
@@ -124,9 +123,9 @@ const handleSubmit = async (e) => {
               >
                Login
               </button>
-              <a href="/" className="mt-4 block">
+              <Link to="/signup" className="mt-4 block">
                 <p className="text-white">Signup Page</p>
-              </a>
+              </Link>
             </div>
           </form>
         </div>

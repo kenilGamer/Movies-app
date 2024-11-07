@@ -19,7 +19,7 @@ function Movies() {
 
   const fetchMovies = async () => {
     try {
-      const { data } = await axios.get(`/movie/${category}?language=en-US&page=${page}`);
+      const { data } = await axios.get(`/movie/${category}?language=en-US&origin_country=IN&page=${page}`);
       if (data.results.length > 0) {
         setMovies(prevState => [...prevState, ...data.results]);
         setPage(page + 1);

@@ -36,8 +36,8 @@ function Sidenav() {
     <div className='relative z-10'>
       <div className="md:hidden flex items-center justify-start ">
        <span>
-       <button onClick={toggleMenu} className="text-xl text-white focus:outline-none">
-          {isMenuOpen ? <IoMdClose/> : <HiMenu/>}
+       <button onClick={toggleMenu} className="text-xl text-white focus:outline-none p-2 rounded-lg absolute top-2 left-0 z-[1000]">
+          {isMenuOpen ? <HiMenu/>  : <IoMdClose/>}
         </button>
        </span>
       </div>

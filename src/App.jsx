@@ -15,13 +15,14 @@ import Sinup from './components/Sinup'
 import AuthenticateToken from './components/AuthenticateToken'
 import Login from './components/Login'
 import Profile from './components/Profile'
+
 function App() { 
   return (
     <div className='w-full bg-[#0f0b20] select-none h-screen flex text-white '>
       <Routes>
-        <Route path='/' element={<Sinup/>} />
+        <Route path='/signup' element={<Sinup/>} />
         <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<AuthenticateToken><Home /></AuthenticateToken>} />
+        <Route path="/" element={<AuthenticateToken><Home /></AuthenticateToken>} />
         <Route path="/profile" element={<AuthenticateToken><Profile /></AuthenticateToken>} />
         <Route path="/trending" element={<AuthenticateToken><Trending /></AuthenticateToken>} />
         <Route path="/popular" element={<AuthenticateToken><Popular /></AuthenticateToken>} />

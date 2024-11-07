@@ -5,6 +5,7 @@ import Sidenav from "../partials/sidenav";
 import axios2 from "../utils/axios";
 import axios from "axios";
 import Loading from "./Loading";
+import Flashmessage from "./Flashmessage";
 function Signup() {
   const [wallpaper, setWallpaper] = useState(null);
   const navigate = useNavigate();
@@ -14,6 +15,8 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [age, setAge] = useState("");
   const [data, setData] = useState(null);
+  const [errorKey, setErrorKey] = useState(0);
+  const [getError, setGetError] = useState(null);
   const getHeaderWallpaper = async () => {
     try {
       const { data } = await axios2.get('/trending/all/day');
@@ -44,13 +47,17 @@ function Signup() {
               username, email, age, password, avatar
             });
           if (!response.data.success) {
+            setErrorKey((prevKey) => prevKey + 1);
+            setGetError(response.data.message);
             console.log("Failed to sign up");
           }
           console.log(response.data);
-          navigate("/home"); // Redirect to login page after successful signup
+          navigate("/"); // Redirect to login page after successful signup
         } catch (error) {
+          setErrorKey((prevKey) => prevKey + 1);
+          setGetError(error.response.data);
           console.error('Error signing up:', error);
-        }
+          }
   };
   const handleEdit = () => {
     const fileInput = document.getElementById("avatar");
@@ -66,7 +73,7 @@ function Signup() {
   return (
     <>
       <Sidenav />
-
+      {getError && <Flashmessage errorKey={errorKey} getError={getError} />}
       <div
         style={{
           background: `linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.7),rgba(0,0,0,0.9)), url(${wallpaper})`,
@@ -152,9 +159,9 @@ function Signup() {
                 required
               />
             </div>
-            <a href="/forgot-password">
+            <Link  to="/forgot-password">
               <p className="text-white">Forgot Password?</p>
-            </a>
+            </Link>
             <div>
               <button
                 type="submit"

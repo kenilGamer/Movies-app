@@ -20,6 +20,8 @@ function Home() {
   const getHeaderWallpaper = async () => {
     try {
       const { data } = await axios.get(`/trending/all/day`);
+      console.log(data);
+      
       const randomIndex = Math.floor(Math.random() * data.results.length);
       setWallpaper(data.results[randomIndex]);
     } catch (error) {
