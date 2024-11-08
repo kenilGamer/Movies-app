@@ -58,7 +58,12 @@ function Profile() {
       <h1>Profile</h1>
       {profileData ? (
         <div>
-        </div>
+          <img src={`http://localhost:3000/${profileData.avatar}`} alt="Profile" />
+
+          <h2>{profileData.username}</h2>
+          <p>{profileData.email}</p>
+          <p>{profileData.age}</p>
+        </div> 
       ) : (
         <p>Loading profile...</p>
       )}
