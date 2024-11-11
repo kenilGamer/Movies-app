@@ -10,6 +10,34 @@ import {
 } from "react-router-dom";
 import HorizontalCards from "./Horizontalcrads";
 import Loading from "../components/Loading";
+import noimage from "/noimage.jpeg"; // Added import for noimage
+
+// Function to add a new item to the history in localStorage
+const addToHistory = (movie) => {
+  try {
+    // Retrieve the history from localStorage
+    let historyArray = JSON.parse(localStorage.getItem("history"));
+    
+    // If the history is null or not an array, initialize it as an empty array
+    if (!Array.isArray(historyArray)) {
+      historyArray = [];
+    }
+
+    // Check if the movie is already in history
+    const isMovieInHistory = historyArray.some((item) => item.id === movie.id);
+    
+    if (!isMovieInHistory) {
+      // Add the movie to history
+      historyArray.push(movie);
+      // Save it back to localStorage
+      localStorage.setItem("history", JSON.stringify(historyArray));
+    }
+  } catch (error) {
+    console.error("Error adding to history:", error);
+  }
+};
+
+  
 
 const Moviedetails = () => {
     document.title = "godcraft | Movie Details";
@@ -21,10 +49,32 @@ const Moviedetails = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(asyncloadmovie(id));
+
         return () => {
             dispatch(removemovie());
         };
     }, [id]);
+
+    useEffect(() => {
+        if (info && info.detail) {
+            try {
+                // Create a new item object from the info.details
+                const newItem = {
+                    id: info.detail.id, // Unique identifier for each movie
+                    title: info.detail.name || info.detail.title || "Unknown",
+                    poster_path: info.detail.poster_path,
+                    release_date: info.detail.release_date || "N/A",
+                    overview: info.detail.overview || "No overview available",
+                };
+
+                // Call the addToHistory function to append the new item to history
+                addToHistory(newItem);
+            } catch (e) {
+                console.error("Error adding to history:", e);
+            }
+        }
+    }, [info]); // Trigger this whenever the `info` changes
+
     return info ? (
         <div
             style={{

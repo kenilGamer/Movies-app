@@ -10,17 +10,20 @@ import { FaLongArrowAltLeft } from "react-icons/fa";
 
 function Movies() {
   document.title = "Godcrfts | Movies";
-
+  const [history, setHistory] = useState([]);
   const navigate = useNavigate();
   const [category, setCategory] = useState("now_playing");
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-
+  
   const fetchMovies = async () => {
     try {
       const { data } = await axios.get(`/movie/${category}?language=en-US&origin_country=IN&page=${page}`);
       if (data.results.length > 0) {
+        localStorage.setItem("history", JSON.stringify([...history, ...data.results]));
+        
+        setHistory(prevState => [...prevState, ...data.results]);
         setMovies(prevState => [...prevState, ...data.results]);
         setPage(page + 1);
       } else {
