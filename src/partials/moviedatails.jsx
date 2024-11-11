@@ -65,6 +65,10 @@ const Moviedetails = () => {
                     poster_path: info.detail.poster_path,
                     release_date: info.detail.release_date || "N/A",
                     overview: info.detail.overview || "No overview available",
+                    type: "movie",
+                    media_type: "movie",
+                    backdrop_path: info.detail.backdrop_path,
+                    vote_average: info.detail.vote_average,
                 };
 
                 // Call the addToHistory function to append the new item to history

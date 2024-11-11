@@ -33,6 +33,12 @@ function Login() {
   };
 
   useEffect(() => {
+
+    const token = new URLSearchParams(window.location.search).get('token');
+    if (token) {
+      localStorage.setItem('token', token);
+      navigate('/profile');
+    }
     if (!wallpaper) getHeaderWallpaper();
   }, []);
 
@@ -62,6 +68,16 @@ const handleSubmit = async (e) => {
   }
 };
 
+const handleGoogleLogin = async () => {
+  try {
+    window.location.href = 'http://localhost:3000/auth/google';
+    toast.success('Redirecting to Google login...');
+    localStorage.setItem('token', response.data.token);
+  } catch (error) {
+    console.error('Error with Google login:', error);
+    toast.error('Failed to redirect to Google login');
+  }
+};
   if (!wallpaper) return <Loading />;
 
   return (
@@ -128,6 +144,7 @@ const handleSubmit = async (e) => {
               </Link>
             </div>
           </form>
+          <button onClick={handleGoogleLogin} className="mt-4 block">Google Login</button>
         </div>
       </div>
     </>

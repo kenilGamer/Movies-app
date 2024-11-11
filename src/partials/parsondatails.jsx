@@ -7,7 +7,7 @@ import Loading from "../components/Loading";
 import Dropdown from "./Dropdown";
 
 const PersonDetails = () => {
-  document.title = "SCSDB | Person Details";
+  document.title = `Person Details | Godcrfts`;
 
   const { pathname } = useLocation();
   const navigate = useNavigate();

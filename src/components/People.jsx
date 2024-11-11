@@ -14,7 +14,7 @@ function People() {
     const [people, setPeople] = useState([]);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
-
+    document.title = `People | Godcrfts`;
     const fetchPeople = async () => {
         try {
             const response = await axios.get(`/person/${category}?page=${page}`);

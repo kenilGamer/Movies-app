@@ -6,6 +6,7 @@ import NotFound from "../components/notfound";
 // import plugin from "tailwindcss";
 
 function Trailer() {
+  document.title = `Trailer | Godcrfts`;
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const category = pathname.includes("movie") ? "movie" : "tv";

@@ -18,7 +18,7 @@ function Signup() {
   const [data, setData] = useState(null);
   const [errorKey, setErrorKey] = useState(0);
   const [getError, setGetError] = useState(null);
-
+  document.title = `Signup | Godcrfts`;
   const getHeaderWallpaper = async () => {
     try {
       const { data } = await axios2.get('/trending/all/day');
@@ -79,7 +79,17 @@ function Signup() {
       console.error('Error signing up:', error);
     }
   };
+  const handleGoogleSignup = async () => {
+    try {
+      // Trigger the authentication process by calling the backend route
+      window.location.href = 'http://localhost:3000/auth/google';  // This will redirect to Google's OAuth page
 
+    } catch (error) {
+      console.error('Error with Google signup:', error);
+    }
+  };
+  
+  
   const handleAvatar = () => {
     const fileInput = document.getElementById("avatar");
     console.log(fileInput);
@@ -192,6 +202,7 @@ function Signup() {
               </Link>
             </div>
           </form>
+              <button onClick={handleGoogleSignup} className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">google</button>
         </div>
       </div>
     </>

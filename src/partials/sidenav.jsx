@@ -33,7 +33,7 @@ function Sidenav() {
   };
 
   return (
-    <div className='relative z-10'>
+    <div className='relative  z-10'>
       <div className="md:hidden flex items-center justify-start ">
        <span>
        <button onClick={toggleMenu} className="text-xl text-white focus:outline-none p-2 rounded-lg absolute top-2 left-0 z-[1000]">
@@ -41,7 +41,7 @@ function Sidenav() {
         </button>
        </span>
       </div>
-     {isMobile === false ? ( <div className={` max-w-full overflow-hidden h-[95vh] border-r-[1px] p-1 sticky `}>
+     {isMobile === false ? ( <div className={` max-w-full overflow-hidden h-[100vh] border-r-[1px] p-1 sticky `}>
         <div className='flex flex-col text-xl'>
           <div className='w-full h-full'>
           <h1 className='flex items-center sm:justify-center md-sm:text-[30vw] md:text-xl tracking-wider font-bold font1 uppercase'>

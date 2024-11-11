@@ -15,6 +15,7 @@ const Trending = () => {
   const [trending, setTrending] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  document.title = `Trending | Godcrfts`;
 
   const handleCategoryChange = (event) => setCategory(event.target.value);
   const handleDurationChange = (event) => setDuration(event.target.value);
@@ -46,7 +47,7 @@ const Trending = () => {
   useEffect(() => {
     refreshHandler();
   }, [category, duration]);
-
+  console.log(trending);
   return (
     <div className='w-full min-h-screen py-3 select-auto'>
       <div className='w-full flex max-sm:flex-col sm:items-center gap-4 px-[3%]'>
