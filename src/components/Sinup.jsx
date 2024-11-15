@@ -55,7 +55,7 @@ function Signup() {
 
     try {
       const response = await axios.post(
-        'http://localhost:3000/api/signup',
+        'https://movies-backend-07f5.onrender.com/api/signup',
         formData, // Use formData, not a regular object
         {
           headers: {
@@ -82,7 +82,7 @@ function Signup() {
   const handleGoogleSignup = async () => {
     try {
       // Trigger the authentication process by calling the backend route
-      window.location.href = 'http://localhost:3000/auth/google';  // This will redirect to Google's OAuth page
+      window.location.href = 'https://movies-backend-07f5.onrender.com/auth/google';  // This will redirect to Google's OAuth page
 
     } catch (error) {
       console.error('Error with Google signup:', error);

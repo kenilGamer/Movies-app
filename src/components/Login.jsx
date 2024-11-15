@@ -46,7 +46,7 @@ const handleSubmit = async (e) => {
   
   e.preventDefault();
   try {
-    const response = await axios.post('http://localhost:3000/api/login', {
+    const response = await axios.post('https://movies-backend-07f5.onrender.com/api/login', {
       username: username || email,
       password: password
     });
@@ -71,14 +71,14 @@ const handleSubmit = async (e) => {
 
 const handleGoogleLogin = async () => {
   try {
-    window.location.href = 'http://localhost:3000/auth/google';
+    window.location.href = 'https://movies-backend-07f5.onrender.com/auth/google';
     toast.success('Redirecting to Google login...');
     localStorage.setItem('token', response.data.token);
   } catch (error) {
     console.error('Error with Google login:', error);
     toast.error('Failed to redirect to Google login');
   }
-  const user = await axios.get('http://localhost:3000/auth/google/callback');
+  const user = await axios.get('https://movies-backend-07f5.onrender.com/auth/google/callback');
 
   console.log(user);
   navigate('/');

@@ -46,7 +46,7 @@ const Profile = () => {
         return;
       }
 
-      const response = await axios.get("http://localhost:3000/profile", {
+      const response = await axios.get("https://movies-backend-07f5.onrender.com/profile", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProfileData(response.data);
@@ -79,7 +79,7 @@ const Profile = () => {
     setIsLoading(true);
     getHeaderWallpaper();
   }, []);
-  const avatar = `http://localhost:3000/${profileData?.avatar}`;
+  const avatar = `https://movies-backend-07f5.onrender.com/${profileData?.avatar}`;
 
   return isLoading ? (
     <Loading />

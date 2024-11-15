@@ -37,7 +37,7 @@ function Setting() {
     }
   };
   const fetchUser = async () => {
-    const response = await axios.get('http://localhost:3000/settings', { headers: { Authorization: `Bearer ${token}` } });
+    const response = await axios.get('https://movies-backend-07f5.onrender.com/settings', { headers: { Authorization: `Bearer ${token}` } });
 
     setUser(response.data);
   };
@@ -49,7 +49,7 @@ function Setting() {
     formData.append('age', age);
     formData.append('avatar', avatar);
     try {
-      const response = await axios.put('http://localhost:3000/settings', formData, { headers: { Authorization: `Bearer ${token}` } });
+      const response = await axios.put('https://movies-backend-07f5.onrender.com/settings', formData, { headers: { Authorization: `Bearer ${token}` } });
       setUser(response.data);
       navigate('/profile', { replace: true });
     } catch (error) {
@@ -75,7 +75,7 @@ function Setting() {
     fetchUser();    
     getHeaderWallpaper();
   }, []);
-  const userAvatar = `http://localhost:3000/${user?.avatar}`;
+  const userAvatar = `https://movies-backend-07f5.onrender.com/${user?.avatar}`;
   return isLoading ? (
     <Loading />
   ) : (
