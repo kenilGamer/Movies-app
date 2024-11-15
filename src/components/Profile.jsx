@@ -89,7 +89,7 @@ const Profile = () => {
       {getError && <Flashmessage message={getError} />}
    
       <div
-        className="w-screen min-h-screen bg-cover bg-center overflow-hidden overflow-y-auto relative"
+        className="w-screen min-h-screen bg-cover bg-center overflow-hidden  overflow-y-auto relative"
         style={{ backgroundImage: `url(${wallpaper})` }}
       >
            <nav className="absolute top-0 left-0 w-full flex items-center justify-between p-5 z-10">
@@ -97,7 +97,7 @@ const Profile = () => {
         
         <Link to="/settings" className="bg-red-500 text-white px-3 py-2 rounded-md">settings</Link>
       </nav>
-        <div className="profdets flex h-full flex-col bg-black/15 backdrop-blur-[2px] p-5 items-center">
+        <div className="profdets flex min-h-full flex-col  bg-black/15 backdrop-blur-[2px] p-5 items-center">
           {/* Profile Information */}
           <div className="flex flex-col items-center">
             <img
@@ -110,7 +110,7 @@ const Profile = () => {
           <p>{profileData?.email}</p>
 
           {/* Movie History Section */}
-          <div className="movie-history w-full h-full mt-5">
+          <div className="movie-history w-full  min-h-full mt-5">
             <h2 className="text-2xl font-semibold">Watched history</h2>
             {movieHistory.length === 0 ? (
               <p>No movies watched yet.</p>
