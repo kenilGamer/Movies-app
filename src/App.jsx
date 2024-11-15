@@ -15,6 +15,7 @@ import Sinup from './components/Sinup'
 import AuthenticateToken from './components/AuthenticateToken'
 import Login from './components/Login'
 import Profile from './components/Profile'
+import Setting from './components/Setting'
 
 function App() { 
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/trending" element={<AuthenticateToken><Trending /></AuthenticateToken>} />
         <Route path="/popular" element={<AuthenticateToken><Popular /></AuthenticateToken>} />
         <Route path="/movie" element={<AuthenticateToken><Movies /></AuthenticateToken>} />
+        <Route path="/settings" element={<AuthenticateToken><Setting /></AuthenticateToken>} />
         <Route path="/movie/datails/:id" element={<AuthenticateToken><Moviedatails /></AuthenticateToken>}>
           <Route path="/movie/datails/:id/trailer" element={<AuthenticateToken><Trailer /></AuthenticateToken>} />
         </Route>

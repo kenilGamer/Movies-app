@@ -47,7 +47,7 @@ const Trending = () => {
   useEffect(() => {
     refreshHandler();
   }, [category, duration]);
-  console.log(trending);
+  // console.log(trending);
   return (
     <div className='w-full min-h-screen py-3 select-auto'>
       <div className='w-full flex max-sm:flex-col sm:items-center gap-4 px-[3%]'>

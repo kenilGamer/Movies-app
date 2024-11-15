@@ -4,8 +4,14 @@ import noimage from "/noimage.jpeg";
 
 function HistoryCard({ data, title }) {
   document.title = `Profile | Godcrfts`;
+  const handleDragStart = (e) => {
+    e.preventDefault();
+    const scroll = e.target.scrollLeft + 100;
+    console.log(scroll);
+  };
+
   return (
-    <div className="min-w-full flex overflow-x-auto mb-3  gap-10 ">
+      <div onDragStart={handleDragStart} className="min-w-full flex overflow-x-auto mb-3 scroll gap-10 ">
       {data.map((c, i) => (
         <Link key={i} to={`/${c.media_type || title}/datails/${c.id}`} className="min-w-[20em] rounded-xl sm:p-1">
           <img

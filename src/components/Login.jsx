@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, parsePath, useNavigate } from "react-router-dom";
 import { MdModeEdit } from "react-icons/md";
 import Sidenav from "../partials/sidenav";
 import axios2 from "../utils/axios";
@@ -34,9 +34,8 @@ function Login() {
 
   useEffect(() => {
 
-    const token = new URLSearchParams(window.location.search).get('token');
+    const token = localStorage.getItem('token');
     if (token) {
-      localStorage.setItem('token', token);
       navigate('/profile');
     }
     if (!wallpaper) getHeaderWallpaper();
@@ -59,6 +58,8 @@ const handleSubmit = async (e) => {
     } else {
       console.log(response.data.token);
       localStorage.setItem('token', response.data.token);
+      console.log(localStorage.getItem('token'));
+      
       navigate("/");
     }
   } catch (error) {
@@ -77,7 +78,23 @@ const handleGoogleLogin = async () => {
     console.error('Error with Google login:', error);
     toast.error('Failed to redirect to Google login');
   }
+  const user = await axios.get('http://localhost:3000/auth/google/callback');
+
+  console.log(user);
+  navigate('/');
 };
+
+useEffect(() => {
+  // Extract token from URL
+  const params = new URLSearchParams(window.location.search);
+  const authToken = params.get("token");
+  
+  // If token is found in URL, save it to local storage and redirect to profile page
+  if (authToken) {
+    localStorage.setItem("authToken", authToken);
+    navigate("/profile", { replace: true });
+  }
+}, [navigate]);
   if (!wallpaper) return <Loading />;
 
   return (
@@ -110,7 +127,7 @@ const handleGoogleLogin = async () => {
                 name="username"
                 id="username"
                 className="mt-1 p-2  w-full text-black rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                value={username}
+                value={username || email}
                 placeholder="Username or Email"
                 onChange={(e) => setUsername(e.target.value)}
                 required

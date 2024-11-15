@@ -29,6 +29,8 @@ function Sidenav() {
   };
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('history');
+    localStorage.removeItem('authToken');
     navigate('/login');
   };
 
