@@ -89,7 +89,7 @@ const Profile = () => {
       {getError && <Flashmessage message={getError} />}
    
       <div
-        className="w-screen h-screen bg-cover bg-center overflow-hidden overflow-y-auto relative"
+        className="w-screen min-h-screen bg-cover bg-center overflow-hidden overflow-y-auto relative"
         style={{ backgroundImage: `url(${wallpaper})` }}
       >
            <nav className="absolute top-0 left-0 w-full flex items-center justify-between p-5 z-10">
