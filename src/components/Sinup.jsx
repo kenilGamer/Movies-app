@@ -40,14 +40,14 @@ function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    const randomId = Math.random().toString(36).substring(2, 15);
     // Create FormData
     const formData = new FormData();
     formData.append("username", username);
     formData.append("email", email);
     formData.append("age", age);
     formData.append("password", password);
-
+    formData.append("googleId", randomId);
     // Append avatar if available
     if (avatar) {
       formData.append("avatar", avatar);
