@@ -76,7 +76,7 @@ function Signup() {
       navigate("/"); // Redirect to login page after successful signup
     } catch (error) {
       setErrorKey((prevKey) => prevKey + 1);
-      setGetError(error.response.data.message);
+      setGetError(error.response.data);
       console.error('Error signing up:', error);
     }
   };
