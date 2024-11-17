@@ -86,7 +86,8 @@ const Profile = () => {
   }, []);
 
   const avatar = `https://movies-backend-07f5.onrender.com/${profileData?.avatar}`;
-
+  const googleProfile = profileData?.googleProfile;
+  const defaultProfile = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
   return isLoading ? (
     <Loading />
   ) : (
@@ -107,9 +108,9 @@ const Profile = () => {
           {/* Profile Information */}
           <div className="flex flex-col items-center">
             <img
-              src={`${avatar || profileData?.googleProfile}`}
+              src={`${avatar || googleProfile || defaultProfile}`}
               alt="profile"
-              className="w-[150px] h-[150px] rounded-full object-cover bg-red-300"
+              className="w-[150px] h-[150px] rounded-full object-cover bg-transparent border-2 border-white"
             />
           </div>
           <h1 className="text-3xl mt-3 font-semibold">{profileData?.username}</h1>
