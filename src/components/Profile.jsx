@@ -81,7 +81,7 @@ const Profile = () => {
     getProfile();
     setIsLoading(true);
     getHeaderWallpaper();
-  }, [getProfile]);
+  }, []);
   const avatar = `https://movies-backend-07f5.onrender.com/${profileData?.avatar}`;
 
   return isLoading ? (
