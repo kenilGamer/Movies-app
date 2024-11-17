@@ -40,14 +40,15 @@ const Profile = () => {
   const getProfile = async () => {
     try {
       const token = localStorage.getItem("token");
-      if (!token) {
+      const authToken = localStorage.getItem("authToken");
+      if (!token || !authToken) {
         setError("No token found");
         navigate("/login");
         return;
       }
 
       const response = await axios.get("https://movies-backend-07f5.onrender.com/profile", {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token || authToken}` },
       });
       setProfileData(response.data);
     } catch (error) {
