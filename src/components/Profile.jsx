@@ -15,8 +15,9 @@ const Profile = () => {
   const [movieHistory, setMovieHistory] = useState([]);
   const navigate = useNavigate();
 
-  // Fetch trending movie wallpaper
   document.title = `Profile | Godcrafts`;
+
+  // Fetch trending movie wallpaper
   const getHeaderWallpaper = async () => {
     try {
       const { data } = await axios2.get("trending/all/day");
@@ -31,8 +32,6 @@ const Profile = () => {
     } catch (error) {
       setError("Error fetching wallpaper");
       console.error(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -41,48 +40,51 @@ const Profile = () => {
     try {
       const token = localStorage.getItem("token");
       const authToken = localStorage.getItem("authToken");
-      if (!token || !authToken) {
-        console.log(token, authToken);
+      if (!token && !authToken) {
         setError("No token found");
         navigate("/login");
         return;
       }
 
+      const authHeader = `Bearer ${token || authToken}`;
       const response = await axios.get("https://movies-backend-07f5.onrender.com/profile", {
-        headers: { Authorization: `Bearer ${token || authToken}` },
+        headers: { Authorization: authHeader },
       });
-      console.log(response.data);
+
       setProfileData(response.data);
     } catch (error) {
       console.error("Error fetching profile:", error);
       if (error.response?.status === 401) {
+        setError("Unauthorized access");
         navigate("/login");
+      } else {
+        setError("Error fetching profile data");
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
-
+  // Initialize component
   useEffect(() => {
-   
+    // Load history from localStorage
+    const savedHistory = localStorage.getItem("history");
+    if (savedHistory) {
+      try {
+        const parsedHistory = JSON.parse(savedHistory) || [];
+        setMovieHistory(parsedHistory);
+      } catch (error) {
+        console.error("Error parsing history:", error);
+      }
+    }
+
+    const fetchData = async () => {
+      setIsLoading(true);
+      await Promise.all([getProfile(), getHeaderWallpaper()]);
+      setIsLoading(false);
+    };
+
+    fetchData();
   }, []);
 
-  useEffect(() => {
-     // Load history from localStorage
-     const savedHistory = localStorage.getItem("history");
-     if (savedHistory) {
-       try {
-         const parsedHistory = JSON.parse(savedHistory) || [];
-         setMovieHistory(parsedHistory);
-       } catch (error) {
-         console.error("Error parsing history:", error);
-       }
-     }
-    getProfile();
-    setIsLoading(true);
-    getHeaderWallpaper();
-  }, [getProfile]);
   const avatar = `https://movies-backend-07f5.onrender.com/${profileData?.avatar}`;
 
   return isLoading ? (
@@ -91,17 +93,17 @@ const Profile = () => {
     <>
       <Sidenav />
       {getError && <Flashmessage message={getError} />}
-   
       <div
-        className="w-screen min-h-screen bg-cover bg-center overflow-hidden  overflow-y-auto relative"
+        className="w-screen min-h-screen bg-cover bg-center overflow-hidden overflow-y-auto relative"
         style={{ backgroundImage: `url(${wallpaper})` }}
       >
-           <nav className="absolute top-0 left-0 w-full flex items-center justify-between p-5 z-10">
-        <h1 className="text-3xl font-semibold">Profile</h1>
-        
-        <Link to="/settings" className="bg-red-500 text-white px-3 py-2 rounded-md">settings</Link>
-      </nav>
-        <div className="profdets flex min-h-full flex-col  bg-black/15 backdrop-blur-[2px] p-5 items-center">
+        <nav className="absolute top-0 left-0 w-full flex items-center justify-between p-5 z-10">
+          <h1 className="text-3xl font-semibold">Profile</h1>
+          <Link to="/settings" className="bg-red-500 text-white px-3 py-2 rounded-md">
+            Settings
+          </Link>
+        </nav>
+        <div className="profdets flex min-h-full flex-col bg-black/15 backdrop-blur-[2px] p-5 items-center">
           {/* Profile Information */}
           <div className="flex flex-col items-center">
             <img
@@ -114,8 +116,8 @@ const Profile = () => {
           <p>{profileData?.email}</p>
 
           {/* Movie History Section */}
-          <div className="movie-history w-full  min-h-full mt-5">
-            <h2 className="text-2xl font-semibold">Watched history</h2>
+          <div className="movie-history w-full min-h-full mt-5">
+            <h2 className="text-2xl font-semibold">Watched History</h2>
             {movieHistory.length === 0 ? (
               <p>No movies watched yet.</p>
             ) : (
