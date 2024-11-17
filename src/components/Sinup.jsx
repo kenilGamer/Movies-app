@@ -116,8 +116,8 @@ function Signup() {
         }}
         className="w-full h-full flex items-center justify-center bg-cover bg-center"
       >
-        <div className="w-[25em] h-[35em] bg-[#ffffff68] rounded-xl backdrop-blur-sm bg-opacity-50 box-shadow-md shadow-white flex flex-col items-center justify-center">
-          <h1 className="text-2xl font-bold text-white mb-4">Signup Page</h1>
+        <div className="w-[25em] max-md:w-[20em] h-[37em] bg-[#ffffff68] rounded-xl backdrop-blur-sm bg-opacity-50 box-shadow-md shadow-white flex flex-col items-center justify-center">
+          <h1 className="text-2xl font-bold text-white md:mb-4">Signup Page</h1>
           <form
             onSubmit={handleSubmit}
             className="space-y-4 flex flex-col items-center justify-center relative"
