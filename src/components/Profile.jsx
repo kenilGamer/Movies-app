@@ -107,7 +107,7 @@ const Profile = () => {
           {/* Profile Information */}
           <div className="flex flex-col items-center">
             <img
-              src={`${profileData?.googleProfile || avatar}`}
+              src={`${avatar || profileData?.googleProfile}`}
               alt="profile"
               className="w-[150px] h-[150px] rounded-full object-cover bg-red-300"
             />
