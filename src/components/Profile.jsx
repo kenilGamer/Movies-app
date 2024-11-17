@@ -42,6 +42,7 @@ const Profile = () => {
       const token = localStorage.getItem("token");
       const authToken = localStorage.getItem("authToken");
       if (!token || !authToken) {
+        console.log(token, authToken);
         setError("No token found");
         navigate("/login");
         return;
@@ -50,6 +51,7 @@ const Profile = () => {
       const response = await axios.get("https://movies-backend-07f5.onrender.com/profile", {
         headers: { Authorization: `Bearer ${token || authToken}` },
       });
+      console.log(response.data);
       setProfileData(response.data);
     } catch (error) {
       console.error("Error fetching profile:", error);
