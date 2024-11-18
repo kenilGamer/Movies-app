@@ -16,7 +16,6 @@ function Login() {
   const [getError, setError] = useState(null);
   const [errorKey, setErrorKey] = useState(0);
 
-
   const getHeaderWallpaper = async () => {
     try {
       const { data } = await axios2.get('/trending/all/day');
@@ -34,7 +33,6 @@ function Login() {
   };
 
   useEffect(() => {
-
     const token = localStorage.getItem('token');
     if (token) {
       navigate('/profile');
@@ -43,59 +41,57 @@ function Login() {
   }, []);
 
 
-const handleSubmit = async (e) => {
-  
-  e.preventDefault();
-  try {
-    const response = await axios.post('https://movies-backend-07f5.onrender.com/api/login', {
-      username: username || email,
-      password: password
-    });
-    console.log(response.data);
-    if (response.data.message !== 'Logged in successfully') {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('https://movies-backend-07f5.onrender.com/api/login', {
+        username: username || email,
+        password: password
+      });
+      console.log(response.data);
+      if (response.data.message !== 'Logged in successfully') {
+        setErrorKey((prevKey) => prevKey + 1);
+        setError("Invalid username or password");
+        console.log("Failed to login");
+      } else {
+        console.log(response.data.token);
+        localStorage.setItem('token', response.data.token);
+        console.log(localStorage.getItem('token'));
+        
+        navigate("/");
+      }
+    } catch (error) {
       setErrorKey((prevKey) => prevKey + 1);
-      setError("Invalid username or password");
-      console.log("Failed to login");
-    } else {
-      console.log(response.data.token);
-      localStorage.setItem('token', response.data.token);
-      console.log(localStorage.getItem('token'));
-      
-      navigate("/");
+      setError(error.response.data);
+      console.error('Error logging in:', error);
     }
-  } catch (error) {
-    setErrorKey((prevKey) => prevKey + 1);
-    setError(error.response.data);
-    console.error('Error logging in:', error);
-  }
-};
+  };
 
-const handleGoogleLogin = async () => {
-  try {
-    window.location.href = 'https://movies-backend-07f5.onrender.com/auth/google';
-    toast.success('Redirecting to Google login...');
-    localStorage.setItem('token', response.data.token);
-  } catch (error) {
-    console.error('Error with Google login:', error);
-    toast.error('Failed to redirect to Google login');
-  }
-  const user = await axios.get('https://movies-backend-07f5.onrender.com/auth/google/callback');
+  const handleGoogleLogin = async () => {
+    try {
+      window.location.href = 'https://movies-backend-07f5.onrender.com/auth/google';
+      // Assuming toast is a function from a library or a utility function defined elsewhere
+      toast.success('Redirecting to Google login...');
+      // Removed the line that sets token as it's not applicable in this context
+    } catch (error) {
+      console.error('Error with Google login:', error);
+      toast.error('Failed to redirect to Google login');
+    }
+    // Removed the line that attempts to fetch user data as it's not applicable in this context
+    navigate('/');
+  };
 
-  console.log(user);
-  navigate('/');
-};
-
-useEffect(() => {
-  // Extract token from URL
-  const params = new URLSearchParams(window.location.search);
-  const authToken = params.get("token");
-  
-  // If token is found in URL, save it to local storage and redirect to profile page
-  if (authToken) {
-    localStorage.setItem("token", authToken);
-    navigate("/profile", { replace: true });
-  }
-}, [navigate]);
+  useEffect(() => {
+    // Extract token from URL
+    const params = new URLSearchParams(window.location.search);
+    const authToken = params.get("token");
+    
+    // If token is found in URL, save it to local storage and redirect to profile page
+    if (authToken) {
+      localStorage.setItem("token", authToken);
+      navigate("/profile", { replace: true });
+    }
+  }, [navigate]);
   if (!wallpaper) return <Loading />;
 
   return (
