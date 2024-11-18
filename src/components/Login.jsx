@@ -6,6 +6,7 @@ import axios2 from "../utils/axios";
 import axios from "axios";
 import Loading from "./Loading";
 import FlashMessage from "./Flashmessage";
+import { FcGoogle } from "react-icons/fc";
 function Login() {
   const [wallpaper, setWallpaper] = useState(null);
   const navigate = useNavigate();
@@ -161,7 +162,8 @@ useEffect(() => {
               </Link>
             </div>
           </form>
-          <button onClick={handleGoogleLogin} className="mt-4 block">Google Login</button>
+          <h1 className="text-center">or</h1>
+          <button onClick={handleGoogleLogin} className="mt-4 block bg-white px-20 p-1 text-3xl rounded-full"><FcGoogle/></button>
         </div>
       </div>
     </>

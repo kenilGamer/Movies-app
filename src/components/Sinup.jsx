@@ -6,7 +6,8 @@ import axios2 from "../utils/axios";
 import axios from "axios";
 import Loading from "./Loading";
 import Flashmessage from "./Flashmessage";
-
+import { FcGoogle } from "react-icons/fc";
+import { FaGoogle } from "react-icons/fa";
 function Signup() {
   const [wallpaper, setWallpaper] = useState(null);
   const navigate = useNavigate();
@@ -116,7 +117,7 @@ function Signup() {
         }}
         className="w-full h-full flex items-center justify-center bg-cover bg-center"
       >
-        <div className="w-[25em] max-md:w-[20em] h-[37em] bg-[#ffffff68] rounded-xl backdrop-blur-sm bg-opacity-50 box-shadow-md shadow-white flex flex-col items-center justify-center">
+        <div className="w-[25em] max-md:w-[20em] min-h-[39em] bg-[#ffffff68] rounded-xl backdrop-blur-sm bg-opacity-50 box-shadow-md shadow-white flex flex-col items-center justify-center">
           <h1 className="text-2xl font-bold text-white md:mb-4">Signup Page</h1>
           <form
             onSubmit={handleSubmit}
@@ -198,12 +199,13 @@ function Signup() {
               >
                 Sign up
               </button>
-              <Link to="/login" className="mt-4 block">
+              <h1 className="text-center">or</h1>
+              <button onClick={handleGoogleSignup} type="button" className="w-full mt-2 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 bg-slate-50 text-3xl"><FcGoogle/></button>
+              <Link to="/login" className="mt-2 block">
                 <p className="text-white">Already have an account? Login</p>
               </Link>
             </div>
           </form>
-              <button onClick={handleGoogleSignup} className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">google</button>
         </div>
       </div>
     </>
