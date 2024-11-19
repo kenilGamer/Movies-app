@@ -73,7 +73,7 @@ const handleSubmit = async (e) => {
 const handleGoogleLogin = async () => {
   try {
     window.location.href = 'https://movies-backend-07f5.onrender.com/auth/google';
-    toast.success('Redirecting to Google login...');
+    // toast.success('Redirecting to Google login...');
     localStorage.setItem('token', response.data.token);
   } catch (error) {
     console.error('Error with Google login:', error);
