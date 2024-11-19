@@ -47,7 +47,7 @@ const Profile = () => {
       }
 
       const authHeader = `Bearer ${token || authToken}`;
-      const response = await axios.get("https://movies-backend-07f5.onrender.com/profile", {
+      const response = await axios.get("http://localhost:3000/profile", {
         headers: { Authorization: authHeader },
       });
 
@@ -88,6 +88,7 @@ const Profile = () => {
   const avatar = `https://movies-backend-07f5.onrender.com/${profileData?.avatar}`;
   const googleProfile = profileData?.googleProfile;
   const defaultProfile = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+  // console.log(googleProfile);
   return isLoading ? (
     <Loading />
   ) : (
@@ -108,7 +109,7 @@ const Profile = () => {
           {/* Profile Information */}
           <div className="flex flex-col items-center">
             <img
-              src={`${avatar || googleProfile || defaultProfile}`}
+              src={`${googleProfile || avatar || defaultProfile}`}
               alt="profile"
               className="w-[150px] h-[150px] rounded-full object-cover bg-transparent border-2 border-white"
             />
