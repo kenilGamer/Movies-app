@@ -76,6 +76,8 @@ function Setting() {
     getHeaderWallpaper();
   }, []);
   const userAvatar = `https://movies-backend-07f5.onrender.com/${user?.avatar}`;
+  const googleProfile = user?.googleProfile;
+  console.log(googleProfile);
   return isLoading ? (
     <Loading />
   ) : (
@@ -103,7 +105,7 @@ function Setting() {
               hidden
             />
             <div className="w-32 h-32 bg-violet-300 rounded-full">
-              <img src={userAvatar} alt="User Avatar" className="w-full h-full object-cover rounded-full" />
+              <img src={googleProfile || userAvatar} alt="User Avatar" className="w-full h-full object-cover rounded-full" />
               <div className="absolute top-2 left-[60%] avatar cursor-pointer hover:bg-violet-500 rounded-full p-1 bg-violet-500">
                 <MdModeEdit
                   className="text-white text-2xl cursor-pointer"
