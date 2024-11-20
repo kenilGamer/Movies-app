@@ -13,6 +13,7 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [getError, setError] = useState(null);
   const [movieHistory, setMovieHistory] = useState([]);
+  const [profileData, setProfileData] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
