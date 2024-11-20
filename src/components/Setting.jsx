@@ -21,7 +21,7 @@ function Setting() {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const profile = useSelector((state) => state.profile.profile);
+  const settings = useSelector((state) => state.profile.settings);
   const getHeaderWallpaper = async () => {
     try {
       const { data } = await axios2.get("trending/all/day");
@@ -45,9 +45,20 @@ function Setting() {
   //   setUser(response.data);
   // };
 
-  const fetchUser = async () => {
+  useEffect(() => {
+    // Dispatch Redux action to fetch profile data
     dispatch(asyncsetProfile(navigate));
-  };
+  }, [dispatch, navigate]);
+
+  // This effect runs when the profile state from Redux is updated
+  useEffect(() => {
+    if (settings) {
+      console.log("settings: ", settings && settings.settings);
+      setUser(settings && settings.settings);
+    }else{
+      console.log("no settings");
+    }
+  }, [settings]);
   const updateUser = async () => {
     const formData = new FormData();
     formData.append('username', username);
