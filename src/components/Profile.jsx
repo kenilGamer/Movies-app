@@ -71,7 +71,10 @@ const Profile = () => {
   // This effect runs when the profile state from Redux is updated
   useEffect(() => {
     if (profile) {
+      console.log("profile: ", profile);
       setProfileData(profile);
+    }else{
+      console.log("no profile");
     }
   }, [profile]);
 
