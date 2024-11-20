@@ -16,9 +16,15 @@ export const asyncsetProfile = (navigate) => async (dispatch) => {
     const response = await axios.get("https://movies-backend-07f5.onrender.com/profile", {
       headers: { Authorization: authHeader },
     });
-
-    console.log("response: ", response.data);
-    dispatch(setProfile(response.data)); // Dispatch profile to Redux state
+    const response2 = await axios.get("https://movies-backend-07f5.onrender.com/settings", {
+        headers: { Authorization: authHeader },
+      });
+    const responseData = {
+        profile: response.data,
+        settings: response2.data
+    }
+    console.log("response: ", responseData);
+    dispatch(setProfile(responseData)); // Dispatch profile to Redux state
   } catch (error) {
     console.error("Error fetching profile:", error);
     

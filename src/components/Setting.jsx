@@ -6,7 +6,8 @@ import Loading from './Loading';
 import Flashmessage from './Flashmessage';
 import axios2 from '../utils/axios';
 import { MdModeEdit } from 'react-icons/md';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { asyncsetProfile } from '../store/actions/profileActions';
 function Setting() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -19,6 +20,8 @@ function Setting() {
   const [wallpaper, setWallpaper] = useState(null);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const profile = useSelector((state) => state.profile.profile);
   const getHeaderWallpaper = async () => {
     try {
       const { data } = await axios2.get("trending/all/day");
@@ -36,12 +39,15 @@ function Setting() {
       setIsLoading(false);
     }
   };
+  // const fetchUser = async () => {
+  //   const response = await axios.get('https://movies-backend-07f5.onrender.com/settings', { headers: { Authorization: `Bearer ${token}` } });
+
+  //   setUser(response.data);
+  // };
+
   const fetchUser = async () => {
-    const response = await axios.get('https://movies-backend-07f5.onrender.com/settings', { headers: { Authorization: `Bearer ${token}` } });
-
-    setUser(response.data);
+    dispatch(asyncsetProfile(navigate));
   };
-
   const updateUser = async () => {
     const formData = new FormData();
     formData.append('username', username);
