@@ -65,7 +65,7 @@ const Profile = () => {
 
   useEffect(async () => {
     // Dispatch Redux action to fetch profile data
-    dispatch(asyncsetProfile());
+    dispatch(asyncsetProfile(navigate));
     await console.log("profile: ", profile);
     // await console.log("settings: ", settings);
     await setProfileData(profile);
