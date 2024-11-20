@@ -12,6 +12,7 @@ const Profile = () => {
   const [wallpaper, setWallpaper] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [getError, setError] = useState(null);
+  const [profileData, setProfileData] = useState(null);
   const [movieHistory, setMovieHistory] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -65,6 +66,9 @@ const Profile = () => {
   useEffect(() => {
     // Dispatch Redux action to fetch profile data
     dispatch(asyncsetProfile());
+    console.log("profile: ", profile);
+    console.log("settings: ", settings);
+    setProfileData(profile);
   }, [dispatch]);
 
   if (error) {
@@ -75,8 +79,8 @@ const Profile = () => {
     return <div>{error}</div>;
   }
 
-  const avatar = `https://movies-backend-07f5.onrender.com/${profile?.avatar}`;
-  const googleProfile = profile?.googleProfile;
+  const avatar = `https://movies-backend-07f5.onrender.com/${profileData?.avatar}`;
+  const googleProfile = profileData?.googleProfile;
   const defaultProfile = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
   return isLoading ? (
@@ -104,8 +108,8 @@ const Profile = () => {
               className="w-[150px] h-[150px] rounded-full object-cover bg-transparent border-2 border-white"
             />
           </div>
-          <h1 className="text-3xl mt-3 font-semibold">{profile?.username}</h1>
-          <p>{profile?.email}</p>
+          <h1 className="text-3xl mt-3 font-semibold">{profileData?.username}</h1>
+          <p>{profileData?.email}</p>
 
           {/* Movie History Section */}
           <div className="movie-history w-full min-h-full mt-5">
