@@ -67,7 +67,7 @@ const Profile = () => {
     // Dispatch Redux action to fetch profile data
     dispatch(asyncsetProfile());
     await console.log("profile: ", profile);
-    await console.log("settings: ", settings);
+    // await console.log("settings: ", settings);
     await setProfileData(profile);
   }, [dispatch]);
 
