@@ -18,7 +18,7 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   // Access profile data and error from Redux state
-  const profile = useSelector((state) => state.profile.profile.profile);
+  const profile = useSelector((state) => state.profile.profile);
   const error = useSelector((state) => state.profile.error);
 
   document.title = `Profile | Godcrafts`;
@@ -71,8 +71,8 @@ const Profile = () => {
   // This effect runs when the profile state from Redux is updated
   useEffect(() => {
     if (profile) {
-      console.log("profile: ", profile);
-      setProfileData(profile);
+      console.log("profile: ", profile && profile.profile);
+      setProfileData(profile && profile.profile);
     }else{
       console.log("no profile");
     }
