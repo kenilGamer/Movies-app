@@ -18,7 +18,7 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   // Access profile data and error from Redux state
-  const profile = useSelector((state) => state.profile.profile);
+  const profile = useSelector((state) => state.profile.profile.profile);
   const error = useSelector((state) => state.profile.error);
 
   document.title = `Profile | Godcrafts`;
