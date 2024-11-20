@@ -21,7 +21,7 @@ function Setting() {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const settings = useSelector((state) => state.profile.settings);
+  const profile = useSelector((state) => state.profile.profile);
   const getHeaderWallpaper = async () => {
     try {
       const { data } = await axios2.get("trending/all/day");
@@ -52,13 +52,13 @@ function Setting() {
 
   // This effect runs when the profile state from Redux is updated
   useEffect(() => {
-    if (settings) {
-      console.log("settings: ", settings && settings.settings);
-      setUser(settings && settings.settings);
+    if (profile) {
+      console.log("settings: ", profile && profile.settings);
+      setUser(profile && profile.settings);
     }else{
       console.log("no settings");
     }
-  }, [settings]);
+  }, [profile]);
   const updateUser = async () => {
     const formData = new FormData();
     formData.append('username', username);
