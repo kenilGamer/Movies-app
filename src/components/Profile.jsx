@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import axios2 from "../utils/axios";
 import Sidenav from "../partials/sidenav";
 import Flashmessage from "./Flashmessage";
 import HistoryCard from "../partials/HistoryCard";
 import Loading from "./Loading";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncsetProfile } from "../store/actions/profileActions";
 
 const Profile = () => {
-  const [profileData, setProfileData] = useState(null);
   const [wallpaper, setWallpaper] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [getError, setError] = useState(null);
   const [movieHistory, setMovieHistory] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // Access profile data and error from Redux state
+  const profile = useSelector((state) => state.profile.profile);
+  const error = useSelector((state) => state.profile.error);
 
   document.title = `Profile | Godcrafts`;
 
@@ -35,34 +40,6 @@ const Profile = () => {
     }
   };
 
-  // Fetch profile data
-  const getProfile = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const authToken = localStorage.getItem("authToken");
-      if (!token && !authToken) {
-        setError("No token found");
-        navigate("/login");
-        return;
-      }
-
-      const authHeader = `Bearer ${token || authToken}`;
-      const response = await axios.get("https://movies-backend-07f5.onrender.com/profile", {
-        headers: { Authorization: authHeader },
-      });
-
-      setProfileData(response.data);
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-      if (error.response?.status === 401) {
-        setError("Unauthorized access");
-        navigate("/login");
-      } else {
-        setError("Error fetching profile data");
-      }
-    }
-  };
-
   // Initialize component
   useEffect(() => {
     // Load history from localStorage
@@ -78,16 +55,30 @@ const Profile = () => {
 
     const fetchData = async () => {
       setIsLoading(true);
-      await Promise.all([getProfile(), getHeaderWallpaper()]);
+      await getHeaderWallpaper();
       setIsLoading(false);
     };
 
     fetchData();
   }, []);
 
-  const avatar = `https://movies-backend-07f5.onrender.com/${profileData?.avatar}`;
-  const googleProfile = profileData?.googleProfile;
+  useEffect(() => {
+    // Dispatch Redux action to fetch profile data
+    dispatch(asyncsetProfile());
+  }, [dispatch]);
+
+  if (error) {
+    // Handle errors, like redirecting to login if unauthorized
+    if (error === "Unauthorized access") {
+      navigate("/login");
+    }
+    return <div>{error}</div>;
+  }
+
+  const avatar = `https://movies-backend-07f5.onrender.com/${profile?.avatar}`;
+  const googleProfile = profile?.googleProfile;
   const defaultProfile = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+
   return isLoading ? (
     <Loading />
   ) : (
@@ -113,8 +104,8 @@ const Profile = () => {
               className="w-[150px] h-[150px] rounded-full object-cover bg-transparent border-2 border-white"
             />
           </div>
-          <h1 className="text-3xl mt-3 font-semibold">{profileData?.username}</h1>
-          <p>{profileData?.email}</p>
+          <h1 className="text-3xl mt-3 font-semibold">{profile?.username}</h1>
+          <p>{profile?.email}</p>
 
           {/* Movie History Section */}
           <div className="movie-history w-full min-h-full mt-5">
