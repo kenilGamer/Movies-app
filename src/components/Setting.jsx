@@ -89,7 +89,7 @@ function Setting() {
   };
   useEffect(() => {
     
-    fetchUser();    
+    // fetchUser();    
     getHeaderWallpaper();
   }, []);
   const userAvatar = `https://movies-backend-07f5.onrender.com/${user?.avatar}`;
