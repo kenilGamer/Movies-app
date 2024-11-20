@@ -69,6 +69,7 @@ const Profile = () => {
     await console.log("profile: ", profile);
     // await console.log("settings: ", settings);
     await setProfileData(profile);
+    console.log("profileData: ", profileData);
   }, [dispatch]);
 
   if (error) {
