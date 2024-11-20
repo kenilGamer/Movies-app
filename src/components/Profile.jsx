@@ -12,7 +12,6 @@ const Profile = () => {
   const [wallpaper, setWallpaper] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [getError, setError] = useState(null);
-  const [profileData, setProfileData] = useState(null);
   const [movieHistory, setMovieHistory] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -63,14 +62,17 @@ const Profile = () => {
     fetchData();
   }, []);
 
-  useEffect(async () => {
+  useEffect(() => {
     // Dispatch Redux action to fetch profile data
     dispatch(asyncsetProfile(navigate));
-    await console.log("profile: ", profile);
-    // await console.log("settings: ", settings);
-    await setProfileData(profile);
-    console.log("profileData: ", profileData);
-  }, [dispatch]);
+  }, [dispatch, navigate]);
+
+  // This effect runs when the profile state from Redux is updated
+  useEffect(() => {
+    if (profile) {
+      setProfileData(profile);
+    }
+  }, [profile]);
 
   if (error) {
     // Handle errors, like redirecting to login if unauthorized
