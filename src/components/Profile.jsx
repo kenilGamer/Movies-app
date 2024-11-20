@@ -63,11 +63,11 @@ const Profile = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
+  useEffect(async () => {
     // Dispatch Redux action to fetch profile data
     dispatch(asyncsetProfile());
-    console.log("profile: ", profile);
-    console.log("settings: ", settings);
+    await console.log("profile: ", profile);
+    await console.log("settings: ", settings);
     setProfileData(profile);
   }, [dispatch]);
 
