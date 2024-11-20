@@ -68,7 +68,7 @@ const Profile = () => {
     dispatch(asyncsetProfile());
     await console.log("profile: ", profile);
     await console.log("settings: ", settings);
-    setProfileData(profile);
+    await setProfileData(profile);
   }, [dispatch]);
 
   if (error) {
