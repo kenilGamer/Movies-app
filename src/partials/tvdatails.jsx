@@ -167,7 +167,7 @@ function Tvdatails() {
             <i className="text-xl ri-play-fill mr-3 "></i>
             Play Trailer
           </Link>
-          <Link className="p-5 bg-[#6556CD] rounded-lg" to={`https://moviebypass.pro/watch/tv/${id}`}>
+          <Link className="p-5 bg-[#6556CD] rounded-lg hover:bg-[#5546C0] duration-300 ml-5" to={`https://moviebypass.pro/watch/tv/${id}`}>
             <i className="text-xl ri-play-fill mr-3 "></i>
             Play Episodes
           </Link>
