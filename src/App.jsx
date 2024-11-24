@@ -16,10 +16,12 @@ import AuthenticateToken from './components/AuthenticateToken'
 import Login from './components/Login'
 import Profile from './components/Profile'
 import Setting from './components/Setting'
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function App() { 
   return (
     <div className='w-full bg-[#0f0b20] select-none h-screen flex text-white '>
+      <ToastContainer />
       <Routes>
         <Route path='/signup' element={<Sinup/>} />
         <Route path="/login" element={<Login />} />

@@ -7,6 +7,7 @@ import axios from "axios";
 import Loading from "./Loading";
 import FlashMessage from "./Flashmessage";
 import { FcGoogle } from "react-icons/fc";
+import { toast } from "react-toastify";
 function Login() {
   const [wallpaper, setWallpaper] = useState(null);
   const navigate = useNavigate();
@@ -55,17 +56,19 @@ const handleSubmit = async (e) => {
     if (response.data.message !== 'Logged in successfully') {
       setErrorKey((prevKey) => prevKey + 1);
       setError("Invalid username or password");
+      toast.error("Invalid username or password");
       console.log("Failed to login");
     } else {
       console.log(response.data.token);
       localStorage.setItem('token', response.data.token);
       console.log(localStorage.getItem('token'));
-      
+      toast.success("Logged in successfully");
       navigate("/");
     }
   } catch (error) {
-    setErrorKey((prevKey) => prevKey + 1);
-    setError(error.response.data);
+    // setErrorKey((prevKey) => prevKey + 1);
+    // setError(error.response.data);
+    toast.error(error.response.data);
     console.error('Error logging in:', error);
   }
 };
@@ -80,7 +83,7 @@ const handleGoogleLogin = async () => {
     toast.error('Failed to redirect to Google login');
   }
   const user = await axios.get('https://movies-backend-07f5.onrender.com/auth/google/callback');
-
+  toast.success("Logged in with Google successfully");
   console.log(user);
   navigate('/');
 };

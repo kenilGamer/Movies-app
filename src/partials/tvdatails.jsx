@@ -137,16 +137,13 @@ function Tvdatails() {
 
           <div className="mt-3 mb-5 flex  items-center gap-x-3">
             <span className="rounded-full text-xl font-semibold bg-yellow-600 text-white w-[5vh] h-[5vh] flex justify-center items-center">
-              {(info.detail.vote_average * 10).toFixed()}{" "}
-              <sup>%</sup>
+              {(info.detail.vote_average * 10).toFixed()} <sup>%</sup>
             </span>
             <h1 className="w-[60px] font-semibold text-2xl leading-6">
               User Score
             </h1>
             <h1>{info.detail.first_air_date}</h1>
-            <h1>
-              {info.detail.genres.map((g) => g.name).join(",")}
-            </h1>
+            <h1>{info.detail.genres.map((g) => g.name).join(",")}</h1>
             <h1>{info.detail.runtime}min</h1>
           </div>
 
@@ -167,7 +164,10 @@ function Tvdatails() {
             <i className="text-xl ri-play-fill mr-3 "></i>
             Play Trailer
           </Link>
-          <Link className="p-5 bg-[#6556CD] rounded-lg hover:bg-[#5546C0] duration-300 ml-5" to={`https://moviebypass.pro/watch/tv/${id}`}>
+          <Link
+            className="p-5 bg-[#6556CD] rounded-lg hover:bg-[#5546C0] duration-300 ml-5"
+            to={`https://moviebypass.pro/watch/tv/${id}`}
+          >
             <i className="text-xl ri-play-fill mr-3 "></i>
             Play Episodes
           </Link>
@@ -228,14 +228,21 @@ function Tvdatails() {
       <div className="flex gap-5 mt-5 overflow-x-auto">
         {info.detail.seasons.length > 0 ? (
           info.detail.seasons.map((s, i) => (
-            <div key={i} className="group w-[18vw] h-[25vw] hover:scale-105 duration-300 hover:cursor-pointer">
+            <div
+              key={i}
+              className="group w-[18vw] h-[25vw] hover:scale-105 duration-300 hover:cursor-pointer"
+            >
               <img
                 className="w-full h-full object-cover rounded-xl shadow-[8px_17px_38px_2px_rgba(0,0,0,.5)]"
-                src={`https://image.tmdb.org/t/p/original/${s.poster_path || noimage}`}
+                src={`https://image.tmdb.org/t/p/original/${
+                  s.poster_path || noimage
+                }`}
                 alt=""
               />
               <h1 className="text-xl text-white mt-3">{s.name}</h1>
-              <h1 className="text-xl text-zinc-300">{s.episode_count} episodes</h1>
+              <h1 className="text-xl text-zinc-300">
+                {s.episode_count} episodes
+              </h1>
             </div>
           ))
         ) : (

@@ -7,7 +7,7 @@ import HistoryCard from "../partials/HistoryCard";
 import Loading from "./Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncsetProfile } from "../store/actions/profileActions";
-
+import { toast } from "react-toastify";
 const Profile = () => {
   const [wallpaper, setWallpaper] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -55,7 +55,7 @@ const Profile = () => {
     }
 
     const fetchData = async () => {
-      setIsLoading(true);
+      // setIsLoading(true);
       await getHeaderWallpaper();
       setIsLoading(false);
     };
@@ -73,6 +73,7 @@ const Profile = () => {
     if (profile) {
       console.log("profile: ", profile && profile.profile);
       setProfileData(profile && profile.profile);
+      toast.success("Profile loaded successfully");
     }else{
       console.log("no profile");
     }
@@ -91,7 +92,7 @@ const Profile = () => {
   const defaultProfile = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
   return isLoading ? (
-    <Loading />
+    toast.isActive("loading") ? <Loading /> : null
   ) : (
     <>
       <Sidenav />

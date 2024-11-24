@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MdModeEdit } from "react-icons/md";
 import Sidenav from "../partials/sidenav";
@@ -22,11 +22,13 @@ function Signup() {
   document.title = `Signup | Godcrfts`;
   const getHeaderWallpaper = async () => {
     try {
-      const { data } = await axios2.get('/trending/all/day');
+      const { data } = await axios2.get("/trending/all/day");
       setData(data);
       if (data.results && data.results.length > 0) {
         const randomIndex = Math.floor(Math.random() * data.results.length);
-        setWallpaper(`https://image.tmdb.org/t/p/original/${data.results[randomIndex].backdrop_path}`);
+        setWallpaper(
+          `https://image.tmdb.org/t/p/original/${data.results[randomIndex].backdrop_path}`
+        );
       } else {
         console.error("No results found");
       }
@@ -41,7 +43,9 @@ function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const randomId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    const randomId =
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15);
     // Create FormData
     const formData = new FormData();
     formData.append("username", username);
@@ -57,12 +61,12 @@ function Signup() {
 
     try {
       const response = await axios.post(
-        'https://movies-backend-07f5.onrender.com/api/signup',
+        "https://movies-backend-07f5.onrender.com/api/signup",
         formData, // Use formData, not a regular object
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`, // Make sure the token is set
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // Make sure the token is set
           },
         }
       );
@@ -78,20 +82,19 @@ function Signup() {
     } catch (error) {
       setErrorKey((prevKey) => prevKey + 1);
       setGetError(error.response.data);
-      console.error('Error signing up:', error);
+      console.error("Error signing up:", error);
     }
   };
   const handleGoogleSignup = async () => {
     try {
       // Trigger the authentication process by calling the backend route
-      window.location.href = 'https://movies-backend-07f5.onrender.com/auth/google';  // This will redirect to Google's OAuth page
-
+      window.location.href =
+        "https://movies-backend-07f5.onrender.com/auth/google"; // This will redirect to Google's OAuth page
     } catch (error) {
-      console.error('Error with Google signup:', error);
+      console.error("Error with Google signup:", error);
     }
   };
-  
-  
+
   const handleAvatar = () => {
     const fileInput = document.getElementById("avatar");
     console.log(fileInput);
@@ -200,7 +203,13 @@ function Signup() {
                 Sign up
               </button>
               <h1 className="text-center">or</h1>
-              <button onClick={handleGoogleSignup} type="button" className="w-full mt-2 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 bg-slate-50 text-3xl"><FcGoogle/></button>
+              <button
+                onClick={handleGoogleSignup}
+                type="button"
+                className="w-full mt-2 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 bg-slate-50 text-3xl"
+              >
+                <FcGoogle />
+              </button>
               <Link to="/login" className="mt-2 block">
                 <p className="text-white">Already have an account? Login</p>
               </Link>
