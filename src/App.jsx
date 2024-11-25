@@ -17,7 +17,8 @@ import Login from './components/Login'
 import Profile from './components/Profile'
 import Setting from './components/Setting'
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import './node_modules/react-toastify/dist/ReactToastify.css';
+
 function App() { 
   return (
     <div className='w-full bg-[#0f0b20] select-none h-screen flex text-white '>
