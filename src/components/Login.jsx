@@ -93,7 +93,7 @@ useEffect(() => {
   
   // If token is found in URL, save it to local storage and redirect to profile page
   if (authToken) {
-    localStorage.setItem("token", authToken);
+    localStorage.setItem("token", authToken, { expires:"1d"});
     navigate("/profile", { replace: true });
   }
 }, [navigate]);
