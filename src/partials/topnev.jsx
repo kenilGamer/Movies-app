@@ -39,12 +39,12 @@ function Topnev({ left }) {
         <div className="min-w-[40%] rounded-xl z-20 max-h-52 absolute top-[120%] py-3 px-1 bg-[#111] gap-2 flex flex-col overflow-auto">
           {searchResults.map((result, index) => (
             <Link
-              to={`/${result.media_type || 'title'}/details/${result.id}`}
+              to={`/${result.media_type || "title"}/details/${result.id}`}
               key={index}
               className="hover:bg-[#6556cd] min-h-[15vh] overflow-hidden duration-500 hover:border-none p-4 flex items-center justify-between px-10 border-[1px] rounded-full w-full"
             >
               <span className="max-sm:text-xs">
-                {result.title || result.original_name || result.original_title}
+                {result.title || result.original_name || result.original_title }
               </span>
               <img
                 src={`https://image.tmdb.org/t/p/original/${result.poster_path || result.backdrop_path || result.profile_path}`}
