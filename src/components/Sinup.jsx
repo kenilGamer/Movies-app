@@ -76,8 +76,10 @@ function Signup() {
         setGetError(response.data.message);
         console.log("Failed to sign up");
       }
-
-      console.log(response.data);
+      toast.success(response.data.message);
+      const token = response.data.token;
+      localStorage.setItem("token", token, { expires: "1d" });
+      // console.log(response.data);
       navigate("/"); // Redirect to login page after successful signup
     } catch (error) {
       setErrorKey((prevKey) => prevKey + 1);
@@ -94,6 +96,16 @@ function Signup() {
       console.error("Error with Google signup:", error);
     }
   };
+
+  useEffect(() => {
+    // Extract token from URL
+    const params = new URLSearchParams(window.location.search);
+    const authToken = params.get("token");
+    if (authToken) {
+      localStorage.setItem("token", authToken, { expires: "1d" });
+      navigate("/profile", { replace: true });
+    }
+  }, [navigate]);
 
   const handleAvatar = () => {
     const fileInput = document.getElementById("avatar");
