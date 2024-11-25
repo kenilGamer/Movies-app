@@ -63,7 +63,7 @@ const handleSubmit = async (e) => {
       localStorage.setItem('token', response.data.token);
       console.log(localStorage.getItem('token'));
       toast.success("Logged in successfully");
-      navigate("/");
+      navigate("/profile");
     }
   } catch (error) {
     // setErrorKey((prevKey) => prevKey + 1);
@@ -75,8 +75,7 @@ const handleSubmit = async (e) => {
 
 const handleGoogleLogin = async () => {
   try {
-    window.location.href = 'https://movies-backend-07f5.onrender.com/auth/google';
-    localStorage.setItem('token', response.data.token);
+     window.location.href = 'https://movies-backend-07f5.onrender.com/auth/google';
   } catch (error) {
     console.error('Error with Google login:', error);
     toast.error('Failed to redirect to Google login');
