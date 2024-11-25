@@ -17,7 +17,7 @@ import Login from './components/Login'
 import Profile from './components/Profile'
 import Setting from './components/Setting'
 import { ToastContainer } from 'react-toastify';
-import './node_modules/react-toastify/dist/ReactToastify.css';
+// import './node_modules/react-toastify/dist/ReactToastify.css';
 
 function App() { 
   return (
