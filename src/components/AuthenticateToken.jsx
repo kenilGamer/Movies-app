@@ -8,9 +8,12 @@ function AuthenticateToken({ children }) {
   const token = localStorage.getItem('token');
   // console.log(token);
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/');
+    }
     if (!token) {
       navigate('/login');
     }
