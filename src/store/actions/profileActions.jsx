@@ -28,7 +28,7 @@ export const asyncsetProfile = (navigate) => async (dispatch) => {
   } catch (error) {
     console.error("Error fetching profile:", error);
     
-    if (error.response?.status === 401) {
+    if (error.response?.status === 401 && error.response?.status === 403 && error.response?.status === 404 && error.response?.status === 500 && error.response?.status === undefined) {
       dispatch(setError("Unauthorized access"));
       navigate("/login"); // Redirect to login on 401 error
     } else {
