@@ -22,7 +22,6 @@ const addToHistory = (movie) => {
     if (!Array.isArray(historyArray)) {
       historyArray = [];
     }
-
     // Check if the movie is already in history
     const isMovieInHistory = historyArray.some((item) => item.id === movie.id);
     
@@ -30,7 +29,9 @@ const addToHistory = (movie) => {
       // Add the movie to history
       historyArray.push(movie);
       // Save it back to localStorage
-      localStorage.setItem("history", JSON.stringify(historyArray));
+      if (localStorage.getItem("token") !== undefined){
+        localStorage.setItem("history", JSON.stringify(historyArray));
+      }
     }
   } catch (error) {
     console.error("Error adding to history:", error);
