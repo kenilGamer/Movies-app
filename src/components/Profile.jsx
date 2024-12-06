@@ -6,7 +6,7 @@ import Flashmessage from "./Flashmessage";
 import HistoryCard from "../partials/HistoryCard";
 import Loading from "./Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { asyncsetProfile } from "../store/actions/profileActions";
+import { asyncsetProfile, setError } from "../store/actions/profileActions";
 import { toast } from "react-toastify";
 const Profile = () => {
   const [wallpaper, setWallpaper] = useState(null);
@@ -36,6 +36,7 @@ const Profile = () => {
         setError("No wallpaper results found");
       }
     } catch (error) {
+      
       setError("Error fetching wallpaper");
       console.error(error);
     }
