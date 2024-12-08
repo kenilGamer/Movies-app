@@ -51,7 +51,7 @@ function Home() {
       <div className={`${isMenuOpen ? `w-[100%]` : `md:w-[100%]`} h-full overflow-auto overflow-x-hidden`}>
         <Topnev />
         <Headers data={wallpaper} />
-        <div className="mt-5 flex justify-between p-3">
+        <div className="mt-5 flex justify-between p-3 max-sm:flex-col items-center">
           <h1 className="text-3xl uppercase text-center font-bold">
             Trendings
           </h1>

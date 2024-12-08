@@ -171,7 +171,7 @@ const Moviedetails = () => {
                         Play Trailer
                     </Link>
                     <Link
-                        className="p-5 ml-5 bg-[#6556CD] rounded-lg"
+                        className="p-5  bg-[#6556CD] rounded-lg"
                         to={`https://moviebypass.pro/watch/movie/${id}`}
                     >
                         <i className="text-xl ri-play-fill mr-3 "></i>

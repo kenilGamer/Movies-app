@@ -157,7 +157,8 @@ function Tvdatails() {
           <h1 className="text-2xl mb-3  mt-5">tv Translated</h1>
           <p className="mb-10">{info.translations.join(", ")}</p>
 
-          <Link
+        <div className="flex max-sm:flex-col gap-5">
+        <Link
             className="p-5 bg-[#6556CD] rounded-lg"
             to={`${pathname}/trailer`}
           >
@@ -165,12 +166,13 @@ function Tvdatails() {
             Play Trailer
           </Link>
           <Link
-            className="p-5 bg-[#6556CD] rounded-lg hover:bg-[#5546C0] duration-300 ml-5"
+            className="p-5 bg-[#6556CD] rounded-lg hover:bg-[#5546C0] duration-300 "
             to={`https://moviebypass.pro/watch/tv/${id}`}
           >
             <i className="text-xl ri-play-fill mr-3 "></i>
             Play Episodes
           </Link>
+        </div>
         </div>
       </div>
 

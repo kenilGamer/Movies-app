@@ -25,17 +25,17 @@ function Topnev({ left }) {
   }, [query]);
 
   return (
-    <div className="w-full h-[10vh] relative flex sm:items-center justify-center">
-      <div className="flex sm:items-center md:min-w-[40%] max-sm:w-[50vw] max-sm:absolute max-md:w-[70vw]">
+    <div className="w-full h-[10vh] relative flex mx-auto items-center justify-center">
+      <div className="flex sm:items-center md:min-w-[40%] max-sm:w-[72vw] mx-auto max-sm:absolute max-md:w-[70vw]">
         <input
           onChange={(e) => setQuery(e.target.value)}
           value={query}
-          className="max-sm:px-5 py-4 md:px-16 mt-5 outline-none text-zinc-200 font2 bg-[#20164d] rounded-full text-xl md:mx-1 flex items-center justify-center shadow-md shadow-[#000033]"
+          className="max-sm:px-5 py-4 md:px-16 mt-5 outline-none text-zinc-200 font2 bg-[#20164d] rounded-full text-xl md:mx-1 flex items-center mx-auto justify-center shadow-md shadow-[#000033]"
           type="search"
           name="search"
           placeholder="Search anything"
         />
-        <RiSearchEyeLine className="text-3xl mt-5 text-zinc-400 -ml-16" />
+        <RiSearchEyeLine className="text-3xl md:mt-5 mt-8 text-zinc-400 -ml-16" />
       </div>
       {query.length > 0 && (
         <div className="min-w-[40%] rounded-xl z-20 max-h-52 absolute top-[120%] py-3 px-1 bg-[#111] gap-2 flex flex-col overflow-auto">
