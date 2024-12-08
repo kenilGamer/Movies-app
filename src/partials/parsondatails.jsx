@@ -35,10 +35,10 @@ const PersonDetails = () => {
 
       <div className="w-full flex max-sm:flex-col  ">
         {/* Part 2 left Poster and Details */}
-        <div className="sm:w-[50%] max-md:w-[100%]">
+        <div className="sm:w-[50%] max-md:min-w-[100%]">
           <div className="rounded-full overflow-hidden">
           <img
-            className="shadow-[8px_17px_38px_2px_rgba(0,0,0,.5)] w-[35vh] object-cover"
+            className="shadow-[8px_17px_38px_2px_rgba(0,0,0,.5)] w-[90vw] object-cover"
             src={`https://image.tmdb.org/t/p/original/${info.detail.profile_path}`}
             alt=""
           />
