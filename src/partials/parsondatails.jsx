@@ -24,7 +24,7 @@ const PersonDetails = () => {
   }, [id]);
 
   return info ? (
-    <div className="px-[5%] w-screen h-[100vh] bg-[#1F1E24] overflow-hidden overflow-y-auto">
+    <div className="px-[5%] w-screen h-[100vh] overflow-hidden overflow-y-auto">
       {/* Part 1 navigation */}
       <nav className="h-[10vh] w-full text-zinc-100 flex items-center gap-10 text-xl ">
         <Link
@@ -35,12 +35,14 @@ const PersonDetails = () => {
 
       <div className="w-full flex max-sm:flex-col  ">
         {/* Part 2 left Poster and Details */}
-        <div className="sm:w-[20%] max-sm:w-[100%]">
+        <div className="sm:w-[50%] max-md:w-[100%]">
+          <div className="rounded-full overflow-hidden">
           <img
-            className="shadow-[8px_17px_38px_2px_rgba(0,0,0,.5)] h-[35vh] object-cover"
+            className="shadow-[8px_17px_38px_2px_rgba(0,0,0,.5)] w-[35vh] object-cover"
             src={`https://image.tmdb.org/t/p/original/${info.detail.profile_path}`}
             alt=""
           />
+          </div>
           <hr className="mt-10 mb-5 border-none h-[2px] bg-zinc-500" />
           {/* Sosial Media Links */}
           <div className="text-2xl text-white flex gap-x-5">
@@ -133,7 +135,7 @@ const PersonDetails = () => {
             </h1>
 
             <Dropdown
-              title="Catgory"
+              title="Category"
               options={["tv", "movie"]}
               func={(e) => setcategory(e.target.value)}
             />
@@ -143,9 +145,9 @@ const PersonDetails = () => {
             {info[category + "Credits"].cast.map((c, i) => (
               <li
                 key={i}
-                className="hover:text-white p-5 rounded hover:bg-[#19191d]  duration-300 cursor-pointer"
+                className="hover:text-white p-5 rounded hover:bg-[#19191d] duration-300 cursor-pointer"
               >
-                <Link to={`/${category}/datails/${c.id}`} className="">
+                <Link to={`/${category}/details/${c.id}`} className="">
                   <span>
                     {" "}
                     {c.name || c.title || c.original_name || c.original_title}
