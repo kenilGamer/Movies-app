@@ -6,7 +6,8 @@ import Flashmessage from "./Flashmessage";
 import HistoryCard from "../partials/HistoryCard";
 import Loading from "./Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { asyncsetProfile, setError } from "../store/actions/profileActions";
+import { asyncsetProfile } from "../store/actions/profileActions";
+import { setError } from "../store/reducers/profileSlice";
 import { toast } from "react-toastify";
 const Profile = () => {
   const [wallpaper, setWallpaper] = useState(null);
