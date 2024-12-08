@@ -11,9 +11,6 @@ function AuthenticateToken({ children }) {
   
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-      navigate('/');
-    }
     if (!token) {
       navigate('/login');
     }
