@@ -32,7 +32,7 @@ export const asyncsetProfile = (navigate) => async (dispatch) => {
       dispatch(setError("Unauthorized access"));
       navigate("/login"); // Redirect to login on 401 error
     } else {
-      dispatch(setError("Error fetching profile data"));
+      // dispatch(setError("Error fetching profile data"));
       navigate("/login"); // Redirect to error page on other errors
     }
   }

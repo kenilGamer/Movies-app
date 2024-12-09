@@ -104,20 +104,7 @@ const Profile = () => {
         style={{ backgroundImage: `url(${wallpaper})` }}
       >
         <nav className="absolute top-0 left-0 w-full flex items-center justify-between p-5 z-[5]">
-          <h1 className="text-3xl font-semibold text-transparent
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          ">Profile</h1>
+          <h1 className="text-3xl font-semibold text-transparent">Profile</h1>
           <Link to="/settings" className="bg-red-500 text-white px-3 py-2 rounded-md">
             Settings
           </Link>
