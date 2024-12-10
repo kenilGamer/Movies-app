@@ -71,7 +71,6 @@ const Profile = () => {
   useEffect(() => {
     if (profile) {
       setProfileData(profile);
-      console.info("Profile loaded successfully", profile);
       toast.success("Profile loaded successfully");
     } else {
       console.log("No profile data available");
