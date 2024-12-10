@@ -12,6 +12,9 @@ const profileSlice = createSlice({
       state.error = null;
     },
     setError: (state, action) => {
+      console.log(action.payload);
+      localStorage.removeItem("token");
+      state.profile = null;
       state.error = action.payload;
     },
   },
