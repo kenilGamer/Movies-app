@@ -30,8 +30,6 @@ export const asyncsetProfile = (navigate) => async (dispatch) => {
       profile: profileResponse.data,
       settings: settingsResponse.data,
     };
-
-    console.log("response: ", responseData);
     dispatch(setProfile(responseData)); // stop loading here
   } catch (error) {
     console.error("Error fetching profile:", error);
