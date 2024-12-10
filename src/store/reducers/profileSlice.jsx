@@ -1,37 +1,31 @@
+// profileSlice.js
 import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+  profile: null,
+  settings: null,
+  error: null,
+  loading: false,
+};
 
 const profileSlice = createSlice({
   name: "profile",
-  initialState: {
-    profile: null,
-    error: null,
-  },
+  initialState,
   reducers: {
-    /**
-     * Sets the profile in the state to the given payload or clears the profile if the
-     * payload is null. Clears the error if the payload is not null.
-     *
-     * @param {Object} state - The current state of the store.
-     * @param {Object} action - The action containing the payload to use to set the profile.
-     * @param {Object|null} action.payload - The profile data to set or null to clear the profile.
-     */
     setProfile: (state, action) => {
-      if (!action.payload) {
-        state.profile = null;
-        state.error = null;
-        return;
-      }
-      state.profile = action.payload;
-      state.error = null;
+      state.profile = action.payload.profile;
+      state.settings = action.payload.settings;
+      state.loading = false;  // stop loading when profile is set
     },
-    setError: (state, { payload: error }) => {
-      state.profile = null;
-      state.error = error;
+    setError: (state, action) => {
       state.error = action.payload;
-      localStorage.removeItem("token");
+      state.loading = false;  // stop loading on error
+    },
+    setLoading: (state) => {
+      state.loading = true;  // start loading
     },
   },
 });
 
-export const { setProfile, setError } = profileSlice.actions;
+export const { setProfile, setError, setLoading } = profileSlice.actions;
 export default profileSlice.reducer;

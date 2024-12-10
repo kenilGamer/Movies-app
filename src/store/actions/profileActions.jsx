@@ -1,39 +1,46 @@
 import axios from "axios";
-import { setProfile, setError } from "../reducers/profileSlice";
+import { setProfile, setError, setLoading } from "../reducers/profileSlice";
+import Loading from "../../components/Loading";
 
 export const asyncsetProfile = (navigate) => async (dispatch) => {
   try {
+    // Start loading
+    dispatch(setLoading());
+
     const token = localStorage.getItem("token");
     const authToken = localStorage.getItem("authToken");
 
     if (!token && !authToken) {
       dispatch(setError("No token found"));
-      navigate("/login"); // Navigate to the login page if token is not found
+      navigate("/login");
       return;
     }
 
     const authHeader = `Bearer ${token || authToken}`;
-    const response = await axios.get("https://movies-backend-07f5.onrender.com/profile", {
-      headers: { Authorization: authHeader },
-    });
-    const response2 = await axios.get("https://movies-backend-07f5.onrender.com/settings", {
+    const [profileResponse, settingsResponse] = await Promise.all([
+      axios.get("https://movies-backend-07f5.onrender.com/profile", {
         headers: { Authorization: authHeader },
-      });
+      }),
+      axios.get("https://movies-backend-07f5.onrender.com/settings", {
+        headers: { Authorization: authHeader },
+      }),
+    ]);
+
     const responseData = {
-        profile: response.data,
-        settings: response2.data
-    }
+      profile: profileResponse.data,
+      settings: settingsResponse.data,
+    };
+
     console.log("response: ", responseData);
-    dispatch(setProfile(responseData)); // Dispatch profile to Redux state
+    dispatch(setProfile(responseData)); // stop loading here
   } catch (error) {
     console.error("Error fetching profile:", error);
-    
-    if (error.response?.status === 401 && error.response?.status === 403 && error.response?.status === 404 && error.response?.status === 500 && error.response?.status === undefined) {
+
+    if ([401, 403, 404, 500, undefined].includes(error.response?.status)) {
       dispatch(setError("Unauthorized access"));
-      navigate("/login"); // Redirect to login on 401 error
+      navigate("/login");
     } else {
-      // dispatch(setError("Error fetching profile data"));
-      navigate("/login"); // Redirect to error page on other errors
+      navigate("/error");
     }
   }
 };

@@ -4,15 +4,14 @@ import axios2 from "../utils/axios";
 import Sidenav from "../partials/sidenav";
 import Flashmessage from "./Flashmessage";
 import HistoryCard from "../partials/HistoryCard";
-import Loading from "./Loading";
+import Loading from "./Loading";  // Assuming Loading is a spinner component
 import { useDispatch, useSelector } from "react-redux";
 import { asyncsetProfile } from "../store/actions/profileActions";
-import { setError } from "../store/reducers/profileSlice";
 import { toast } from "react-toastify";
+
 const Profile = () => {
   const [wallpaper, setWallpaper] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [getError, setError] = useState(null);
+  const [getError, setGetError] = useState(null); // Renamed for clarity
   const [movieHistory, setMovieHistory] = useState([]);
   const [profileData, setProfileData] = useState(null);
   const navigate = useNavigate();
@@ -21,6 +20,7 @@ const Profile = () => {
   // Access profile data and error from Redux state
   const profile = useSelector((state) => state.profile.profile);
   const error = useSelector((state) => state.profile.error);
+  const isLoading = useSelector((state) => state.profile.loading); // Loading state from Redux
 
   document.title = `Profile | Godcrafts`;
 
@@ -34,11 +34,10 @@ const Profile = () => {
           `https://image.tmdb.org/t/p/original/${data.results[randomIndex].backdrop_path}`
         );
       } else {
-        setError("No wallpaper results found");
+        setGetError("No wallpaper results found");
       }
     } catch (error) {
-      
-      setError("Error fetching wallpaper");
+      setGetError("Error fetching wallpaper");
       console.error(error);
     }
   };
@@ -57,9 +56,7 @@ const Profile = () => {
     }
 
     const fetchData = async () => {
-      // setIsLoading(true);
       await getHeaderWallpaper();
-      setIsLoading(false);
     };
 
     fetchData();
@@ -73,11 +70,11 @@ const Profile = () => {
   // This effect runs when the profile state from Redux is updated
   useEffect(() => {
     if (profile) {
-      console.log("profile: ", profile && profile.profile);
-      setProfileData(profile && profile.profile);
+      setProfileData(profile);
+      console.info("Profile loaded successfully", profile);
       toast.success("Profile loaded successfully");
-    }else{
-      console.log("no profile");
+    } else {
+      console.log("No profile data available");
     }
   }, [profile]);
 
@@ -94,7 +91,7 @@ const Profile = () => {
   const defaultProfile = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
   return isLoading ? (
-    toast.isActive("loading") ? <Loading /> : null
+    <Loading /> // Show loading indicator if loading
   ) : (
     <>
       <Sidenav />
