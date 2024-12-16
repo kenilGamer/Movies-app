@@ -165,7 +165,7 @@ const Moviedetails = () => {
                    <div className="flex max-md:flex-col max-md:items-center gap-5 max-md:justify-center">
                    <Link
                         className="p-5 bg-[#6556CD] rounded-lg"
-                        to={`${pathname}/trailer`}
+                        to={`${pathname}/`}
                     >
                         <i className="text-xl ri-play-fill mr-3 "></i>
                         Play Trailer

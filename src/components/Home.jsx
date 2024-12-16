@@ -15,7 +15,7 @@ function Home() {
   const [trending, setTrending] = useState(null);
   const [category, setCategory] = useState("all");
 
-  const toggleMenu = () => setIsMenuOpen(prevState => !prevState);
+  const setIsMenu = () => setIsMenuOpen(prevState => !prevState);
 
   const getHeaderWallpaper = async () => {
     try {

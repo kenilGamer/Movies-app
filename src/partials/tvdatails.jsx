@@ -160,7 +160,7 @@ function Tvdatails() {
         <div className="flex max-sm:flex-col gap-5">
         <Link
             className="p-5 bg-[#6556CD] rounded-lg"
-            to={`${pathname}/trailer`}
+            to={`${pathname}`}
           >
             <i className="text-xl ri-play-fill mr-3 "></i>
             Play Trailer
