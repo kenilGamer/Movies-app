@@ -44,6 +44,8 @@ export const asyncsetProfile = (navigate) => async (dispatch) => {
     } else if (status === 404) {
       dispatch(setError("Profile not found"));
       toast.error("Profile not found.");
+      token && localStorage.setItem("profile", null);
+      navigate("/login");
     } else if (status === 500) {
       dispatch(setError("Server error"));
       toast.error("Internal server error. Try again later.");
