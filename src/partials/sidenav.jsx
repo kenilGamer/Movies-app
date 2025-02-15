@@ -7,7 +7,7 @@ import { MdTv } from "react-icons/md";
 import { RiTeamFill } from "react-icons/ri";
 import axios from 'axios';
 import { HiMenu } from "react-icons/hi";
-import { IoMdClose } from "react-icons/io";
+import { IoIosHome, IoMdClose } from "react-icons/io";
 import { IoLogOut } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from 'react-router-dom';
@@ -53,6 +53,7 @@ function Sidenav() {
           </div>
           <nav>
             <h1 className='text-white font-semibold text-lg p-5 '>New Feeds</h1>
+            <Link to={`/`} className='hover:bg-[#6556cd] px-5 rounded-lg py-3 duration-500 flex items-center gap-2'><IoIosHome />Home</Link>
             <Link to={`/trending`} className='hover:bg-[#6556cd] px-5 rounded-lg py-3 duration-500 flex items-center gap-2'><AiOutlineFire />Trending</Link>
             <Link to={`/popular`} className='hover:bg-[#6556cd] px-5 rounded-lg py-3 duration-500 flex items-center gap-2'><SiCodemagic className='mt-2'/>Popular</Link>          
             <Link to={`/movie`} className='hover:bg-[#6556cd] px-5 rounded-lg py-3 duration-500 flex items-center gap-2'><MdOutlineMovieFilter/>Movies</Link>
