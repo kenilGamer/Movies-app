@@ -32,23 +32,5 @@ export const asyncsetProfile = (navigate) => async (dispatch) => {
   } catch (error) {
     console.error("Error fetching profile:", error);
     const status = error.response?.status;
-
-    if (status === 401 || status === 403) {
-      dispatch(setError("Unauthorized access"));
-      toast.error("Unauthorized access. Please log in.");
-      navigate("/login");
-    } else if (status === 404) {
-      dispatch(setError("Profile not found"));
-      toast.error("Profile not found.");
-      token && localStorage.setItem("profile", null);
-      navigate("/login");
-    } else if (status === 500) {
-      dispatch(setError("Server error"));
-      toast.error("Internal server error. Try again later.");
-    } else {
-      toast.error("An unexpected error occurred.");
-      token && localStorage.removeItem("token");
-      navigate("/login");
-    }
   }
 };
