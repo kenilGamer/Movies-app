@@ -5,9 +5,7 @@ import { toast } from "react-toastify";
 export const asyncsetProfile = (navigate) => async (dispatch) => {
   try {
     dispatch(setLoading()); // Start loading
-    if(navigate === undefined){
-      navigate("/login");
-    }
+
     const token = localStorage.getItem("token");
     const authToken = localStorage.getItem("authToken");
 
