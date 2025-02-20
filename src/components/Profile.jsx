@@ -73,10 +73,7 @@ const Profile = () => {
       setProfileData(profile);
       toast.success("Profile loaded successfully");
     } else {
-      setTimeout(() => {
-        localStorage.removeItem("token");
-      navigate("/login");
-      }, 5000);
+      setProfileData(null);
       console.log("No profile data available");
     }
   }, [profile]);
