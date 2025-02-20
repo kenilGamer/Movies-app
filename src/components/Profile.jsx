@@ -73,7 +73,7 @@ const Profile = () => {
       setProfileData(profile);
       toast.success("Profile loaded successfully");
     } else {
-      setProfileData(null);
+      toast.error("not loaded");
       console.log("No profile data available");
     }
   }, [profile]);
