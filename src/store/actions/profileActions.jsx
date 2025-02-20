@@ -5,7 +5,9 @@ import { toast } from "react-toastify";
 export const asyncsetProfile = (navigate) => async (dispatch) => {
   try {
     dispatch(setLoading()); // Start loading
-
+    if(navigate === undefined){
+      navigate("/login");
+    }
     const token = localStorage.getItem("token");
     const authToken = localStorage.getItem("authToken");
 
@@ -15,9 +17,7 @@ export const asyncsetProfile = (navigate) => async (dispatch) => {
       navigate("/login");
       return;
     }
-
     const authHeader = `Bearer ${token || authToken}`;
-
     const [profileResponse, settingsResponse] = await Promise.all([
       axios.get("https://movies-backend-07f5.onrender.com/profile", {
         headers: { Authorization: authHeader },
@@ -26,7 +26,6 @@ export const asyncsetProfile = (navigate) => async (dispatch) => {
         headers: { Authorization: authHeader },
       }),
     ]);
-
     dispatch(setProfile({
       profile: profileResponse.data,
       settings: settingsResponse.data,
@@ -34,7 +33,6 @@ export const asyncsetProfile = (navigate) => async (dispatch) => {
 
   } catch (error) {
     console.error("Error fetching profile:", error);
-
     const status = error.response?.status;
 
     if (status === 401 || status === 403) {
@@ -50,7 +48,6 @@ export const asyncsetProfile = (navigate) => async (dispatch) => {
       dispatch(setError("Server error"));
       toast.error("Internal server error. Try again later.");
     } else {
-      // dispatch(setError("Something went wrong"));
       toast.error("An unexpected error occurred.");
       token && localStorage.removeItem("token");
       navigate("/login");
