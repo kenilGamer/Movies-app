@@ -23,7 +23,6 @@ const Profile = () => {
   const isLoading = useSelector((state) => state.profile.loading); // Loading state from Redux
 
   document.title = `Profile | Godcrafts`;
-
   // Fetch trending movie wallpaper
   const getHeaderWallpaper = async () => {
     try {
