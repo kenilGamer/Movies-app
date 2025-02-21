@@ -60,7 +60,7 @@ const handleSubmit = async (e) => {
       console.log("Failed to login");
     } else {
       console.log(response.data.token);
-      localStorage.setItem('token', response.data.token, { expires: "1d" });
+      localStorage.setItem('token', response.data.token, { expires: "1d", deleted: true });
       console.log(localStorage.getItem('token'));
       toast.success("Logged in successfully");
       navigate("/profile");
