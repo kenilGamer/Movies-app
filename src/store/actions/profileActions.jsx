@@ -20,7 +20,7 @@ export const asyncsetProfile = (navigate) => async (dispatch) => {
       axios.get("https://movies-backend-07f5.onrender.com/profile", {
         headers: { Authorization: authHeader },
       }),
-      axios.get("https://movies-backend-07f5.onrender.com/settings", {
+      axios.get("https://movies-backend-07f5.onrender.com/profile", {
         headers: { Authorization: authHeader },
       }),
     ]);

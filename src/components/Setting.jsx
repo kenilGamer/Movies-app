@@ -1,13 +1,13 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
-import Sidenav from '../partials/sidenav';
-import Loading from './Loading';
-import Flashmessage from './Flashmessage';
-import axios2 from '../utils/axios';
-import { MdModeEdit } from 'react-icons/md';
-import { useDispatch, useSelector } from 'react-redux';
-import { asyncsetProfile } from '../store/actions/profileActions';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Sidenav from "../partials/sidenav";
+import Loading from "./Loading";
+import Flashmessage from "./Flashmessage";
+import axios2 from "../utils/axios";
+import { MdModeEdit } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncsetProfile } from "../store/actions/profileActions";
 function Setting() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -53,22 +53,28 @@ function Setting() {
   // This effect runs when the profile state from Redux is updated
   useEffect(() => {
     if (profile) {
-      console.log("settings: ", profile && profile.settings);
-      setUser(profile && profile.settings);
-    }else{
+      console.log("settings: ", profile && profile);
+      setUser(profile);
+    } else {
       console.log("no settings");
     }
   }, [profile]);
   const updateUser = async () => {
     const formData = new FormData();
-    formData.append('username', username);
-    formData.append('email', email);
-    formData.append('age', age);
-    formData.append('avatar', avatar);
+    formData.append("username", username);
+    formData.append("email", email);
+    formData.append("age", age);
+    formData.append("avatar", avatar);
     try {
-      const response = await axios.put('https://movies-backend-07f5.onrender.com/settings', formData, { headers: { Authorization: `Bearer ${token}` } });
+      const response = await axios.put(
+        "https://movies-backend-07f5.onrender.com/settings",
+        formData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       setUser(response.data);
-      navigate('/profile', { replace: true });
+      console.log(response.data);
+
+      navigate("/profile", { replace: true });
     } catch (error) {
       setError("Failed to update user");
       console.error(error);
@@ -88,28 +94,29 @@ function Setting() {
     }
   };
   useEffect(() => {
-    
-    // fetchUser();    
+    // fetchUser();
     getHeaderWallpaper();
   }, []);
-  const userAvatar = `https://movies-backend-07f5.onrender.com/${user?.avatar}`;
+  const avatar1 = `https://movies-backend-07f5.onrender.com/${user?.avatar}`;
   const googleProfile = user?.googleProfile;
-  console.log(googleProfile);
+  const defaultProfile =
+    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+
+  // console.log(googleProfile);
   return isLoading ? (
     <Loading />
   ) : (
     <>
       <Sidenav />
       {error && <Flashmessage message={error} />}
-   
+
       <div
         className="w-screen h-screen bg-cover bg-center overflow-hidden overflow-y-auto relative"
         style={{ backgroundImage: `url(${wallpaper})` }}
       >
-          
         <div className="profdets flex h-full flex-col bg-black/15 backdrop-blur-[2px] p-5 items-center">
           {/* Profile Information */}
-      
+
           <form
             onSubmit={handleUpdate}
             className="space-y-4 flex flex-col items-center justify-center relative"
@@ -122,7 +129,11 @@ function Setting() {
               hidden
             />
             <div className="w-32 h-32 bg-violet-300 rounded-full">
-              <img src={googleProfile || userAvatar} alt="User Avatar" className="w-full h-full object-cover rounded-full" />
+              <img
+                src={googleProfile || avatar1}
+                alt="User Avatar"
+                className="w-full h-full object-cover rounded-full"
+              />
               <div className="absolute top-2 left-[60%] avatar cursor-pointer hover:bg-violet-500 rounded-full p-1 bg-violet-500">
                 <MdModeEdit
                   className="text-white text-2xl cursor-pointer"
@@ -140,7 +151,6 @@ function Setting() {
                 value={username}
                 placeholder={user?.username}
                 onChange={(e) => setUsername(e.target.value)}
-           
               />
             </div>
 
@@ -152,7 +162,6 @@ function Setting() {
                 value={email}
                 placeholder={user?.email}
                 onChange={(e) => setEmail(e.target.value)}
-        
               />
             </div>
 
@@ -164,7 +173,6 @@ function Setting() {
                 value={age}
                 placeholder={user?.age}
                 onChange={(e) => setAge(e.target.value)}
-              
               />
             </div>
 
@@ -200,8 +208,6 @@ function Setting() {
       </div>
     </>
   );
-};
+}
 
-
-
-export default Setting
+export default Setting;
