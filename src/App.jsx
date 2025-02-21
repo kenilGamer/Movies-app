@@ -18,6 +18,7 @@ import Profile from './components/Profile'
 import Setting from './components/Setting'
 import { ToastContainer } from 'react-toastify';
 import MoviePalyer from './partials/MoviePalyer'
+import TvPalyer from './partials/Tvplayer'
 // import './node_modules/react-toastify/dist/ReactToastify.css';
 
 function App() { 
@@ -39,6 +40,7 @@ function App() {
         </Route>
         <Route path="/tv" element={<AuthenticateToken><Tv /></AuthenticateToken>} />
         <Route path="/tv/datails/:id" element={<AuthenticateToken><Tvdatails /></AuthenticateToken>}>
+        <Route path="/tv/datails/:id/:epid/:sid/tvpalyer/" element={<AuthenticateToken><TvPalyer /></AuthenticateToken>} />
         </Route>
         <Route path="/people" element={<AuthenticateToken><People /></AuthenticateToken>} />
         <Route path="/People/datails/:id" element={<AuthenticateToken><Parsondatails /></AuthenticateToken>} />

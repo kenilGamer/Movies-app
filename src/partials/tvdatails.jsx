@@ -63,6 +63,8 @@ function Tvdatails() {
           id: info.detail.id, // Unique identifier for each show
           title: info.detail.name || info.detail.title || "Unknown",
           poster_path: info.detail.poster_path,
+          episode: info.detail.number_of_episodes,
+          seasons: info.detail.number_of_seasons,
           release_date: info.detail.first_air_date || "N/A",
           overview: info.detail.overview || "No overview available",
           type: "tv",
@@ -167,7 +169,7 @@ function Tvdatails() {
           </Link>
           <Link
             className="p-5 bg-[#6556CD] rounded-lg hover:bg-[#5546C0] duration-300 "
-            to={`https://moviebypass.pro/watch/tv/${id}`}
+            to={`/tv/datails/${info.detail.id}/${info.detail.number_of_seasons}/${info.detail.number_of_episodes}/tvpalyer/`}
           >
             <i className="text-xl ri-play-fill mr-3 "></i>
             Play Episodes
