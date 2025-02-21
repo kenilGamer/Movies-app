@@ -172,7 +172,7 @@ const Moviedetails = () => {
                     </Link>
                     <Link
                         className="p-5  bg-[#6556CD] rounded-lg"
-                        to={`https://moviebypass.pro/watch/movie/${id}`}
+                        to={`/movie/datails/${id}/moviepalyer`}
                     >
                         <i className="text-xl ri-play-fill mr-3 "></i>
                         Watch Now

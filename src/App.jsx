@@ -17,6 +17,7 @@ import Login from './components/Login'
 import Profile from './components/Profile'
 import Setting from './components/Setting'
 import { ToastContainer } from 'react-toastify';
+import MoviePalyer from './partials/MoviePalyer'
 // import './node_modules/react-toastify/dist/ReactToastify.css';
 
 function App() { 
@@ -34,6 +35,7 @@ function App() {
         <Route path="/settings" element={<AuthenticateToken><Setting /></AuthenticateToken>} />
         <Route path="/movie/datails/:id" element={<AuthenticateToken><Moviedatails /></AuthenticateToken>}>
           <Route path="/movie/datails/:id/trailer" element={<AuthenticateToken><Trailer /></AuthenticateToken>} />
+          <Route path="/movie/datails/:id/moviepalyer" element={<AuthenticateToken><MoviePalyer /></AuthenticateToken>} />
         </Route>
         <Route path="/tv" element={<AuthenticateToken><Tv /></AuthenticateToken>} />
         <Route path="/tv/datails/:id" element={<AuthenticateToken><Tvdatails /></AuthenticateToken>}>
