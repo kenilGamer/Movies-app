@@ -53,7 +53,7 @@ function Setting() {
   // This effect runs when the profile state from Redux is updated
   useEffect(() => {
     if (profile) {
-      console.log("settings: ", profile && profile);
+      // console.log("settings: ", profile && profile);
       setUser(profile);
     } else {
       console.log("no settings");
@@ -72,7 +72,7 @@ function Setting() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setUser(response.data);
-      console.log(response.data);
+      // console.log(response.data);
 
       navigate("/profile", { replace: true });
     } catch (error) {
