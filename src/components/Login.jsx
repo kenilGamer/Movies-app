@@ -163,7 +163,7 @@ useEffect(() => {
               </Link>
             </div>
           </form>
-          <h1 className="text-center">or</h1>
+          {/* <h1 className="text-center">or</h1> */}
           <button onClick={handleGoogleLogin} className="mt-4 block bg-white px-20 p-1 text-3xl rounded-full"><FcGoogle/></button>
         </div>
       </div>

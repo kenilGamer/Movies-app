@@ -4,94 +4,86 @@ import axios2 from "../utils/axios";
 import Sidenav from "../partials/sidenav";
 import Flashmessage from "./Flashmessage";
 import HistoryCard from "../partials/HistoryCard";
-import Loading from "./Loading";  // Assuming Loading is a spinner component
+import Loading from "./Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncsetProfile } from "../store/actions/profileActions";
 import { toast } from "react-toastify";
 
 const Profile = () => {
   const [wallpaper, setWallpaper] = useState(null);
-  const [getError, setGetError] = useState(null); // Renamed for clarity
+  const [getError, setGetError] = useState(null);
   const [movieHistory, setMovieHistory] = useState([]);
-  const [profileData, setProfileData] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // Access profile data and error from Redux state
+  // Redux state
   const profile = useSelector((state) => state.profile.profile);
   const error = useSelector((state) => state.profile.error);
-  const isLoading = useSelector((state) => state.profile.loading); // Loading state from Redux
+  const isLoading = useSelector((state) => state.profile.loading);
 
   document.title = `Profile | Godcrafts`;
+
   // Fetch trending movie wallpaper
   const getHeaderWallpaper = async () => {
     try {
       const { data } = await axios2.get("trending/all/day");
-      if (data.results && data.results.length > 0) {
+      if (data.results?.length > 0) {
         const randomIndex = Math.floor(Math.random() * data.results.length);
         setWallpaper(
           `https://image.tmdb.org/t/p/original/${data.results[randomIndex].backdrop_path}`
         );
       } else {
-        setGetError("No wallpaper results found");
+        setGetError("No wallpaper found.");
       }
     } catch (error) {
-      setGetError("Error fetching wallpaper");
+      setGetError("Error fetching wallpaper.");
       console.error(error);
     }
   };
 
-  // Initialize component
+  // Load movie history from localStorage
   useEffect(() => {
-    // Load history from localStorage
     const savedHistory = localStorage.getItem("history");
     if (savedHistory) {
-      try {
-        const parsedHistory = JSON.parse(savedHistory) || [];
-        setMovieHistory(parsedHistory);
-      } catch (error) {
-        console.error("Error parsing history:", error);
-      }
+      setMovieHistory(JSON.parse(savedHistory) || []);
     }
-
-    const fetchData = async () => {
-      await getHeaderWallpaper();
-    };
-
-    fetchData();
+    getHeaderWallpaper();
   }, []);
 
+  // Fetch profile data from Redux
   useEffect(() => {
-    // Dispatch Redux action to fetch profile data
     dispatch(asyncsetProfile(navigate));
   }, [dispatch, navigate]);
 
-  // This effect runs when the profile state from Redux is updated
+  // Handle profile state updates
   useEffect(() => {
     if (profile) {
-      setProfileData(profile);
       toast.success("Profile loaded successfully");
     } else {
-      toast.error("not loaded");
-      console.log("No profile data available");
+      toast.error("Profile not loaded");
     }
   }, [profile]);
 
-  if (error) {
-    // Handle errors, like redirecting to login if unauthorized
-    if (error === "Unauthorized access") {
-      navigate("/login");
+  // Redirect if unauthorized
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      if (error === "Unauthorized access") {
+        setTimeout(() => navigate("/login"), 2000);
+      }
     }
-    return <div>{error}</div>;
+  }, [error, navigate]);
+
+  if (isLoading) {
+    return <Loading />;
   }
 
-  const avatar = `https://movies-backend-07f5.onrender.com/${profileData?.avatar}`;
-  const googleProfile = profileData?.googleProfile;
+  // Profile picture selection
+  const avatar = `https://movies-backend-07f5.onrender.com/${profile?.avatar}`;
   const defaultProfile = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+  const profileImage = profile?.googleProfile || avatar || defaultProfile;
 
-  return isLoading ? (
-    <Loading /> // Show loading indicator if loading
-  ) : (
+  return (
     <>
       <Sidenav />
       {getError && <Flashmessage message={getError} />}
@@ -109,13 +101,13 @@ const Profile = () => {
           {/* Profile Information */}
           <div className="flex flex-col items-center">
             <img
-              src={`${googleProfile || avatar || defaultProfile}`}
+              src={profileImage}
               alt="profile"
               className="w-[150px] h-[150px] rounded-full object-cover bg-transparent border-2 border-white"
             />
           </div>
-          <h1 className="text-3xl mt-3 font-semibold">{profileData?.username}</h1>
-          <p>{profileData?.email}</p>
+          <h1 className="text-3xl mt-3 font-semibold">{profile?.username}</h1>
+          <p>{profile?.email}</p>
 
           {/* Movie History Section */}
           <div className="movie-history w-full min-h-full mt-5">
@@ -123,9 +115,7 @@ const Profile = () => {
             {movieHistory.length === 0 ? (
               <p>No movies watched yet.</p>
             ) : (
-              <div>
-                <HistoryCard data={movieHistory} />
-              </div>
+              <HistoryCard data={movieHistory} />
             )}
           </div>
         </div>

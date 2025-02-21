@@ -79,7 +79,7 @@ function Tvdatails() {
         console.error("Error adding to history:", e);
       }
     }
-  }, [info]); // Trigger this whenever the `info` changes
+  }, [info]);
 
   return info ? (
     <div
