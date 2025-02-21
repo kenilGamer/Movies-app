@@ -13,7 +13,6 @@ function Topnev({ left }) {
     try {
       const response = await axios.get(`/search/multi?query=${query}`);
       setSearchResults(response.data.results);
-      console.log("Search results", response.data.results);
       
     } catch (error) {
       console.error(error);
