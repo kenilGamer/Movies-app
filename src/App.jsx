@@ -46,7 +46,7 @@ function App() {
         <Route path="/People/datails/:id" element={<AuthenticateToken><Parsondatails /></AuthenticateToken>} />
         <Route path="*" element={<NotFound />} />
       </Routes>  
-    </div>
+    </div> 
   )
 }
 export default App
