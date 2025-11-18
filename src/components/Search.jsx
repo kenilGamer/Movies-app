@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FaLongArrowAltLeft, FaSearch } from 'react-icons/fa';
+import Sidenav from '../partials/sidenav';
 import Topnev from '../partials/topnev';
-import axios from '../utils/axios';
+import axios from 'axios';
 import Loading from './Loading';
 import Card from '../partials/Card';
+import EmptyState from './EmptyState';
 import { useDebounce } from '../utils/useDebounce';
+import { API_BASE_URL } from '../utils/config';
 import { toast } from 'react-toastify';
 
 const Search = React.memo(() => {
@@ -36,24 +39,44 @@ const Search = React.memo(() => {
         setIsLoading(true);
 
         try {
-            const endpoint = searchType === 'all' ? '/search' : `/search/${searchType}`;
-            const { data } = await axios.get(endpoint, {
+            const endpoint = searchType === 'all' ? '/api/search' : `/api/search/${searchType}`;
+            const token = localStorage.getItem('token');
+            const headers = token ? { Authorization: `Bearer ${token}` } : {};
+            
+            const { data } = await axios.get(`${API_BASE_URL}${endpoint}`, {
                 params: { query: searchQuery.trim(), page: currentPage },
+                headers,
                 signal: abortControllerRef.current.signal
             });
 
-            if (currentPage === 1) {
-                setResults(data.results || []);
+            // Handle response data
+            if (data && data.results) {
+                if (currentPage === 1) {
+                    setResults(data.results || []);
+                } else {
+                    setResults(prev => [...prev, ...(data.results || [])]);
+                }
+                setHasMore(data.page < data.total_pages);
+                setPage(currentPage);
             } else {
-                setResults(prev => [...prev, ...(data.results || [])]);
+                // Empty results
+                if (currentPage === 1) {
+                    setResults([]);
+                }
+                setHasMore(false);
             }
-
-            setHasMore(data.page < data.total_pages);
-            setPage(currentPage);
         } catch (error) {
             if (error.name !== 'CanceledError' && error.code !== 'ERR_CANCELED') {
-                console.error('Search error:', error);
-                toast.error('Failed to search');
+                if (import.meta.env.DEV) {
+                    console.error('Search error:', error);
+                }
+                // If it's a 404, treat as no results instead of error
+                if (error.response && error.response.status === 404) {
+                    setResults([]);
+                    setHasMore(false);
+                } else {
+                    toast.error('Failed to search. Please try again.');
+                }
             }
         } finally {
             setIsLoading(false);
@@ -116,13 +139,22 @@ const Search = React.memo(() => {
     }, [results, activeTab]);
 
     return (
-        <div className='w-full min-h-screen py-3 select-auto overflow-hidden overflow-y-auto'>
-            <div className='w-full flex items-center gap-4 px-[3%] mb-4'>
-                <h1 onClick={handleBack} className='text-2xl font-semibold hover:text-blue-500 flex items-center text-zinc-400 cursor-pointer'>
-                    <FaLongArrowAltLeft /> Search
-                </h1>
-                <Topnev />
-            </div>
+        <>
+            <Sidenav />
+            <div className='w-full min-h-screen py-3 select-auto overflow-hidden overflow-y-auto bg-[#0f0b20]'>
+                <div className='w-full flex items-center gap-4 px-[3%] mb-4'>
+                    <h1 
+                        onClick={handleBack} 
+                        className='text-2xl font-semibold hover:text-indigo-400 flex items-center gap-2 text-zinc-300 cursor-pointer transition-colors group'
+                    >
+                        <FaLongArrowAltLeft className="group-hover:-translate-x-1 transition-transform" /> 
+                        <span className="flex items-center gap-2">
+                            <FaSearch className="text-indigo-500" />
+                            Search
+                        </span>
+                    </h1>
+                    <Topnev />
+                </div>
 
             {/* Search Bar */}
             <div className='px-[3%] mb-6'>
@@ -184,15 +216,20 @@ const Search = React.memo(() => {
                     )}
                 </>
             ) : query && !isLoading ? (
-                <div className="flex items-center justify-center h-64">
-                    <p className="text-zinc-400 text-xl">No results found</p>
-                </div>
+                <EmptyState
+                    icon={<FaSearch className="w-24 h-24 text-indigo-500/50" />}
+                    title={`No results found for "${query}"`}
+                    description="Try a different search term or check your spelling"
+                />
             ) : (
-                <div className="flex items-center justify-center h-64">
-                    <p className="text-zinc-400 text-xl">Start typing to search...</p>
-                </div>
+                <EmptyState
+                    icon={<FaSearch className="w-24 h-24 text-indigo-500/50" />}
+                    title="Start Searching"
+                    description="Search for movies, TV shows, or people. Type in the search bar above to get started."
+                />
             )}
-        </div>
+            </div>
+        </>
     );
 });
 

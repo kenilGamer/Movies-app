@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import axios from '../utils/axios';
+import axios from 'axios';
 import { API_BASE_URL } from '../utils/config';
 import { toast } from 'react-toastify';
 import Loading from './Loading';
@@ -21,8 +21,12 @@ const Reviews = React.memo(({ movieId, mediaType }) => {
         setIsLoading(true);
 
         try {
-            const { data } = await axios.get(`/reviews/${mediaType}/${movieId}`, {
+            const token = localStorage.getItem('token');
+            const headers = token ? { Authorization: `Bearer ${token}` } : {};
+            
+            const { data } = await axios.get(`${API_BASE_URL}/api/reviews/${mediaType}/${movieId}`, {
                 params: { page: currentPage },
+                headers,
                 signal: abortControllerRef.current.signal
             });
 
@@ -125,7 +129,11 @@ const Reviews = React.memo(({ movieId, mediaType }) => {
                     )}
                 </>
             ) : (
-                <p className="text-zinc-400 text-center py-8">No reviews yet. Be the first to review!</p>
+                <div className="text-center py-8 animate-fadeIn">
+                    <div className="text-6xl mb-4">⭐</div>
+                    <p className="text-zinc-400 text-lg">No reviews yet.</p>
+                    <p className="text-zinc-500 text-sm mt-2">Be the first to share your thoughts!</p>
+                </div>
             )}
         </div>
     );

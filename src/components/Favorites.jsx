@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
-import { FaLongArrowAltLeft } from "react-icons/fa";
+import { FaLongArrowAltLeft, FaHeart } from "react-icons/fa";
 import Topnev from '../partials/topnev';
+import Sidenav from '../partials/sidenav';
 import axios from '../utils/axios';
 import Loading from './Loading';
 import Card from '../partials/Card';
+import EmptyState from './EmptyState';
 import { API_BASE_URL } from '../utils/config';
 import { toast } from 'react-toastify';
 
@@ -76,23 +78,39 @@ const Favorites = React.memo(() => {
     }, [navigate]);
 
     return (
-        <div className='w-full min-h-screen py-3 select-auto overflow-hidden overflow-y-auto'>
-            <div className='w-full flex items-center gap-4 px-[3%]'>
-                <h1 onClick={handleBack} className='text-2xl font-semibold hover:text-blue-500 flex items-center text-zinc-400 cursor-pointer'>
-                    <FaLongArrowAltLeft /> My Favorites
-                </h1>
-                <Topnev />
-            </div>
-            {isLoading ? (
-                <Loading />
-            ) : movies.length > 0 ? (
-                <Card data={movies} title="favorites" />
-            ) : (
-                <div className="flex items-center justify-center h-64">
-                    <p className="text-zinc-400 text-xl">Your favorites list is empty</p>
+        <>
+            <Sidenav />
+            <div className='w-full min-h-screen py-3 select-auto overflow-hidden overflow-y-auto bg-[#0f0b20]'>
+                <div className='w-full flex items-center gap-4 px-[3%] mb-6'>
+                    <h1 
+                        onClick={handleBack} 
+                        className='text-2xl font-semibold hover:text-red-400 flex items-center gap-2 text-zinc-300 cursor-pointer transition-colors group'
+                    >
+                        <FaLongArrowAltLeft className="group-hover:-translate-x-1 transition-transform" /> 
+                        <span className="flex items-center gap-2">
+                            <FaHeart className="text-red-500 animate-pulse" />
+                            My Favorites
+                        </span>
+                    </h1>
+                    <Topnev />
                 </div>
-            )}
-        </div>
+                {isLoading ? (
+                    <Loading message="Loading your favorites..." fullScreen={false} />
+                ) : movies.length > 0 ? (
+                    <div className="px-[3%] animate-fadeIn">
+                        <Card data={movies} title="favorites" />
+                    </div>
+                ) : (
+                    <EmptyState
+                        icon={<FaHeart className="w-24 h-24 text-red-500/50" />}
+                        title="No Favorites Yet"
+                        description="Show some love! Add movies and TV shows to your favorites by clicking the heart icon on any title."
+                        actionLabel="Discover Content"
+                        actionPath="/trending"
+                    />
+                )}
+            </div>
+        </>
     );
 });
 

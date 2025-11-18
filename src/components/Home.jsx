@@ -112,20 +112,27 @@ const Home = React.memo(() => {
   // Show error state if there's an error and no data
   if (error && !trending) {
     return (
-      <div className="w-full h-full flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-500 mb-4">{error}</p>
-          <button 
-            onClick={() => {
-              setError(null);
-              getTrending();
-            }}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
-            Retry
-          </button>
+      <>
+        <Sidenav />
+        <div className="w-full h-full flex items-center justify-center bg-[#0f0b20]">
+          <div className="text-center p-8 bg-zinc-900/50 backdrop-blur-sm rounded-xl border border-red-500/20 max-w-md mx-4">
+            <div className="mb-4 text-6xl">⚠️</div>
+            <h2 className="text-2xl font-bold text-white mb-2">Oops! Something went wrong</h2>
+            <p className="text-red-400 mb-6">{error}</p>
+            <button 
+              onClick={() => {
+                setError(null);
+                setIsLoading(true);
+                getHeaderWallpaper();
+                getTrending();
+              }}
+              className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+            >
+              Try Again
+            </button>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
@@ -135,13 +142,15 @@ const Home = React.memo(() => {
       <div className={containerClass}>
         <Topnev />
         <Headers data={wallpaper} />
-        <div className="mt-8 flex justify-between p-3 max-sm:flex-col items-center gap-4 mb-6">
-          <h1 className="text-3xl md:text-4xl uppercase text-center font-bold text-white tracking-wide">
+        <div className="mt-8 flex justify-between p-3 max-sm:flex-col items-center gap-4 mb-6 animate-fadeIn">
+          <h1 className="text-3xl md:text-4xl uppercase text-center font-bold bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent tracking-wide">
             Trendings
           </h1>
           <Dropdown title="filter" options={["tv", "movie", "all"]} func={handleCategoryChange} />
         </div>
-        <Horizontalcrads data={trending} />
+        <div className="animate-fadeIn">
+          <Horizontalcrads data={trending} />
+        </div>
       </div>
     </>
   );

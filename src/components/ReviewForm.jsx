@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from '../utils/axios';
+import axios from 'axios';
 import { API_BASE_URL } from '../utils/config';
 import { toast } from 'react-toastify';
 

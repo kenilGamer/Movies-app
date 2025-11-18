@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { RiSearchEyeLine } from "react-icons/ri";
 import { IoCloseSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import axios from "../utils/axios";
+import axios from "axios";
+import { API_BASE_URL } from "../utils/config";
 import { FaLeaf } from "react-icons/fa";
 import NotificationBell from "../components/NotificationBell.jsx";
 import ThemeToggle from "../components/ThemeToggle.jsx";
@@ -10,24 +11,52 @@ import ThemeToggle from "../components/ThemeToggle.jsx";
 function Topnev({ left }) {
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const abortControllerRef = useRef(null);
 
   const getSearchResults = async () => {
     if (!query || query.trim().length === 0) {
       setSearchResults([]);
       return;
     }
+
+    // Cancel previous request
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    abortControllerRef.current = new AbortController();
+
     try {
-      const response = await axios.get(`/search?query=${query}`);
+      const token = localStorage.getItem('token');
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      
+      const response = await axios.get(`${API_BASE_URL}/api/search`, {
+        params: { query: query.trim() },
+        headers,
+        signal: abortControllerRef.current.signal
+      });
       setSearchResults(response.data.results || []);
     } catch (error) {
       if (error.name !== 'CanceledError' && error.code !== 'ERR_CANCELED') {
-        console.error(error);
+        if (import.meta.env.DEV) {
+          console.error('Search error:', error);
+        }
+        setSearchResults([]);
       }
     }
   };
 
   useEffect(() => {
-    getSearchResults();
+    const timeoutId = setTimeout(() => {
+      getSearchResults();
+    }, 300); // Debounce search
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
   }, [query]);
 
   return (
