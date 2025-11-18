@@ -83,56 +83,60 @@ const Reviews = React.memo(({ movieId, mediaType }) => {
     }
 
     return (
-        <div className="mt-10">
-            <div className="mb-6">
-                <h2 className="text-3xl font-bold text-white mb-2">Reviews & Ratings</h2>
-                <div className="flex items-center gap-4">
+        <div className="mt-6 sm:mt-10 px-2 sm:px-0">
+            <div className="mb-4 sm:mb-6">
+                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">Reviews & Ratings</h2>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                     {renderStars(averageRating / 2)}
-                    <span className="text-zinc-400">({ratingCount} {ratingCount === 1 ? 'review' : 'reviews'})</span>
+                    <span className="text-sm sm:text-base text-zinc-400">({ratingCount} {ratingCount === 1 ? 'review' : 'reviews'})</span>
                 </div>
             </div>
 
             {reviews.length > 0 ? (
                 <>
-                    <div className="space-y-4">
+                    <div className="space-y-3 sm:space-y-4">
                         {reviews.map((review) => (
-                            <div key={review._id} className="bg-zinc-900 p-6 rounded-lg">
-                                <div className="flex items-start justify-between mb-3">
+                            <div key={review._id} className="bg-zinc-900/90 backdrop-blur-sm p-4 sm:p-6 rounded-lg sm:rounded-xl border border-zinc-800">
+                                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4 mb-3">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-full bg-[#6556CD] flex items-center justify-center text-white font-semibold">
+                                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#6556CD] flex items-center justify-center text-white font-semibold text-sm sm:text-base flex-shrink-0">
                                             {review.userId?.username?.charAt(0).toUpperCase() || 'U'}
                                         </div>
-                                        <div>
-                                            <h4 className="text-white font-semibold">
+                                        <div className="min-w-0 flex-1">
+                                            <h4 className="text-white font-semibold text-sm sm:text-base truncate">
                                                 {review.userId?.username || 'Anonymous'}
                                             </h4>
-                                            <p className="text-zinc-400 text-sm">
+                                            <p className="text-zinc-400 text-xs sm:text-sm">
                                                 {new Date(review.createdAt).toLocaleDateString()}
                                             </p>
                                         </div>
                                     </div>
-                                    {renderStars(review.rating / 2)}
+                                    <div className="flex-shrink-0">
+                                        {renderStars(review.rating / 2)}
+                                    </div>
                                 </div>
                                 {review.review && (
-                                    <p className="text-zinc-300 mt-3">{review.review}</p>
+                                    <p className="text-zinc-300 mt-3 text-sm sm:text-base leading-relaxed break-words">{review.review}</p>
                                 )}
                             </div>
                         ))}
                     </div>
                     {hasMore && (
-                        <button
-                            onClick={() => fetchReviews(page + 1)}
-                            className="mt-6 px-6 py-3 bg-[#6556CD] text-white rounded-lg hover:bg-[#5546C0] transition-colors"
-                        >
-                            Load More Reviews
-                        </button>
+                        <div className="text-center mt-6">
+                            <button
+                                onClick={() => fetchReviews(page + 1)}
+                                className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-[#6556CD] text-white rounded-lg hover:bg-[#5546C0] active:bg-[#4535B0] transition-colors font-semibold text-base sm:text-lg touch-manipulation"
+                            >
+                                Load More Reviews
+                            </button>
+                        </div>
                     )}
                 </>
             ) : (
                 <div className="text-center py-8 animate-fadeIn">
                     <div className="text-6xl mb-4">⭐</div>
-                    <p className="text-zinc-400 text-lg">No reviews yet.</p>
-                    <p className="text-zinc-500 text-sm mt-2">Be the first to share your thoughts!</p>
+                    <p className="text-zinc-400 text-base sm:text-lg">No reviews yet.</p>
+                    <p className="text-zinc-500 text-sm sm:text-base mt-2">Be the first to share your thoughts!</p>
                 </div>
             )}
         </div>

@@ -142,11 +142,13 @@ const Home = React.memo(() => {
       <div className={containerClass}>
         <Topnev />
         <Headers data={wallpaper} />
-        <div className="mt-8 flex justify-between p-3 max-sm:flex-col items-center gap-4 mb-6 animate-fadeIn">
-          <h1 className="text-3xl md:text-4xl uppercase text-center font-bold bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent tracking-wide">
+        <div className="mt-4 sm:mt-8 flex flex-col sm:flex-row justify-between px-4 sm:px-[3%] items-center gap-3 sm:gap-4 mb-4 sm:mb-6 animate-fadeIn">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl uppercase text-center font-bold bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent tracking-wide">
             Trendings
           </h1>
-          <Dropdown title="filter" options={["tv", "movie", "all"]} func={handleCategoryChange} />
+          <div className="w-full sm:w-auto">
+            <Dropdown title="filter" options={["tv", "movie", "all"]} func={handleCategoryChange} />
+          </div>
         </div>
         <div className="animate-fadeIn">
           <Horizontalcrads data={trending} />

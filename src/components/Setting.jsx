@@ -187,13 +187,13 @@ function Setting() {
             <Topnev />
           </div>
 
-          <div className="max-w-5xl mx-auto px-[3%] py-8">
+          <div className="max-w-5xl mx-auto px-4 sm:px-[3%] py-4 sm:py-8">
             {/* Profile Card */}
-            <div className="bg-zinc-900/95 backdrop-blur-md rounded-2xl p-8 mb-6 shadow-2xl border border-zinc-800">
-              <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+            <div className="bg-zinc-900/95 backdrop-blur-md rounded-xl sm:rounded-2xl p-4 sm:p-8 mb-4 sm:mb-6 shadow-2xl border border-zinc-800">
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-4 sm:gap-6">
                 {/* Avatar Section */}
                 <div className="relative group">
-                  <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-[#6556CD] shadow-xl ring-4 ring-[#6556CD]/20">
+                  <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-[#6556CD] shadow-xl ring-4 ring-[#6556CD]/20">
                     <img
                       src={displayAvatar}
                       alt="User Avatar"
@@ -215,21 +215,21 @@ function Setting() {
 
                 {/* User Info */}
                 <div className="flex-1 text-center md:text-left">
-                  <h2 className="text-3xl font-bold text-white mb-2">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
                     {user?.username || "User"}
                   </h2>
-                  <p className="text-zinc-400 mb-1 flex items-center justify-center md:justify-start gap-2">
+                  <p className="text-sm sm:text-base text-zinc-400 mb-1 flex items-center justify-center md:justify-start gap-2">
                     <MdEmail className="text-sm" /> {user?.email || "No email"}
                   </p>
                   {user?.age && (
-                    <p className="text-zinc-400 mb-4 flex items-center justify-center md:justify-start gap-2">
+                    <p className="text-sm sm:text-base text-zinc-400 mb-4 flex items-center justify-center md:justify-start gap-2">
                       <MdCake className="text-sm" /> Age: {user.age}
                     </p>
                   )}
                   {!isEditing && (
                     <button
                       onClick={() => setIsEditing(true)}
-                      className="px-6 py-2 bg-[#6556CD] text-white rounded-lg hover:bg-[#5546C0] transition-all flex items-center gap-2 mx-auto md:mx-0 shadow-lg hover:shadow-xl"
+                      className="w-full sm:w-auto px-6 py-2 sm:py-3 bg-[#6556CD] text-white rounded-lg hover:bg-[#5546C0] active:bg-[#4535B0] transition-all flex items-center justify-center gap-2 mx-auto md:mx-0 shadow-lg hover:shadow-xl font-semibold text-sm sm:text-base touch-manipulation"
                     >
                       <MdModeEdit /> Edit Profile
                     </button>
@@ -241,8 +241,8 @@ function Setting() {
             {/* Settings Sections */}
             <div className="space-y-6">
               {/* Personal Information */}
-              <div className="bg-zinc-900/95 backdrop-blur-md rounded-2xl p-8 shadow-2xl border border-zinc-800">
-                <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+              <div className="bg-zinc-900/95 backdrop-blur-md rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-2xl border border-zinc-800">
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
                   <div className="p-2 bg-[#6556CD]/20 rounded-lg">
                     <MdPerson className="text-[#6556CD] text-2xl" />
                   </div>
@@ -250,8 +250,8 @@ function Setting() {
                 </h3>
                 <form onSubmit={handleUpdate} className="space-y-6">
                   <div>
-                    <label className="block text-white font-semibold mb-3 flex items-center gap-2">
-                      <MdPerson className="text-[#6556CD]" /> Username
+                    <label className="block text-white font-semibold mb-2 sm:mb-3 flex items-center gap-2 text-sm sm:text-base">
+                      <MdPerson className="text-[#6556CD] text-lg sm:text-xl" /> Username
                     </label>
                     <input
                       type="text"
@@ -260,7 +260,7 @@ function Setting() {
                       onChange={(e) => setUsername(e.target.value)}
                       disabled={!isEditing}
                       placeholder={user?.username || "Enter username"}
-                      className="w-full p-4 bg-zinc-800/50 text-white rounded-lg border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-[#6556CD] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                      className="w-full p-3 sm:p-4 text-sm sm:text-base bg-zinc-800/50 text-white rounded-lg border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-[#6556CD] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                     />
                   </div>
 
@@ -297,11 +297,11 @@ function Setting() {
                   </div>
 
                   {isEditing && (
-                    <div className="flex gap-4 pt-4">
+                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4">
                       <button
                         type="submit"
                         disabled={isSaving}
-                        className="flex-1 px-6 py-3 bg-[#6556CD] text-white rounded-lg hover:bg-[#5546C0] disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 font-semibold shadow-lg hover:shadow-xl"
+                        className="flex-1 px-6 py-3 sm:py-4 bg-[#6556CD] text-white rounded-lg hover:bg-[#5546C0] active:bg-[#4535B0] disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 font-semibold text-base sm:text-lg shadow-lg hover:shadow-xl touch-manipulation"
                       >
                         <FaSave /> {isSaving ? "Saving..." : "Save Changes"}
                       </button>
@@ -309,7 +309,7 @@ function Setting() {
                         type="button"
                         onClick={handleCancel}
                         disabled={isSaving}
-                        className="flex-1 px-6 py-3 bg-zinc-700 text-white rounded-lg hover:bg-zinc-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 font-semibold"
+                        className="flex-1 px-6 py-3 sm:py-4 bg-zinc-700 text-white rounded-lg hover:bg-zinc-600 active:bg-zinc-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 font-semibold text-base sm:text-lg touch-manipulation"
                       >
                         <FaTimes /> Cancel
                       </button>

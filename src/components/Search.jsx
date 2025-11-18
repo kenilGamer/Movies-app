@@ -70,8 +70,19 @@ const Search = React.memo(() => {
                 if (import.meta.env.DEV) {
                     console.error('Search error:', error);
                 }
+                // Handle 429 (Too Many Requests)
+                if (error.response && error.response.status === 429) {
+                    const retryAfter = error.response.data?.error?.retry_after || 
+                                     error.response.headers['retry-after'] || 
+                                     15;
+                    toast.error(`Too many requests. Please wait ${retryAfter} seconds before searching again.`, {
+                        autoClose: Math.min(retryAfter * 1000, 10000)
+                    });
+                    setResults([]);
+                    setHasMore(false);
+                } 
                 // If it's a 404, treat as no results instead of error
-                if (error.response && error.response.status === 404) {
+                else if (error.response && error.response.status === 404) {
                     setResults([]);
                     setHasMore(false);
                 } else {
@@ -157,21 +168,21 @@ const Search = React.memo(() => {
                 </div>
 
             {/* Search Bar */}
-            <div className='px-[3%] mb-6'>
-                <form onSubmit={handleSearch} className='flex gap-4'>
+            <div className='px-4 sm:px-[3%] mb-4 sm:mb-6'>
+                <form onSubmit={handleSearch} className='flex flex-col sm:flex-row gap-3 sm:gap-4'>
                     <div className='flex-1 relative'>
                         <input
                             type="text"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             placeholder="Search movies, TV shows, people..."
-                            className='w-full p-4 pr-12 bg-zinc-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6556CD]'
+                            className='w-full p-3 sm:p-4 pr-12 text-base sm:text-lg bg-zinc-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6556CD]'
                         />
-                        <FaSearch className='absolute right-4 top-1/2 transform -translate-y-1/2 text-zinc-400' />
+                        <FaSearch className='absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 text-zinc-400 text-lg sm:text-xl' />
                     </div>
                     <button
                         type="submit"
-                        className='px-6 py-4 bg-[#6556CD] text-white rounded-lg hover:bg-[#5546C0] transition-colors'
+                        className='w-full sm:w-auto px-6 py-3 sm:py-4 bg-[#6556CD] text-white rounded-lg hover:bg-[#5546C0] active:bg-[#4535B0] transition-colors font-semibold text-base sm:text-lg'
                     >
                         Search
                     </button>
@@ -180,20 +191,22 @@ const Search = React.memo(() => {
 
             {/* Tabs */}
             {query && (
-                <div className='px-[3%] mb-4 flex gap-2 border-b border-zinc-700'>
-                    {['all', 'movie', 'tv', 'person'].map(tab => (
-                        <button
-                            key={tab}
-                            onClick={() => handleTabChange(tab)}
-                            className={`px-4 py-2 capitalize transition-colors ${
-                                activeTab === tab
-                                    ? 'border-b-2 border-[#6556CD] text-[#6556CD]'
-                                    : 'text-zinc-400 hover:text-white'
-                            }`}
-                        >
-                            {tab === 'all' ? 'All' : tab === 'tv' ? 'TV Shows' : tab}
-                        </button>
-                    ))}
+                <div className='px-4 sm:px-[3%] mb-4 overflow-x-auto scrollbar-hide'>
+                    <div className='flex gap-2 sm:gap-4 border-b border-zinc-700 min-w-max'>
+                        {['all', 'movie', 'tv', 'person'].map(tab => (
+                            <button
+                                key={tab}
+                                onClick={() => handleTabChange(tab)}
+                                className={`px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base capitalize transition-colors whitespace-nowrap ${
+                                    activeTab === tab
+                                        ? 'border-b-2 border-[#6556CD] text-[#6556CD] font-semibold'
+                                        : 'text-zinc-400 hover:text-white'
+                                }`}
+                            >
+                                {tab === 'all' ? 'All' : tab === 'tv' ? 'TV Shows' : tab}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             )}
 
@@ -204,11 +217,11 @@ const Search = React.memo(() => {
                 <>
                     <Card data={filteredResults} title={activeTab === 'all' ? 'search' : activeTab} />
                     {hasMore && (
-                        <div className='text-center mt-6'>
+                        <div className='text-center mt-6 px-4'>
                             <button
                                 onClick={loadMore}
                                 disabled={isLoading}
-                                className='px-6 py-3 bg-[#6556CD] text-white rounded-lg hover:bg-[#5546C0] disabled:opacity-50'
+                                className='w-full sm:w-auto px-8 py-3 sm:py-4 bg-[#6556CD] text-white rounded-lg hover:bg-[#5546C0] active:bg-[#4535B0] disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-semibold text-base sm:text-lg'
                             >
                                 {isLoading ? 'Loading...' : 'Load More'}
                             </button>
