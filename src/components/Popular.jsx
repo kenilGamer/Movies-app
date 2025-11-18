@@ -99,10 +99,14 @@ const Popular = React.memo(() => {
     }, [fetchPopular, isLoading, hasMore]);
 
     return popular.length > 0 ? (
-        <div className='w-full min-h-screen py-3 select-auto overflow-hidden overflow-y-auto'>
-            <div className='w-full flex items-center gap-4 px-[3%]'>
-                <h1 onClick={handleBack} className='text-2xl font-semibold hover:text-blue-500 flex items-center text-zinc-400 cursor-pointer'>
-                    <FaLongArrowAltLeft /> Popular 
+        <div className='w-full min-h-screen py-3 select-auto overflow-hidden overflow-y-auto animate-fadeIn'>
+            <div className='w-full flex max-sm:flex-col sm:items-center gap-4 px-[3%] mb-6'>
+                <h1 
+                    onClick={handleBack} 
+                    className='text-2xl sm:text-3xl font-bold hover:text-indigo-400 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 cursor-pointer transition-all duration-300 group'
+                >
+                    <FaLongArrowAltLeft className="text-zinc-400 group-hover:text-indigo-400 group-hover:-translate-x-1 transition-all duration-300" /> 
+                    <span>Popular</span>
                 </h1>
                 <Topnev />
                 <Dropdown title={`Category`} options={["movie", "tv"]} func={handleCategoryChange} />
@@ -111,7 +115,12 @@ const Popular = React.memo(() => {
                 dataLength={popular.length}
                 next={loadMore}
                 hasMore={hasMore}
-                loader={<h1>Loading...</h1>}
+                loader={
+                    <div className="flex justify-center items-center py-8">
+                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+                        <span className="ml-4 text-zinc-400">Loading more...</span>
+                    </div>
+                }
             >
                 <Card data={popular} title={category} />
             </InfiniteScroll>

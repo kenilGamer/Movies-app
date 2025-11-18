@@ -122,37 +122,36 @@ function Tv() {
     }, []);
 
     return tv.length > 0 ? (
-        <div className="w-full h-screen ">
-            <div className=" px-[5%] w-full flex items-center justify-between ">
-                <h1 className=" text-2xl font-semibold text-zinc-400">
-                    <i
-                        onClick={() => navigate(-1)}
-                        className="hover:text-[#6556CD] ri-arrow-left-line"
-                    ></i>{" "}
-                    tv
-                    <small className="ml-2 text-sm text-zinc-600">
-                        ({category})
+        <div className="w-full min-h-screen py-3 select-auto animate-fadeIn">
+            <div className="w-full flex max-sm:flex-col sm:items-center gap-4 px-[3%] mb-6">
+                <h1 
+                    onClick={() => navigate(-1)} 
+                    className="text-2xl sm:text-3xl font-bold hover:text-indigo-400 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 cursor-pointer transition-all duration-300 group"
+                >
+                    <FaLongArrowAltLeft className="text-zinc-400 group-hover:text-indigo-400 group-hover:-translate-x-1 transition-all duration-300" /> 
+                    <span>TV Shows</span>
+                    <small className="ml-2 text-sm sm:text-base text-zinc-500 font-normal">
+                        ({category.replace(/_/g, ' ')})
                     </small>
                 </h1>
-                <div className="flex max-md:flex-col items-center w-[80%]">
+                <div className="flex items-center flex-1">
                     <Topnev />
-                    {!useFilters && (
-                        <Dropdown
-                            title="Category"
-                            options={[
-                                "on_the_air",
-                                "popular",
-                                "top_rated",
-                                "airing_today",
-                            ]}
-                            func={(e) => setcategory(e.target.value)}
-                        />
-                    )}
-                    <div className="w-[2%]"></div>
                 </div>
+                {!useFilters && (
+                    <Dropdown
+                        title="Category"
+                        options={[
+                            "on_the_air",
+                            "popular",
+                            "top_rated",
+                            "airing_today",
+                        ]}
+                        func={(e) => setcategory(e.target.value)}
+                    />
+                )}
             </div>
 
-            <div className="px-[5%] mb-6">
+            <div className="px-[3%] mb-6">
                 <AdvancedFilters mediaType="tv" onFilterChange={handleFilterChange} />
             </div>
 
@@ -160,7 +159,12 @@ function Tv() {
                 dataLength={tv.length}
                 next={() => Gettv()}
                 hasMore={hasMore}
-                loader={<h1>Loading...</h1>}
+                loader={
+                    <div className="flex justify-center items-center py-8">
+                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+                        <span className="ml-4 text-zinc-400">Loading more TV shows...</span>
+                    </div>
+                }
             >
                 <Card data={tv} title="tv" />
             </InfiniteScroll>

@@ -192,15 +192,15 @@ const Search = React.memo(() => {
             {/* Tabs */}
             {query && (
                 <div className='px-4 sm:px-[3%] mb-4 overflow-x-auto scrollbar-hide'>
-                    <div className='flex gap-2 sm:gap-4 border-b border-zinc-700 min-w-max'>
+                    <div className='flex gap-2 sm:gap-3 min-w-max bg-zinc-900/50 backdrop-blur-sm border border-zinc-800/50 rounded-xl p-1'>
                         {['all', 'movie', 'tv', 'person'].map(tab => (
                             <button
                                 key={tab}
                                 onClick={() => handleTabChange(tab)}
-                                className={`px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base capitalize transition-colors whitespace-nowrap ${
+                                className={`px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base capitalize transition-all duration-300 whitespace-nowrap rounded-lg font-medium ${
                                     activeTab === tab
-                                        ? 'border-b-2 border-[#6556CD] text-[#6556CD] font-semibold'
-                                        : 'text-zinc-400 hover:text-white'
+                                        ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/50 transform scale-105'
+                                        : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
                                 }`}
                             >
                                 {tab === 'all' ? 'All' : tab === 'tv' ? 'TV Shows' : tab}

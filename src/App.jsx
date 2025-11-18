@@ -33,7 +33,21 @@ import TvPalyer from './partials/Tvplayer'
 function App() { 
   return (
     <div className='w-full bg-[#0f0b20] select-none h-screen flex text-white '>
-      <ToastContainer />
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        toastClassName="bg-zinc-900/95 backdrop-blur-md border border-zinc-700/50 rounded-xl shadow-2xl"
+        progressClassName="bg-gradient-to-r from-indigo-600 to-purple-600"
+        bodyClassName="text-white"
+      />
       <Routes>
         <Route path='/signup' element={<Sinup/>} />
         <Route path="/login" element={<Login />} />

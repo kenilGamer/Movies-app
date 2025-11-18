@@ -111,26 +111,34 @@ const AdvancedFilters = React.memo(({ mediaType = 'movie', onFilterChange, initi
         <div className="mb-6">
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full p-4 bg-zinc-800 text-white rounded-lg flex items-center justify-between hover:bg-zinc-700 transition-colors"
+                className="w-full p-4 bg-gradient-to-r from-zinc-800/90 to-zinc-900/90 backdrop-blur-sm border border-zinc-700/50 text-white rounded-xl flex items-center justify-between hover:border-indigo-500/50 hover:shadow-lg hover:shadow-indigo-500/20 transition-all duration-300 group"
             >
-                <span className="font-semibold">Advanced Filters</span>
-                <i className={`ri-arrow-${isOpen ? 'up' : 'down'}-s-line text-xl`}></i>
+                <span className="font-semibold text-base sm:text-lg flex items-center gap-2">
+                    <span className="text-indigo-400">⚙️</span>
+                    Advanced Filters
+                </span>
+                <span className={`transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+                    <i className={`ri-arrow-down-s-line text-xl text-zinc-400 group-hover:text-indigo-400`}></i>
+                </span>
             </button>
 
             {isOpen && (
-                <div className="mt-4 p-6 bg-zinc-900 rounded-lg space-y-6">
+                <div className="mt-4 p-4 sm:p-6 bg-gradient-to-br from-zinc-900/95 to-zinc-800/95 backdrop-blur-md border border-zinc-700/50 rounded-xl shadow-2xl shadow-black/50 space-y-6 animate-fadeIn">
                     {/* Genres */}
                     <div>
-                        <label className="block text-white font-semibold mb-3">Genres</label>
+                        <label className="block text-white font-semibold mb-3 text-base sm:text-lg flex items-center gap-2">
+                            <span className="text-indigo-400">🎬</span>
+                            Genres
+                        </label>
                         <div className="flex flex-wrap gap-2">
                             {genres.map(genre => (
                                 <button
                                     key={genre.id}
                                     onClick={() => handleGenreToggle(genre.id)}
-                                    className={`px-4 py-2 rounded-full text-sm transition-colors ${
+                                    className={`px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 ${
                                         selectedGenres.includes(genre.id)
-                                            ? 'bg-[#6556CD] text-white'
-                                            : 'bg-zinc-700 text-zinc-300 hover:bg-zinc-600'
+                                            ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/50'
+                                            : 'bg-zinc-700/50 text-zinc-300 hover:bg-zinc-600 hover:text-white border border-zinc-600/50'
                                     }`}
                                 >
                                     {genre.name}
@@ -141,71 +149,84 @@ const AdvancedFilters = React.memo(({ mediaType = 'movie', onFilterChange, initi
 
                     {/* Year Range */}
                     <div>
-                        <label className="block text-white font-semibold mb-3">
-                            Year Range: {yearRange.min} - {yearRange.max}
+                        <label className="block text-white font-semibold mb-3 text-base sm:text-lg flex items-center gap-2">
+                            <span className="text-indigo-400">📅</span>
+                            Year Range: <span className="text-indigo-400">{yearRange.min}</span> - <span className="text-indigo-400">{yearRange.max}</span>
                         </label>
-                        <div className="flex gap-4 items-center">
-                            <input
-                                type="range"
-                                min="1900"
-                                max={currentYear}
-                                value={yearRange.min}
-                                onChange={(e) => setYearRange(prev => ({ ...prev, min: parseInt(e.target.value) }))}
-                                className="flex-1"
-                            />
-                            <input
-                                type="range"
-                                min="1900"
-                                max={currentYear}
-                                value={yearRange.max}
-                                onChange={(e) => setYearRange(prev => ({ ...prev, max: parseInt(e.target.value) }))}
-                                className="flex-1"
-                            />
+                        <div className="flex gap-3 sm:gap-4 items-center">
+                            <div className="flex-1">
+                                <input
+                                    type="range"
+                                    min="1900"
+                                    max={currentYear}
+                                    value={yearRange.min}
+                                    onChange={(e) => setYearRange(prev => ({ ...prev, min: parseInt(e.target.value) }))}
+                                    className="w-full h-2 bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                                />
+                            </div>
+                            <div className="flex-1">
+                                <input
+                                    type="range"
+                                    min="1900"
+                                    max={currentYear}
+                                    value={yearRange.max}
+                                    onChange={(e) => setYearRange(prev => ({ ...prev, max: parseInt(e.target.value) }))}
+                                    className="w-full h-2 bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                                />
+                            </div>
                         </div>
                         <div className="flex justify-between text-zinc-400 text-sm mt-2">
-                            <span>{yearRange.min}</span>
-                            <span>{yearRange.max}</span>
+                            <span className="bg-zinc-800/50 px-2 py-1 rounded">{yearRange.min}</span>
+                            <span className="bg-zinc-800/50 px-2 py-1 rounded">{yearRange.max}</span>
                         </div>
                     </div>
 
                     {/* Rating Range */}
                     <div>
-                        <label className="block text-white font-semibold mb-3">
-                            Rating: {ratingRange.min} - {ratingRange.max}
+                        <label className="block text-white font-semibold mb-3 text-base sm:text-lg flex items-center gap-2">
+                            <span className="text-indigo-400">⭐</span>
+                            Rating: <span className="text-indigo-400">{ratingRange.min.toFixed(1)}</span> - <span className="text-indigo-400">{ratingRange.max.toFixed(1)}</span>
                         </label>
-                        <div className="flex gap-4 items-center">
-                            <input
-                                type="range"
-                                min="0"
-                                max="10"
-                                step="0.1"
-                                value={ratingRange.min}
-                                onChange={(e) => setRatingRange(prev => ({ ...prev, min: parseFloat(e.target.value) }))}
-                                className="flex-1"
-                            />
-                            <input
-                                type="range"
-                                min="0"
-                                max="10"
-                                step="0.1"
-                                value={ratingRange.max}
-                                onChange={(e) => setRatingRange(prev => ({ ...prev, max: parseFloat(e.target.value) }))}
-                                className="flex-1"
-                            />
+                        <div className="flex gap-3 sm:gap-4 items-center">
+                            <div className="flex-1">
+                                <input
+                                    type="range"
+                                    min="0"
+                                    max="10"
+                                    step="0.1"
+                                    value={ratingRange.min}
+                                    onChange={(e) => setRatingRange(prev => ({ ...prev, min: parseFloat(e.target.value) }))}
+                                    className="w-full h-2 bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                                />
+                            </div>
+                            <div className="flex-1">
+                                <input
+                                    type="range"
+                                    min="0"
+                                    max="10"
+                                    step="0.1"
+                                    value={ratingRange.max}
+                                    onChange={(e) => setRatingRange(prev => ({ ...prev, max: parseFloat(e.target.value) }))}
+                                    className="w-full h-2 bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                                />
+                            </div>
                         </div>
                         <div className="flex justify-between text-zinc-400 text-sm mt-2">
-                            <span>{ratingRange.min.toFixed(1)}</span>
-                            <span>{ratingRange.max.toFixed(1)}</span>
+                            <span className="bg-zinc-800/50 px-2 py-1 rounded">{ratingRange.min.toFixed(1)}</span>
+                            <span className="bg-zinc-800/50 px-2 py-1 rounded">{ratingRange.max.toFixed(1)}</span>
                         </div>
                     </div>
 
                     {/* Language */}
                     <div>
-                        <label className="block text-white font-semibold mb-3">Language</label>
+                        <label className="block text-white font-semibold mb-3 text-base sm:text-lg flex items-center gap-2">
+                            <span className="text-indigo-400">🌐</span>
+                            Language
+                        </label>
                         <select
                             value={selectedLanguage}
                             onChange={(e) => setSelectedLanguage(e.target.value)}
-                            className="w-full p-3 bg-zinc-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6556CD]"
+                            className="w-full p-3 bg-zinc-800/50 border border-zinc-700/50 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300"
                         >
                             <option value="">All Languages</option>
                             {languages.map(lang => (
@@ -218,11 +239,14 @@ const AdvancedFilters = React.memo(({ mediaType = 'movie', onFilterChange, initi
 
                     {/* Sort By */}
                     <div>
-                        <label className="block text-white font-semibold mb-3">Sort By</label>
+                        <label className="block text-white font-semibold mb-3 text-base sm:text-lg flex items-center gap-2">
+                            <span className="text-indigo-400">🔀</span>
+                            Sort By
+                        </label>
                         <select
                             value={sortBy}
                             onChange={(e) => setSortBy(e.target.value)}
-                            className="w-full p-3 bg-zinc-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6556CD]"
+                            className="w-full p-3 bg-zinc-800/50 border border-zinc-700/50 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300"
                         >
                             {sortOptions.map(option => (
                                 <option key={option.value} value={option.value}>
@@ -235,9 +259,9 @@ const AdvancedFilters = React.memo(({ mediaType = 'movie', onFilterChange, initi
                     {/* Reset Button */}
                     <button
                         onClick={handleReset}
-                        className="w-full p-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                        className="w-full p-3 sm:p-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-[1.02] active:scale-95 shadow-lg shadow-red-500/20"
                     >
-                        Reset Filters
+                        🔄 Reset Filters
                     </button>
                 </div>
             )}

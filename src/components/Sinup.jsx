@@ -133,8 +133,11 @@ function Signup() {
         }}
         className="w-full h-full flex items-center justify-center bg-cover bg-center"
       >
-        <div className="w-[25em] max-md:w-[20em] min-h-[39em] bg-[#ffffff68] rounded-xl backdrop-blur-sm bg-opacity-50 box-shadow-md shadow-white flex flex-col items-center justify-center">
-          <h1 className="text-2xl font-bold text-white md:mb-4">Signup Page</h1>
+        <div className="w-full max-w-md min-h-[42em] bg-gradient-to-br from-zinc-900/95 to-zinc-800/95 backdrop-blur-xl border border-zinc-700/50 rounded-2xl shadow-2xl shadow-black/50 flex flex-col items-center justify-center p-6 sm:p-8 transition-all duration-300 hover:shadow-indigo-500/20 hover:border-indigo-500/50 overflow-y-auto">
+          <div className="mb-6 text-center">
+            <h1 className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 mb-2 tracking-wide">Create Account</h1>
+            <p className="text-zinc-400 text-sm sm:text-base">Join GODCRAFTS today</p>
+          </div>
           <form
             onSubmit={handleSubmit}
             className="space-y-4 flex flex-col items-center justify-center relative"
@@ -143,88 +146,119 @@ function Signup() {
               type="file"
               name="avatar"
               id="avatar"
+              accept="image/*"
               onChange={(e) => setAvatar(e.target.files[0])}
               hidden
             />
-            <div className="w-32 h-32 bg-violet-300 rounded-full">
-              <div className="absolute top-2 left-[60%] avatar cursor-pointer hover:bg-violet-500 rounded-full p-1 bg-violet-500">
-                <MdModeEdit
-                  className="text-white text-2xl cursor-pointer"
-                  onClick={handleAvatar}
-                />
+            <div className="relative mb-4 group">
+              <div className="w-24 h-24 sm:w-28 sm:h-28 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center overflow-hidden border-4 border-zinc-700/50 shadow-lg">
+                {avatar ? (
+                  <img 
+                    src={URL.createObjectURL(avatar)} 
+                    alt="Avatar preview" 
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span className="text-3xl sm:text-4xl text-white font-bold">
+                    {(username || email || 'U').charAt(0).toUpperCase()}
+                  </span>
+                )}
               </div>
+              <button
+                type="button"
+                onClick={handleAvatar}
+                className="absolute bottom-0 right-0 w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transform transition-all duration-300 hover:scale-110 active:scale-95 border-2 border-zinc-900"
+              >
+                <MdModeEdit className="text-white text-sm sm:text-base" />
+              </button>
             </div>
 
             {/* Username, Email, Age, Password Inputs */}
-            <div className="mb-4">
+            <div className="mb-4 w-full">
+              <label htmlFor="username" className="block text-sm font-medium text-zinc-300 mb-2">Username</label>
               <input
                 type="text"
                 name="username"
-                className="mt-1 p-2 w-full text-black rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="username"
+                className="w-full p-3 sm:p-4 text-white bg-zinc-800/50 border border-zinc-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all duration-300 placeholder:text-zinc-500 hover:border-zinc-600"
                 value={username}
-                placeholder="Username"
+                placeholder="Choose a username"
                 onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-4 w-full">
+              <label htmlFor="email" className="block text-sm font-medium text-zinc-300 mb-2">Email</label>
               <input
                 type="email"
                 name="email"
-                className="mt-1 p-2 w-full text-black rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="email"
+                className="w-full p-3 sm:p-4 text-white bg-zinc-800/50 border border-zinc-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all duration-300 placeholder:text-zinc-500 hover:border-zinc-600"
                 value={email}
-                placeholder="Email"
+                placeholder="Enter your email"
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-4 w-full">
+              <label htmlFor="age" className="block text-sm font-medium text-zinc-300 mb-2">Age</label>
               <input
                 type="number"
                 name="age"
-                className="mt-1 p-2 w-full rounded-md text-black border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="age"
+                min="13"
+                max="120"
+                className="w-full p-3 sm:p-4 text-white bg-zinc-800/50 border border-zinc-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all duration-300 placeholder:text-zinc-500 hover:border-zinc-600"
                 value={age}
-                placeholder="Age"
+                placeholder="Enter your age"
                 onChange={(e) => setAge(e.target.value)}
                 required
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-4 w-full">
+              <label htmlFor="password" className="block text-sm font-medium text-zinc-300 mb-2">Password</label>
               <input
                 type="password"
                 name="password"
-                className="mt-1 p-2 w-full rounded-md text-black border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                id="password"
+                className="w-full p-3 sm:p-4 text-white bg-zinc-800/50 border border-zinc-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all duration-300 placeholder:text-zinc-500 hover:border-zinc-600"
                 value={password}
-                placeholder="Password"
+                placeholder="Create a password"
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
 
-            <Link to="/forgot-password">
-              <p className="text-white">Forgot Password?</p>
-            </Link>
-
-            <div>
+            <div className="w-full space-y-3">
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="w-full flex justify-center items-center gap-2 py-3 sm:py-4 px-4 border border-transparent rounded-xl shadow-lg text-sm sm:text-base font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] hover:shadow-xl hover:shadow-indigo-500/50"
               >
-                Sign up
+                <span>Sign up</span>
               </button>
-              <h1 className="text-center">or</h1>
+              
+              <div className="flex items-center justify-center w-full my-6">
+                <div className="flex-1 h-px bg-zinc-700/50"></div>
+                <span className="px-4 text-zinc-500 text-sm font-medium">or</span>
+                <div className="flex-1 h-px bg-zinc-700/50"></div>
+              </div>
+              
               <button
                 onClick={handleGoogleSignup}
                 type="button"
-                className="w-full mt-2 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 bg-slate-50 text-3xl"
+                className="w-full flex items-center justify-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-zinc-700/50 px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] group"
               >
-                <FcGoogle />
+                <FcGoogle className="text-2xl"/>
+                <span className="text-sm sm:text-base font-medium text-white group-hover:text-indigo-300 transition-colors">Continue with Google</span>
               </button>
-              <Link to="/login" className="mt-2 block">
-                <p className="text-white">Already have an account? Login</p>
+              
+              <Link to="/login" className="mt-4 block text-center">
+                <p className="text-zinc-400 hover:text-indigo-300 transition-colors duration-200 text-sm">
+                  Already have an account? <span className="font-semibold text-indigo-400 underline underline-offset-2">Login</span>
+                </p>
               </Link>
             </div>
           </form>

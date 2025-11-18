@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { FaLongArrowAltLeft, FaPlus } from 'react-icons/fa';
+import { FaLongArrowAltLeft, FaPlus, FaFolder, FaLock, FaGlobe, FaTrash, FaEdit } from 'react-icons/fa';
 import Topnev from '../partials/topnev';
 import axios from '../utils/axios';
 import Loading from './Loading';
+import EmptyState from './EmptyState';
 import { API_BASE_URL } from '../utils/config';
 import { toast } from 'react-toastify';
 
@@ -72,58 +73,103 @@ const Collections = React.memo(() => {
     }, [fetchCollections]);
 
     return (
-        <div className='w-full min-h-screen py-3 select-auto overflow-hidden overflow-y-auto'>
-            <div className='w-full flex items-center gap-4 px-[3%] mb-6'>
-                <h1 onClick={handleBack} className='text-2xl font-semibold hover:text-blue-500 flex items-center text-zinc-400 cursor-pointer'>
-                    <FaLongArrowAltLeft /> My Collections
+        <div className='w-full min-h-screen py-3 select-auto overflow-hidden overflow-y-auto animate-fadeIn'>
+            <div className='w-full flex max-sm:flex-col sm:items-center gap-4 px-[3%] mb-6 sm:mb-8'>
+                <h1 
+                    onClick={handleBack} 
+                    className='text-2xl sm:text-3xl font-bold hover:text-indigo-400 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 cursor-pointer transition-all duration-300 group'
+                >
+                    <FaLongArrowAltLeft className="text-zinc-400 group-hover:text-indigo-400 group-hover:-translate-x-1 transition-all duration-300" /> 
+                    <span>My Collections</span>
                 </h1>
                 <Topnev />
                 <Link
                     to="/collections/create"
-                    className="ml-auto px-4 py-2 bg-[#6556CD] text-white rounded-lg hover:bg-[#5546C0] transition-colors flex items-center gap-2"
+                    className="ml-auto sm:ml-0 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-xl font-semibold shadow-lg shadow-indigo-500/50 transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center gap-2 sm:gap-3 text-sm sm:text-base"
                 >
-                    <FaPlus /> Create Collection
+                    <FaPlus className="text-base sm:text-lg" />
+                    <span>Create Collection</span>
                 </Link>
             </div>
             {isLoading ? (
                 <Loading />
             ) : collections.length > 0 ? (
-                <div className="px-[3%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="px-4 sm:px-[3%] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                     {collections.map((collection) => (
-                        <Link
+                        <div
                             key={collection._id}
-                            to={`/collections/${collection._id}`}
-                            className="bg-zinc-900 p-6 rounded-lg hover:bg-zinc-800 transition-colors"
+                            className="group relative bg-gradient-to-br from-zinc-900/50 to-zinc-800/30 backdrop-blur-sm border border-zinc-800/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:border-indigo-500/50 shadow-lg shadow-black/30 hover:shadow-2xl hover:shadow-indigo-500/20 transition-all duration-500"
                         >
-                            <h3 className="text-xl font-bold text-white mb-2">{collection.name}</h3>
-                            <p className="text-zinc-400 text-sm mb-4 line-clamp-2">
-                                {collection.description || 'No description'}
-                            </p>
-                            <div className="flex items-center justify-between">
-                                <span className="text-zinc-500 text-sm">
-                                    {collection.items?.length || 0} items
-                                </span>
-                                <span className={`text-xs px-2 py-1 rounded ${
-                                    collection.isPublic 
-                                        ? 'bg-green-600 text-white' 
-                                        : 'bg-zinc-700 text-zinc-300'
-                                }`}>
-                                    {collection.isPublic ? 'Public' : 'Private'}
-                                </span>
-                            </div>
-                        </Link>
+                            <Link
+                                to={`/collections/${collection._id}`}
+                                className="block"
+                            >
+                                <div className="flex items-start justify-between mb-4">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                                            <FaFolder className="text-white text-xl sm:text-2xl" />
+                                        </div>
+                                        <div className="flex-1">
+                                            <h3 className="text-lg sm:text-xl font-bold text-white mb-1 line-clamp-1 group-hover:text-indigo-400 transition-colors">
+                                                {collection.name}
+                                            </h3>
+                                            <div className="flex items-center gap-2">
+                                                {collection.isPublic ? (
+                                                    <span className="flex items-center gap-1 text-xs text-green-400">
+                                                        <FaGlobe className="text-[0.7em]" />
+                                                        <span>Public</span>
+                                                    </span>
+                                                ) : (
+                                                    <span className="flex items-center gap-1 text-xs text-zinc-500">
+                                                        <FaLock className="text-[0.7em]" />
+                                                        <span>Private</span>
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p className="text-zinc-400 text-sm mb-4 line-clamp-2 leading-relaxed">
+                                    {collection.description || 'No description provided'}
+                                </p>
+                                <div className="flex items-center justify-between pt-4 border-t border-zinc-800/50">
+                                    <span className="text-zinc-500 text-sm font-medium">
+                                        {collection.items?.length || 0} item{collection.items?.length !== 1 ? 's' : ''}
+                                    </span>
+                                    <span className="text-indigo-400 text-sm font-semibold group-hover:text-indigo-300 transition-colors">
+                                        View →
+                                    </span>
+                                </div>
+                            </Link>
+                            <button
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    handleDelete(collection._id);
+                                }}
+                                className="absolute top-4 right-4 p-2 bg-red-600/20 hover:bg-red-600/40 rounded-lg text-red-400 hover:text-red-300 transition-all duration-300 opacity-0 group-hover:opacity-100 transform scale-90 group-hover:scale-100"
+                                aria-label="Delete collection"
+                            >
+                                <FaTrash className="text-sm" />
+                            </button>
+                        </div>
                     ))}
                 </div>
             ) : (
-                <div className="flex flex-col items-center justify-center h-64">
-                    <p className="text-zinc-400 text-xl mb-4">You don't have any collections yet</p>
-                    <Link
-                        to="/collections/create"
-                        className="px-6 py-3 bg-[#6556CD] text-white rounded-lg hover:bg-[#5546C0] transition-colors"
-                    >
-                        Create Your First Collection
-                    </Link>
-                </div>
+                <EmptyState
+                    icon={<FaFolder className="w-24 h-24 text-indigo-500/50" />}
+                    title="No Collections Yet"
+                    description="Create your first collection to organize your favorite movies and TV shows"
+                    action={
+                        <Link
+                            to="/collections/create"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-xl font-semibold shadow-lg shadow-indigo-500/50 transition-all duration-300 transform hover:scale-105"
+                        >
+                            <FaPlus />
+                            <span>Create Your First Collection</span>
+                        </Link>
+                    }
+                />
             )}
         </div>
     );

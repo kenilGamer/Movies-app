@@ -184,9 +184,10 @@ const Bollywood = React.memo(() => {
                 <div className='w-full flex max-sm:flex-col sm:items-center gap-4 px-[3%] mb-6'>
                     <h1 
                         onClick={handleBack} 
-                        className='text-2xl font-semibold hover:text-blue-500 flex items-center text-zinc-400 cursor-pointer transition-colors duration-200 group'
+                        className='text-2xl sm:text-3xl font-bold hover:text-indigo-400 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 cursor-pointer transition-all duration-300 group'
                     >
-                        <FaLongArrowAltLeft className="mr-2 transform transition-transform duration-200 group-hover:-translate-x-1" /> Bollywood Movies
+                        <FaLongArrowAltLeft className="text-zinc-400 group-hover:text-indigo-400 group-hover:-translate-x-1 transition-all duration-300" /> 
+                        <span>Bollywood Movies</span>
                     </h1>
                     <Topnev />
                     <Dropdown 

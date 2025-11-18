@@ -114,8 +114,11 @@ useEffect(() => {
         }}
         className="w-full min-h-screen flex items-center justify-center bg-cover bg-center p-4"
         >
-        <div className="w-[20em] h-auto min-h-[30em] bg-[#ffffff68] rounded-2xl backdrop-blur-md bg-opacity-50 box-shadow-md shadow-2xl shadow-white/20 flex flex-col items-center justify-center p-8 transition-all duration-300 hover:shadow-white/30">
-          <h1 className="text-3xl font-bold text-white mb-6 tracking-wide">Login Page</h1>
+        <div className="w-full max-w-md h-auto min-h-[32em] bg-gradient-to-br from-zinc-900/95 to-zinc-800/95 backdrop-blur-xl border border-zinc-700/50 rounded-2xl shadow-2xl shadow-black/50 flex flex-col items-center justify-center p-6 sm:p-8 transition-all duration-300 hover:shadow-indigo-500/20 hover:border-indigo-500/50">
+          <div className="mb-6 text-center">
+            <h1 className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 mb-2 tracking-wide">Welcome Back</h1>
+            <p className="text-zinc-400 text-sm sm:text-base">Sign in to continue to GODCRAFTS</p>
+          </div>
           <form
             method="post"
             encType="multipart/form-data"
@@ -124,57 +127,62 @@ useEffect(() => {
           >   
          
             <div className="mb-4 w-full relative group">
+              <label htmlFor="username" className="block text-sm font-medium text-zinc-300 mb-2">Username or Email</label>
               <input
                 type="text"
                 name="username"
                 id="username"
-                className="mt-1 p-3 w-full text-black rounded-lg border-2 border-transparent shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all duration-300 bg-white/95 hover:bg-white placeholder:text-gray-500"
+                className="w-full p-3 sm:p-4 text-white bg-zinc-800/50 border border-zinc-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all duration-300 placeholder:text-zinc-500 hover:border-zinc-600"
                 value={username || email}
-                placeholder="Username or Email"
+                placeholder="Enter your username or email"
                 onChange={(e) => setUsername(e.target.value)}
                 required
               />
-              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"></div>
             </div>
             <div className="mb-4 w-full relative group">
+              <label htmlFor="password" className="block text-sm font-medium text-zinc-300 mb-2">Password</label>
               <input
                 type="password"
                 name="password"
                 id="password"
-                className="mt-1 p-3 w-full rounded-lg text-black border-2 border-transparent shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all duration-300 bg-white/95 hover:bg-white placeholder:text-gray-500"
+                className="w-full p-3 sm:p-4 text-white bg-zinc-800/50 border border-zinc-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all duration-300 placeholder:text-zinc-500 hover:border-zinc-600"
                 value={password}
-                placeholder="Password"
+                placeholder="Enter your password"
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"></div>
             </div>
-            <a href="/forgot-password" className="self-end">
-              <p className="text-white hover:text-indigo-300 transition-colors duration-200 text-sm underline-offset-2 hover:underline">Forgot Password?</p>
-            </a>
+            <div className="w-full flex items-center justify-between mb-4">
+              <a href="/forgot-password" className="text-indigo-400 hover:text-indigo-300 transition-colors duration-200 text-sm font-medium">
+                Forgot Password?
+              </a>
+            </div>
             <div className="w-full space-y-3">
               <button
                 type="submit"
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                className="w-full flex justify-center items-center gap-2 py-3 sm:py-4 px-4 border border-transparent rounded-xl shadow-lg text-sm sm:text-base font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] hover:shadow-xl hover:shadow-indigo-500/50"
               >
-               Login
+                <span>Login</span>
               </button>
               <Link to="/signup" className="mt-4 block text-center">
-                <p className="text-white hover:text-indigo-300 transition-colors duration-200 text-sm">Don't have an account? <span className="font-semibold underline underline-offset-2">Signup</span></p>
+                <p className="text-zinc-400 hover:text-indigo-300 transition-colors duration-200 text-sm">
+                  Don't have an account? <span className="font-semibold text-indigo-400 underline underline-offset-2">Sign up</span>
+                </p>
               </Link>
             </div>
           </form>
-          <div className="flex items-center justify-center w-full my-4">
-            <div className="flex-1 h-px bg-white/30"></div>
-            <span className="px-4 text-white text-sm">or</span>
-            <div className="flex-1 h-px bg-white/30"></div>
+          <div className="flex items-center justify-center w-full my-6">
+            <div className="flex-1 h-px bg-zinc-700/50"></div>
+            <span className="px-4 text-zinc-500 text-sm font-medium">or</span>
+            <div className="flex-1 h-px bg-zinc-700/50"></div>
           </div>
           <button 
             onClick={handleGoogleLogin} 
-            className="mt-2 flex items-center justify-center gap-2 bg-white px-8 py-3 text-3xl rounded-full shadow-lg hover:shadow-xl transform transition-all duration-300 hover:scale-110 active:scale-95"
+            type="button"
+            className="w-full flex items-center justify-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-zinc-700/50 px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] group"
           >
-            <FcGoogle/>
-            <span className="text-sm font-medium text-gray-700">Continue with Google</span>
+            <FcGoogle className="text-2xl"/>
+            <span className="text-sm sm:text-base font-medium text-white group-hover:text-indigo-300 transition-colors">Continue with Google</span>
           </button>
         </div>
       </div>

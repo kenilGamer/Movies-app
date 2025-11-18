@@ -149,8 +149,7 @@ function Topnev({ left }) {
       </div>
       
       <div className="absolute right-2 sm:right-4 flex items-center gap-2 sm:gap-4">
-        <ThemeToggle />
-        <NotificationBell />
+      <NotificationBell />
       </div>
     </div>
   );
