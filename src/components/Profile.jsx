@@ -8,6 +8,7 @@ import Loading from "./Loading";  // Assuming Loading is a spinner component
 import { useDispatch, useSelector } from "react-redux";
 import { asyncsetProfile } from "../store/actions/profileActions";
 import { toast } from "react-toastify";
+import { API_BASE_URL } from "../utils/config";
 
 const Profile = () => {
   const [wallpaper, setWallpaper] = useState(null);
@@ -70,24 +71,54 @@ const Profile = () => {
   useEffect(() => {
     if (profile) {
       setProfileData(profile);
-      toast.success("Profile loaded successfully");
+      if (import.meta.env.DEV) {
+        console.log("Profile loaded:", profile);
+      }
     } else {
-      toast.error("not loaded");
-      console.log("No profile data available");
+      if (import.meta.env.DEV) {
+        console.log("No profile data available");
+      }
     }
   }, [profile]);
 
   if (error) {
     // Handle errors, like redirecting to login if unauthorized
-    if (error === "Unauthorized access") {
+    if (error === "Unauthorized access" || error === "No token found") {
       navigate("/login");
+      return null;
     }
-    return <div>{error}</div>;
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-500 mb-4">{error}</p>
+          <button 
+            onClick={() => dispatch(asyncsetProfile(navigate))}
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
   }
 
-  const avatar = `https://movies-backend-07f5.onrender.com/${profileData?.avatar}`;
-  const googleProfile = profileData?.googleProfile;
-  const defaultProfile = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+  // Construct avatar URL properly
+  const getAvatarUrl = () => {
+    if (profileData?.googleProfile) {
+      return profileData.googleProfile;
+    }
+    if (profileData?.avatar) {
+      // Check if avatar is already a full URL
+      if (profileData.avatar.startsWith('http://') || profileData.avatar.startsWith('https://')) {
+        return profileData.avatar;
+      }
+      // Otherwise, construct the URL
+      return `${API_BASE_URL}/${profileData.avatar}`;
+    }
+    return "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+  };
+
+  const avatarUrl = getAvatarUrl();
 
   return isLoading ? (
     <Loading /> // Show loading indicator if loading
@@ -109,13 +140,17 @@ const Profile = () => {
           {/* Profile Information */}
           <div className="flex flex-col items-center">
             <img
-              src={`${googleProfile || avatar || defaultProfile}`}
+              src={avatarUrl}
               alt="profile"
               className="w-[150px] h-[150px] rounded-full object-cover bg-transparent border-2 border-white"
+              onError={(e) => {
+                // Fallback to default if image fails to load
+                e.target.src = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+              }}
             />
           </div>
-          <h1 className="text-3xl mt-3 font-semibold">{profileData?.username}</h1>
-          <p>{profileData?.email}</p>
+          <h1 className="text-3xl mt-3 font-semibold text-white">{profileData?.username || "User"}</h1>
+          <p className="text-zinc-300">{profileData?.email || "No email"}</p>
 
           {/* Movie History Section */}
           <div className="movie-history w-full min-h-full mt-5">

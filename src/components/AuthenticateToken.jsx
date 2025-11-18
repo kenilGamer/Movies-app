@@ -1,22 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { children } from 'react';
+import Loading from './Loading';
 
 function AuthenticateToken({ children }) {
-  document.title = "Godcrfts | Token";
   const [loading, setLoading] = useState(true);
-  const token = localStorage.getItem('token');
-  // console.log(token);
   const navigate = useNavigate();
   
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/login');
-    }
-  }, []);
+    const checkToken = () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        navigate('/login', { replace: true });
+      } else {
+        setLoading(false);
+      }
+    };
 
-  return children;
+    checkToken();
+  }, [navigate]);
+
+  // Show loading while checking token
+  if (loading) {
+    return <Loading />;
+  }
+
+  return <>{children}</>;
 }
 
 export default AuthenticateToken;

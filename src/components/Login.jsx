@@ -8,6 +8,7 @@ import Loading from "./Loading";
 import FlashMessage from "./Flashmessage";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
+import { API_BASE_URL } from "../utils/config";
 function Login() {
   const [wallpaper, setWallpaper] = useState(null);
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ const handleSubmit = async (e) => {
   
   e.preventDefault();
   try {
-    const response = await axios.post('https://movies-backend-07f5.onrender.com/api/login', {
+    const response = await axios.post(`${API_BASE_URL}/api/login`, {
       username: username || email,
       password: password
     });
@@ -75,12 +76,12 @@ const handleSubmit = async (e) => {
 
 const handleGoogleLogin = async () => {
   try {
-     window.location.href = 'https://movies-backend-07f5.onrender.com/auth/google';
+     window.location.href = `${API_BASE_URL}/auth/google`;
   } catch (error) {
     console.error('Error with Google login:', error);
     toast.error('Failed to redirect to Google login');
   }
-  const user = await axios.get('https://movies-backend-07f5.onrender.com/auth/google/callback');
+  const user = await axios.get(`${API_BASE_URL}/auth/google/callback`);
   toast.success("Logged in with Google successfully");
   console.log(user);
   navigate('/');
@@ -111,60 +112,70 @@ useEffect(() => {
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}
-        className="w-full h-full flex items-center justify-center bg-cover bg-center"
+        className="w-full min-h-screen flex items-center justify-center bg-cover bg-center p-4"
         >
-        <div className="w-[20em] h-[30em] bg-[#ffffff68] rounded-xl backdrop-blur-sm bg-opacity-50 box-shadow-md shadow-white flex flex-col items-center justify-center">
-          <h1 className="text-2xl font-bold text-white mb-4">Login Page</h1>
+        <div className="w-[20em] h-auto min-h-[30em] bg-[#ffffff68] rounded-2xl backdrop-blur-md bg-opacity-50 box-shadow-md shadow-2xl shadow-white/20 flex flex-col items-center justify-center p-8 transition-all duration-300 hover:shadow-white/30">
+          <h1 className="text-3xl font-bold text-white mb-6 tracking-wide">Login Page</h1>
           <form
             method="post"
             encType="multipart/form-data"
             onSubmit={handleSubmit}
-            className="space-y-4 flex flex-col items-center justify-center relative"
+            className="space-y-5 flex flex-col items-center justify-center relative w-full"
           >   
          
-            <div className="mb-4">
-            
+            <div className="mb-4 w-full relative group">
               <input
                 type="text"
                 name="username"
                 id="username"
-                className="mt-1 p-2  w-full text-black rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 p-3 w-full text-black rounded-lg border-2 border-transparent shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all duration-300 bg-white/95 hover:bg-white placeholder:text-gray-500"
                 value={username || email}
                 placeholder="Username or Email"
                 onChange={(e) => setUsername(e.target.value)}
                 required
               />
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"></div>
             </div>
-            <div className="mb-4">
-        
+            <div className="mb-4 w-full relative group">
               <input
                 type="password"
                 name="password"
                 id="password"
-                className="mt-1 p-2 w-full rounded-md text-black border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 p-3 w-full rounded-lg text-black border-2 border-transparent shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all duration-300 bg-white/95 hover:bg-white placeholder:text-gray-500"
                 value={password}
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"></div>
             </div>
-            <a href="/forgot-password">
-              <p className="text-white">Forgot Password?</p>
+            <a href="/forgot-password" className="self-end">
+              <p className="text-white hover:text-indigo-300 transition-colors duration-200 text-sm underline-offset-2 hover:underline">Forgot Password?</p>
             </a>
-            <div>
+            <div className="w-full space-y-3">
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
               >
                Login
               </button>
-              <Link to="/signup" className="mt-4 block">
-                <p className="text-white">Signup Page</p>
+              <Link to="/signup" className="mt-4 block text-center">
+                <p className="text-white hover:text-indigo-300 transition-colors duration-200 text-sm">Don't have an account? <span className="font-semibold underline underline-offset-2">Signup</span></p>
               </Link>
             </div>
           </form>
-          <h1 className="text-center">or</h1>
-          <button onClick={handleGoogleLogin} className="mt-4 block bg-white px-20 p-1 text-3xl rounded-full"><FcGoogle/></button>
+          <div className="flex items-center justify-center w-full my-4">
+            <div className="flex-1 h-px bg-white/30"></div>
+            <span className="px-4 text-white text-sm">or</span>
+            <div className="flex-1 h-px bg-white/30"></div>
+          </div>
+          <button 
+            onClick={handleGoogleLogin} 
+            className="mt-2 flex items-center justify-center gap-2 bg-white px-8 py-3 text-3xl rounded-full shadow-lg hover:shadow-xl transform transition-all duration-300 hover:scale-110 active:scale-95"
+          >
+            <FcGoogle/>
+            <span className="text-sm font-medium text-gray-700">Continue with Google</span>
+          </button>
         </div>
       </div>
     </>

@@ -8,6 +8,8 @@ import Loading from "./Loading";
 import Flashmessage from "./Flashmessage";
 import { FcGoogle } from "react-icons/fc";
 import { FaGoogle } from "react-icons/fa";
+import { toast } from "react-toastify";
+import { API_BASE_URL } from "../utils/config";
 function Signup() {
   const [wallpaper, setWallpaper] = useState(null);
   const navigate = useNavigate();
@@ -61,7 +63,7 @@ function Signup() {
 
     try {
       const response = await axios.post(
-        "https://movies-backend-07f5.onrender.com/api/signup",
+        `${API_BASE_URL}/api/signup`,
         formData, // Use formData, not a regular object
         {
           headers: {
@@ -90,8 +92,7 @@ function Signup() {
   const handleGoogleSignup = async () => {
     try {
       // Trigger the authentication process by calling the backend route
-      window.location.href =
-        "https://movies-backend-07f5.onrender.com/auth/google"; // This will redirect to Google's OAuth page
+      window.location.href = `${API_BASE_URL}/auth/google`; // This will redirect to Google's OAuth page
     } catch (error) {
       console.error("Error with Google signup:", error);
     }

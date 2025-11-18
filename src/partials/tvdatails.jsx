@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncloadtv, removetv } from "../store/actions/tvActions";
 import {
@@ -11,6 +11,81 @@ import {
 import HorizontalCards from "./Horizontalcrads";
 import Loading from "../components/Loading";
 import noimage from "/noimage.jpeg";
+import { addToWatchlist, removeFromWatchlist, addToFavorites, removeFromFavorites, checkItemStatus } from "../utils/watchlistUtils";
+import Reviews from "../components/Reviews";
+import ReviewForm from "../components/ReviewForm";
+import ShareButton from "../components/ShareButton";
+
+// Watchlist and Favorites buttons component
+const WatchlistButtons = ({ movieId, mediaType }) => {
+    const [inWatchlist, setInWatchlist] = useState(false);
+    const [inFavorites, setInFavorites] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const checkStatus = async () => {
+            try {
+                const status = await checkItemStatus(movieId, mediaType);
+                setInWatchlist(status.inWatchlist);
+                setInFavorites(status.inFavorites);
+            } catch (error) {
+                console.error('Error checking status:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        checkStatus();
+    }, [movieId, mediaType]);
+
+    const handleWatchlist = async () => {
+        try {
+            if (inWatchlist) {
+                await removeFromWatchlist(movieId, mediaType);
+                setInWatchlist(false);
+            } else {
+                await addToWatchlist(movieId, mediaType);
+                setInWatchlist(true);
+            }
+        } catch (error) {
+            console.error('Error toggling watchlist:', error);
+        }
+    };
+
+    const handleFavorites = async () => {
+        try {
+            if (inFavorites) {
+                await removeFromFavorites(movieId, mediaType);
+                setInFavorites(false);
+            } else {
+                await addToFavorites(movieId, mediaType);
+                setInFavorites(true);
+            }
+        } catch (error) {
+            console.error('Error toggling favorites:', error);
+        }
+    };
+
+    if (loading) return null;
+
+    return (
+        <>
+            <button
+                onClick={handleWatchlist}
+                className={`p-5 rounded-lg flex items-center gap-2 ${inWatchlist ? 'bg-green-600' : 'bg-[#6556CD]'} hover:opacity-80 transition-opacity`}
+            >
+                <i className={`text-xl ${inWatchlist ? 'ri-bookmark-fill' : 'ri-bookmark-line'}`}></i>
+                {inWatchlist ? 'In Watchlist' : 'Add to Watchlist'}
+            </button>
+            <button
+                onClick={handleFavorites}
+                className={`p-5 rounded-lg flex items-center gap-2 ${inFavorites ? 'bg-red-600' : 'bg-[#6556CD]'} hover:opacity-80 transition-opacity`}
+            >
+                <i className={`text-xl ${inFavorites ? 'ri-heart-fill' : 'ri-heart-line'}`}></i>
+                {inFavorites ? 'Favorited' : 'Add to Favorites'}
+            </button>
+        </>
+    );
+};
 
 // Function to add a new item to the history in localStorage
 const addToHistory = (newItem) => {
@@ -159,7 +234,7 @@ function Tvdatails() {
           <h1 className="text-2xl mb-3  mt-5">tv Translated</h1>
           <p className="mb-10">{info.translations.join(", ")}</p>
 
-        <div className="flex max-sm:flex-col gap-5">
+        <div className="flex max-sm:flex-col gap-5 flex-wrap">
         <Link
             className="p-5 bg-[#6556CD] rounded-lg"
             to={`${pathname}/trailer`}
@@ -174,6 +249,14 @@ function Tvdatails() {
             <i className="text-xl ri-play-fill mr-3 "></i>
             Play Episodes
           </Link>
+          <WatchlistButtons movieId={parseInt(id)} mediaType="tv" />
+          <ShareButton
+              movieId={parseInt(id)}
+              mediaType="tv"
+              title={info.detail?.name || info.detail?.title}
+              description={info.detail?.overview}
+              posterPath={info.detail?.poster_path}
+          />
         </div>
         </div>
       </div>
@@ -254,7 +337,11 @@ function Tvdatails() {
         )}
       </div>
 
-      {/* Part 5 Recommendations */}
+      {/* Part 5 Reviews */}
+      <Reviews movieId={parseInt(id)} mediaType="tv" />
+      <ReviewForm movieId={parseInt(id)} mediaType="tv" />
+
+      {/* Part 6 Recommendations */}
       <h1 className=" text-3xl font-bold text-white">Recommendations</h1>
       <HorizontalCards data={info.recommendations} />
       <hr className="mt-10 border-none h-[2px] bg-zinc-500" />

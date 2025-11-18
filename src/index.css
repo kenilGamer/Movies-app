@@ -2,6 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Light theme variables */
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f3f4f6;
+  --bg-tertiary: #e5e7eb;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  --border-color: #d1d5db;
+  --accent-color: #6556CD;
+  --accent-hover: #5546C0;
+}
+
+/* Dark theme variables (default) */
+[data-theme="dark"] {
+  --bg-primary: #0f0f0f;
+  --bg-secondary: #18181b;
+  --bg-tertiary: #27272a;
+  --text-primary: #fafafa;
+  --text-secondary: #a1a1aa;
+  --text-tertiary: #71717a;
+  --border-color: #3f3f46;
+  --accent-color: #6556CD;
+  --accent-hover: #5546C0;
+}
+
+/* Apply theme colors */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* *{
   border: 2px solid #050118;
 } */

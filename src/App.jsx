@@ -6,6 +6,15 @@ import Popular from './components/Popular'
 import Movies from './components/Movies'
 import Tv from './components/Tv'
 import People from './components/People'
+import Bollywood from './components/Bollywood'
+import Watchlist from './components/Watchlist'
+import Favorites from './components/Favorites'
+import Search from './components/Search'
+import Collections from './components/Collections'
+import CollectionDetail from './components/CollectionDetail'
+import CreateCollection from './components/CreateCollection'
+import Notifications from './components/Notifications'
+import Premium from './components/Premium'
 import Moviedatails from './partials/moviedatails'
 import Tvdatails from './partials/tvdatails'
 import Parsondatails from './partials/parsondatails'
@@ -33,6 +42,15 @@ function App() {
         <Route path="/trending" element={<AuthenticateToken><Trending /></AuthenticateToken>} />
         <Route path="/popular" element={<AuthenticateToken><Popular /></AuthenticateToken>} />
         <Route path="/movie" element={<AuthenticateToken><Movies /></AuthenticateToken>} />
+        <Route path="/bollywood" element={<AuthenticateToken><Bollywood /></AuthenticateToken>} />
+        <Route path="/watchlist" element={<AuthenticateToken><Watchlist /></AuthenticateToken>} />
+        <Route path="/favorites" element={<AuthenticateToken><Favorites /></AuthenticateToken>} />
+        <Route path="/search" element={<AuthenticateToken><Search /></AuthenticateToken>} />
+        <Route path="/collections" element={<AuthenticateToken><Collections /></AuthenticateToken>} />
+        <Route path="/collections/create" element={<AuthenticateToken><CreateCollection /></AuthenticateToken>} />
+        <Route path="/collections/:id" element={<AuthenticateToken><CollectionDetail /></AuthenticateToken>} />
+        <Route path="/notifications" element={<AuthenticateToken><Notifications /></AuthenticateToken>} />
+        <Route path="/premium" element={<AuthenticateToken><Premium /></AuthenticateToken>} />
         <Route path="/settings" element={<AuthenticateToken><Setting /></AuthenticateToken>} />
         <Route path="/movie/datails/:id" element={<AuthenticateToken><Moviedatails /></AuthenticateToken>}>
           <Route path="/movie/datails/:id/trailer" element={<AuthenticateToken><Trailer /></AuthenticateToken>} />

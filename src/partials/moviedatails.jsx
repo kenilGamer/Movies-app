@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncloadmovie, removemovie } from "../store/actions/movieActions";
 import {
@@ -11,6 +11,10 @@ import {
 import HorizontalCards from "./Horizontalcrads";
 import Loading from "../components/Loading";
 import noimage from "/noimage.jpeg"; // Added import for noimage
+import { addToWatchlist, removeFromWatchlist, addToFavorites, removeFromFavorites, checkItemStatus } from "../utils/watchlistUtils";
+import Reviews from "../components/Reviews";
+import ReviewForm from "../components/ReviewForm";
+import ShareButton from "../components/ShareButton";
 
 // Function to add a new item to the history in localStorage
 const addToHistory = (movie) => {
@@ -39,6 +43,77 @@ const addToHistory = (movie) => {
 };
 
   
+
+// Watchlist and Favorites buttons component
+const WatchlistButtons = ({ movieId, mediaType }) => {
+    const [inWatchlist, setInWatchlist] = useState(false);
+    const [inFavorites, setInFavorites] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const checkStatus = async () => {
+            try {
+                const status = await checkItemStatus(movieId, mediaType);
+                setInWatchlist(status.inWatchlist);
+                setInFavorites(status.inFavorites);
+            } catch (error) {
+                console.error('Error checking status:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        checkStatus();
+    }, [movieId, mediaType]);
+
+    const handleWatchlist = async () => {
+        try {
+            if (inWatchlist) {
+                await removeFromWatchlist(movieId, mediaType);
+                setInWatchlist(false);
+            } else {
+                await addToWatchlist(movieId, mediaType);
+                setInWatchlist(true);
+            }
+        } catch (error) {
+            console.error('Error toggling watchlist:', error);
+        }
+    };
+
+    const handleFavorites = async () => {
+        try {
+            if (inFavorites) {
+                await removeFromFavorites(movieId, mediaType);
+                setInFavorites(false);
+            } else {
+                await addToFavorites(movieId, mediaType);
+                setInFavorites(true);
+            }
+        } catch (error) {
+            console.error('Error toggling favorites:', error);
+        }
+    };
+
+    if (loading) return null;
+
+    return (
+        <>
+            <button
+                onClick={handleWatchlist}
+                className={`p-5 rounded-lg flex items-center gap-2 ${inWatchlist ? 'bg-green-600' : 'bg-[#6556CD]'} hover:opacity-80 transition-opacity`}
+            >
+                <i className={`text-xl ${inWatchlist ? 'ri-bookmark-fill' : 'ri-bookmark-line'}`}></i>
+                {inWatchlist ? 'In Watchlist' : 'Add to Watchlist'}
+            </button>
+            <button
+                onClick={handleFavorites}
+                className={`p-5 rounded-lg flex items-center gap-2 ${inFavorites ? 'bg-red-600' : 'bg-[#6556CD]'} hover:opacity-80 transition-opacity`}
+            >
+                <i className={`text-xl ${inFavorites ? 'ri-heart-fill' : 'ri-heart-line'}`}></i>
+                {inFavorites ? 'Favorited' : 'Add to Favorites'}
+            </button>
+        </>
+    );
+};
 
 const Moviedetails = () => {
     document.title = "godcraft | Movie Details";
@@ -162,7 +237,7 @@ const Moviedetails = () => {
                     <h1 className="text-2xl mb-3  mt-5">Movie Translated</h1>
                     <p className="mb-10">{info.translations.join(", ")}</p>
 
-                   <div className="flex max-md:flex-col max-md:items-center gap-5 max-md:justify-center">
+                   <div className="flex max-md:flex-col max-md:items-center gap-5 max-md:justify-center flex-wrap">
                    <Link
                         className="p-5 bg-[#6556CD] rounded-lg"
                         to={`${pathname}/trailer`}
@@ -177,6 +252,14 @@ const Moviedetails = () => {
                         <i className="text-xl ri-play-fill mr-3 "></i>
                         Watch Now
                     </Link>
+                    <WatchlistButtons movieId={parseInt(id)} mediaType="movie" />
+                    <ShareButton
+                        movieId={parseInt(id)}
+                        mediaType="movie"
+                        title={info.detail?.title || info.detail?.name}
+                        description={info.detail?.overview}
+                        posterPath={info.detail?.poster_path}
+                    />
                    </div>
                 </div>
             </div>
@@ -229,7 +312,12 @@ const Moviedetails = () => {
                 )}
             </div>
 
-            {/* Part 4 Recommendations and Similar Stuff */}
+            {/* Part 4 Reviews */}
+            <hr className="mt-10 mb-5 border-none h-[2px] bg-zinc-500" />
+            <Reviews movieId={parseInt(id)} mediaType="movie" />
+            <ReviewForm movieId={parseInt(id)} mediaType="movie" />
+
+            {/* Part 5 Recommendations and Similar Stuff */}
             <hr className="mt-10 mb-5 border-none h-[2px] bg-zinc-500" />
             <h1 className=" text-3xl font-bold text-white">
                 Recommendations & Similar stuff
