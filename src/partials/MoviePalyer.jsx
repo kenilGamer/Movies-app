@@ -5,10 +5,11 @@ import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import NotFound from "../components/notfound";
 import axios from "axios";
+import { FaTimes } from "react-icons/fa";
 // import plugin from "tailwindcss";
 function MoviePalyer() {
     
-      document.title = `Trailer | Godcrfts`;
+      document.title = `Movie Player | Godcrfts`;
       const navigate = useNavigate();
       const { pathname } = useLocation();
       const category = pathname.includes("movie") ? "movie" : "tv";
@@ -24,24 +25,32 @@ function MoviePalyer() {
       
     //   console.log(ytvideos.key);
       return (
-        <div className="absolute overflow-hidden w-screen h-screen flex items-center justify-center bg-[#000000f5] top-0 left-0">
-          <Link
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-md overflow-hidden">
+          {/* Close button */}
+          <button
             onClick={() => navigate(-1)}
-            className="hover:text-[#6556CD] absolute text-2xl top-[5%] right-[5%] ri-close-fill"
-          ></Link>
-        {movieid ?  
-        // <ReactPlayer
-        //     controls={true}
-        //     url={`https://www.youtube.com/watch?v=${ytvideos.key}`}
-        //     // height={500}
-        //     // width={1100}
-        //     className="w-full"
-        //   />
-        <iframe src={`https://www.2embed.stream/embed/movie/${movieid}`}  className="w-full h-full m-2"></iframe>
-          :(
-            <NotFound/>
-          )}
-        
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 z-[10000] p-3 sm:p-4 bg-zinc-900/80 hover:bg-red-600/80 backdrop-blur-md rounded-full text-white transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-lg shadow-black/50 group"
+            aria-label="Close player"
+          >
+            <FaTimes className="text-xl sm:text-2xl group-hover:rotate-90 transition-transform duration-300" />
+          </button>
+          
+          {/* Video container */}
+          <div className="relative w-full h-full max-w-7xl mx-auto p-2 sm:p-4 z-[9999]">
+            {movieid ?  
+              <iframe 
+                src={`https://www.2embed.stream/embed/movie/${movieid}`}  
+                className="w-full h-full rounded-lg sm:rounded-xl border-2 border-zinc-800/50 shadow-2xl"
+                allowFullScreen
+                frameBorder="0"
+                title="Movie Player"
+              />
+            :(
+              <div className="flex items-center justify-center h-full">
+                <NotFound/>
+              </div>
+            )}
+          </div>
         </div>
       )
     }
